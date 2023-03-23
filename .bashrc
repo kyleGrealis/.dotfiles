@@ -10,7 +10,7 @@ esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+HISTCONTROL=ignoreboth:erasedups
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -117,15 +117,5 @@ if ! shopt -oq posix; then
 fi
 
 
-# clear screen on startup
-clear
-
-# print the weather the screen
-curl wttr.in/Miami?0
-
-
-
-
-
-# print vpn status on startup 
-protonvpn-cli status
+# change command prompt
+#export PS1='\e[01;32m\[3nc0d3d@linux--# \e[m'
