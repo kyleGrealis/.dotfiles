@@ -15,6 +15,9 @@ HISTCONTROL=ignoreboth:erasedups
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+# add day & time to history input
+HISTTIMEFORMAT='%m-%d %T  '
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
@@ -117,5 +120,7 @@ if ! shopt -oq posix; then
 fi
 
 
-# change command prompt
-#export PS1='\e[01;32m\[3nc0d3d@linux--# \e[m'
+# get weather when opening new terminal
+clear
+curl wttr.in/Miami?0
+
