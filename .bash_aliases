@@ -1,6 +1,4 @@
 alias restart="source .bashrc"
-alias vpn-on='protonvpn-cli connect'
-alias vpn-status='protonvpn-cli status'
-alias vpn-off='protonvpn-cli disconnect'
+alias messages='open -a Messages'
+alias firefox='open -a Firefox'
 
-alias scaling="./git-repos/dot-files/.screen-scaling" 
