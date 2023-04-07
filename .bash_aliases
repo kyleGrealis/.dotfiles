@@ -11,4 +11,6 @@ alias slack='open -a Slack'
 
 # miscellaneous options -------------------------
 # human readable file & directory
-alias ls='ls -h'
+alias ls='ls -alhF'
+alias now='date +%F\ %T'
+alias rm='rm -i'
