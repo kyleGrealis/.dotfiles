@@ -2,6 +2,7 @@
 alias restart='source .bashrc'
 
 # applications ----------------------------------
+alias settings='open -a Settings'
 alias firefox='open -a Firefox'
 alias messages='open -a Messages'
 alias notes='open -a Notes'
