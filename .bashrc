@@ -24,7 +24,3 @@ PS1='\e[1;32m[kyle-3nc0d3d] \W -$ \e[0m '
 
 # colorized directories
 export CLICOLOR=1
-
-# upon opening...
-clear
-curl wttr.in/Miami?0
