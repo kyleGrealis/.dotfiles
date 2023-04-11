@@ -10,9 +10,18 @@ alias mail='open -a Mail'
 alias rstudio='open -a RStudio'
 alias slack='open -a Slack'
 
+# git -------------------------------------------
+alias ga='git add'
+alias gc='git commit -m'
+alias gs='git status'
+alias gpush='git push origin main'
+alias gpull='git pull origin main'
+
 # miscellaneous options -------------------------
 # human readable file & directory
 alias ls='ls -alhF'
 alias now='date +%F\ %T'
 alias rm='rm -i'
 alias weather='curl wttr.in/Miami?0'
+
+
