@@ -52,5 +52,5 @@ cdl() {
 }
 
 # custom user prompt
-PS1="\[\e[1;32m\][kyle-3nc0d3d] \W -$ \[\e[0m\] "
-#PS1="${bgreen}[kyle-3nc0d3d] \W -$  ${nc}"
+#PS1="\[\e[1;32m\][kyle-3nc0d3d] \W -$ \[\e[0m\] "
+PS1="\[${bgreen}\][kyle-3nc0d3d] \W -$  \[${nc}\]"
