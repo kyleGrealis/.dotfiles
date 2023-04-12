@@ -20,14 +20,35 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # custom user prompt
-PS1='\e[1;32m[kyle-3nc0d3d] \W -$ \e[0m '
+PS1='\[\e[1;32m\][kyle-3nc0d3d] \W -$ \[\e[0m\] '
 
 # colorized directories
 export CLICOLOR=1
 
+#####------------------------------------------------------------------
 # miscellaneous
 export icloud=/Library/Mobile\ Documents/com~apple~CloudDocs/
+# colors for use inside echo and printf
+export nc='\033[0m'              # No color
+export black='\033[0;30m'        # Black
+export red='\033[0;31m'          # Red
+export green='\033[0;32m'        # Green
+export yellow='\033[0;33m'       # Yellow
+export blue='\033[0;34m'         # Blue
+export purple='\033[0;35m'       # Purple
+export cyan='\033[0;36m'         # Cyan
+export white='\033[0;37m'        # White
+# bold
+export bblack='\033[1;30m'       # Black
+export bred='\033[1;31m'         # Red
+export bgreen='\033[1;32m'       # Greene
+export byellow='\033[1;33m'      # Yellow
+export bblue='\033[1;34m'        # Blue
+export bpurple='\033[1;35m'      # Purple
+export bcyan='\033[1;36m'        # Cyan
+export bwhite='\033[1;37m'       # White
 
+# change directory AND list contents of the directory
 cdl() {
 	cd "$@";
 	ls -alhF;
