@@ -19,9 +19,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# custom user prompt
-PS1='\[\e[1;32m\][kyle-3nc0d3d] \W -$ \[\e[0m\] '
-
 # colorized directories
 export CLICOLOR=1
 
@@ -53,3 +50,7 @@ cdl() {
 	cd "$@";
 	ls -alhF;
 }
+
+# custom user prompt
+PS1="\[\e[1;32m\][kyle-3nc0d3d] \W -$ \[\e[0m\] "
+#PS1="${bgreen}[kyle-3nc0d3d] \W -$  ${nc}"
