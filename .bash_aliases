@@ -9,6 +9,8 @@ alias notes='open -a Notes'
 alias mail='open -a Mail'
 alias rstudio='open -a RStudio'
 alias slack='open -a Slack'
+alias word='open -a "Microsoft Word"'
+alias excel='open -a "Microsoft Excel"'
 
 # git -------------------------------------------
 alias ga='git add'
