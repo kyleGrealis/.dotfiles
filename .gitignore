@@ -125,9 +125,6 @@ _bookdown_files/
 *.itmz
 *.pdf
 
-# R packages
-*.tar
-
 # Archives
 *.zip
 *.Zip
