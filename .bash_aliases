@@ -11,6 +11,7 @@ alias rstudio='open -a RStudio'
 alias slack='open -a Slack'
 alias word='open -a "Microsoft Word"'
 alias excel='open -a "Microsoft Excel"'
+alias vscode='open -a "Visual Studio Code"'
 
 # git -------------------------------------------
 alias ga='git add'
@@ -25,5 +26,6 @@ alias ls='ls -alhF'
 alias now='date +%F\ %T'
 alias rm='rm -i'
 alias weather='curl wttr.in/Miami?0'
+alias rshiny='./runShiny.sh'
 
 
