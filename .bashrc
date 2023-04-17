@@ -19,8 +19,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# colorized directories
-export CLICOLOR=1
 
 #####------------------------------------------------------------------
 # miscellaneous
@@ -54,3 +52,7 @@ cdl() {
 # custom user prompt
 #PS1="\[\e[1;32m\][kyle-3nc0d3d] \W -$ \[\e[0m\] "
 PS1="\[${bgreen}\][kyle-3nc0d3d] \W -$  \[${nc}\]"
+
+# Add colors to Terminal
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
