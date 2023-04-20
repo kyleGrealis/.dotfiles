@@ -23,9 +23,12 @@ alias gpull='git pull origin main'
 # miscellaneous options -------------------------
 # human readable file & directory
 alias ls='ls -alhF'
+# get date & time now
 alias now='date +%F\ %T'
+# confirm prior to deletion
 alias rm='rm -i'
+# get the weather
 alias weather='curl wttr.in/Miami?0'
-alias rshiny='./runShiny.sh'
+
 
 
