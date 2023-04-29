@@ -32,3 +32,4 @@ alias weather='curl wttr.in/Miami?0'
 
 
 
+

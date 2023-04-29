@@ -15,14 +15,13 @@ HISTFILESIZE=2000
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+
 
 
 #####------------------------------------------------------------------
 # miscellaneous
-export icloud=/Library/Mobile\ Documents/com~apple~CloudDocs/
+
 # colors for use inside echo and printf
 export nc='\033[0m'              # No color
 export black='\033[0;30m'        # Black
@@ -50,7 +49,6 @@ cdl() {
 }
 
 # custom user prompt
-#PS1="\[\e[1;32m\][kyle-3nc0d3d] \W -$ \[\e[0m\] "
 PS1="\[${bgreen}\][kyle-3nc0d3d] \W -$  \[${nc}\]"
 
 # Add colors to Terminal
