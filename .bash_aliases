@@ -31,5 +31,4 @@ alias rm='rm -i'
 alias weather='curl wttr.in/Miami?0'
 
 
-
-
+# THE END OF THE SCRIPT
