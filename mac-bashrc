@@ -1,4 +1,3 @@
-
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth:erasedups
@@ -54,3 +53,6 @@ PS1="\[${bgreen}\][kyle-3nc0d3d] \W -$  \[${nc}\]"
 # Add colors to Terminal
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
+
+# stop .bash_sessions from being created
+unset HISTFILE
