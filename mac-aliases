@@ -1,5 +1,5 @@
 # restart terminal session ----------------------
-alias restart='source .bashrc'
+alias restart='source .bash_profile'
 
 # applications ----------------------------------
 alias settings='open -a Settings'

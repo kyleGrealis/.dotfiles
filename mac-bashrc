@@ -1,3 +1,11 @@
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+PATH="/usr/local/bin:PATH"
+
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/Kyle/repos/shell-scripts
+
+eval "$(/usr/local/bin/brew shellenv)"
+
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth:erasedups
