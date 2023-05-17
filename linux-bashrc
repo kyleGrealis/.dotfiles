@@ -160,11 +160,12 @@ cdl() {
 }
 
 # custom user prompt
-PS1="\[${bgreen}\][kyle-MitterBook] \W -$  \[${nc}\]"
+PS1="\[${bgreen}\][mitterLinux] \W -$  \[${nc}\]"
 
 # Add colors to Terminal
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
+
 
 
 
