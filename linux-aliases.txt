@@ -21,4 +21,4 @@ alias rm='rm -i'
 # get the weather
 alias weather='curl wttr.in/Miami?0'
 # run git status checking script
-alias gstatus='check-git.sh
+alias gstatus='check-git.sh'
