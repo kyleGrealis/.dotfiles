@@ -19,6 +19,6 @@ alias now='date +%F\ %T'
 # confirm prior to deletion
 alias rm='rm -i'
 # get the weather
-alias weather='curl wttr.in/Miami?0'
+alias weather='curl wttr.in/Dallas?0'
 # run git status checking script
 alias gstatus='check-git.sh'
