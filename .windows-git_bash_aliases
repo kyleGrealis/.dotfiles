@@ -1,0 +1,37 @@
+# restart terminal session ----------------------
+alias restart='source .bashrc'
+
+# git -------------------------------------------
+alias ga='git add'
+alias gm='git commit -m'
+
+# this function takes in a list of files and a commit message
+# `gam . 'initial commit'` will add all files in the current directory and commit with the message 'initial commit'
+gam() {
+  for file in "${@:1:$#-1}"; do
+    git add $file
+  done
+  git commit -m "${!#}"
+}
+alias gst='git status'
+alias gpush='git push origin main'
+alias gpull='git pull origin main'
+
+# miscellaneous options -------------------------
+alias r='radian'
+
+# human readable file & directory
+alias ls='ls -alh --color=auto'
+
+# get date & time now
+alias now='date +%F\ %T'
+
+# confirm prior to deletion
+alias rm='rm -i'
+
+# get the weather
+alias weather='curl wttr.in/Dallas?0'
+
+# run git status checking script
+alias gstatus='check-git.sh'
+
