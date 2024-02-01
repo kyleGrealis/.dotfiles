@@ -1,0 +1,32 @@
+# custom user prompt
+export PS1="\n\[\033[34m\][mitterMac] \[\033[35m\]\W ~$  \[\033[0m\]"
+
+# load .bash_aliases
+if [ -f ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
+export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
+export R_HOME="/Library/Frameworks/R.framework/Resources"
+
+# VS Code will be the default text editor -- ran once and leaving here for reference
+defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=com.microsoft.VSCode;}'
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth:erasedups
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# change directory AND list contents of the directory
+cdl() {
+	cd "$@";
+	ls -alhF;
+}
