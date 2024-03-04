@@ -20,6 +20,19 @@ gam() {
 
 
 # miscellaneous options -------------------------
+
+# have `rm` move to recycle bin and NOT permanently erase
+function rm() {
+  for file in "$@"; do
+    read -p "Are you sure you want to move $file to the trash? (y/n) " -n 1 -r
+    echo    # move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        mv "$file" ~/Desktop/TRASH/
+    fi
+  done
+}
+
 alias r='radian'
 
 # human readable file & directory
