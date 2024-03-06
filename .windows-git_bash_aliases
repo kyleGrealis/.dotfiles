@@ -22,27 +22,27 @@ gam() {
 # miscellaneous options -------------------------
 
 # have `rm` move to recycle bin and NOT permanently erase
-function rm() {
+function safe_rm() {
   for file in "$@"; do
-    read -p "Are you sure you want to move $file to the trash? (y/n) " -n 1 -r
-    echo    # move to a new line
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        mv "$file" ~/Desktop/TRASH/
+    read -p "Are you sure you want to move $file to the trash? (y/n) " REPLY
+
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      # Use trash-cli if available, fallback to mv
+      if command -v trash-cli &> /dev/null; then
+        trash-cli "$file"
+      else
+        mv "$file" ~/.local/share/Trash  # Fallback
+      fi
     fi
   done
 }
-
-alias r='radian'
+alias rm='safe_rm'
 
 # human readable file & directory
 alias ls='ls -alh --color=auto'
 
 # get date & time now
 alias now='date +%F\ %T'
-
-# confirm prior to deletion
-alias rm='rm -i'
 
 # get the weather
 alias weather='curl wttr.in/Dallas?0'
