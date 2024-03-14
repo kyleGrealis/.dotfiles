@@ -53,4 +53,4 @@ cdl() {
 
 # custom user prompt
 # PS1="\n\[${blue}\][mitterWork] \W \[${purple}~$ \[\033[0m\]"
-PS1="\n\[${blue}\][mitterWork] \[${purple}\]\W ~$ \[\033[0m\]"
+PS1="\n\[${bblue}\][mitterWork] \[${bpurple}\]\W ~$ \[\033[0m\]"
