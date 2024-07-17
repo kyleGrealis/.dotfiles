@@ -25,13 +25,11 @@ gam() {
 function safe_rm() {
   for file in "$@"; do
     read -p "Are you sure you want to move $file to the trash? (y/n) " REPLY
-
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-      # Use trash-cli if available, fallback to mv
-      if command -v trash-cli &> /dev/null; then
-        trash-cli "$file"
+      if trash-put "$file"; then
+        echo "Moved $file to trash"
       else
-        mv "$file" ~/.local/share/Trash  # Fallback
+        echo "Failed to move $file to trash"
       fi
     fi
   done
