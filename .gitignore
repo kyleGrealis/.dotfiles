@@ -1,20 +1,6 @@
-# Version updated April 2023
-
-# History files
-.Rhistory
-.Rapp.history
-
-# Session Data files
-.RData
-*.RData
-
-# User-specific files
-.Ruserdata
-
-# Output files from R CMD check
-/*.Rcheck/
-
-# RStudio files
 .Rproj.user
-.Rproj.user/
-*.Rproj
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto

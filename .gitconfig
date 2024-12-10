@@ -1,0 +1,9 @@
+[init "default"]
+	branch = main
+[user]
+	name = Kyle Grealis
+	email = kyleGrealis@icloud.com
+[credential]
+	helper = cache
+[core]
+	excludesFile = ~/.gitignore
