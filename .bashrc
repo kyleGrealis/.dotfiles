@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100
-HISTFILESIZE=0
+HISTSIZE=400
+HISTFILESIZE=1000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -126,15 +126,15 @@ fi
 # export green='\033[0;32m'        # Green
 # export yellow='\033[0;33m'       # Yellow
 # export blue='\033[0;34m'         # Blue
-# export purple='\033[0;35m'       # Purple
+export purple='\033[0;35m'       # Purple
 # export cyan='\033[0;36m'         # Cyan
 # export white='\033[0;37m'        # White
 # # bold
 # export bblack='\033[1;30m'       # Black
 # export bred='\033[1;31m'         # Red
-# export bgreen='\033[1;32m'       # Greene
+export bgreen='\033[1;32m'       # Greene
 # export byellow='\033[1;33m'      # Yellow
-# export bblue='\033[1;34m'        # Blue
+export bblue='\033[1;34m'        # Blue
 # export bpurple='\033[1;35m'      # Purple
 # export bcyan='\033[1;36m'        # Cyan
 # export bwhite='\033[1;37m'       # White
@@ -145,16 +145,15 @@ parse_git_branch() {
 }
 
 # Custom prompt
-# this will look like this:
-# [kyle@LinuxMint] (dev) repo
+PS1="\n\[${bgreen}\][ubuntu]\[${purple}\]\$(parse_git_branch)\[${bblue}\] \W \[\033[0m\]\n>>\[\033[0m\] "
+# will look like this:
+# [linuxMint] (dev) repo
 # >> sudo apt update
-# PS1="\n\[${bgreen}\][kyle@LinuxMint]\[${purple}\]\$(parse_git_branch)\[${bblue}\] \W \[\033[0m\]\n>>\[\033[0m\] "
-PS1='\n\[\033[1;32m\][kyle@LinuxMint]\[\033[0;35m\]$(parse_git_branch)\[\033[1;34m\] \W \[\033[0m\]\n>>\[\033[0m\] '
 
 
 # Remove duplicates from PATH
 PATH=$(echo $PATH | tr ':' '\n' | awk '!seen[$0]++' | tr '\n' ':' | sed 's/:$//')
 export PATH
 
-cat ~/Documents/.love.txt
+# cat ~/Documents/.love.txt
 
