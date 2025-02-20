@@ -1,0 +1,414 @@
+2025-02-20 17:23:47.035 [info] Extension host with pid 47968 started
+2025-02-20 17:23:47.035 [info] Skipping acquiring lock for /home/kyle/.config/Positron/User/workspaceStorage/8b9a9ccb70120a8f2c8a95abb37a17e6.
+2025-02-20 17:23:47.058 [info] ExtensionService#_doActivateExtension ms-python.python, startup: false, activationEvent: 'onLanguageRuntime:python'
+2025-02-20 17:23:47.287 [info] ExtensionService#_doActivateExtension positron.positron-supervisor, startup: false, activationEvent: 'onLanguageRuntime:r', root cause: positron.positron-r
+2025-02-20 17:23:47.412 [info] ExtensionService#_doActivateExtension positron.positron-r, startup: false, activationEvent: 'onLanguageRuntime:r'
+2025-02-20 17:23:47.552 [info] ExtensionService#_doActivateExtension positron.positron-reticulate, startup: false, activationEvent: 'onLanguageRuntime:reticulate'
+2025-02-20 17:23:47.566 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*', root cause: vscode.git
+2025-02-20 17:23:47.582 [debug] ExtHostSearch /usr/share/positron/resources/app/node_modules/@vscode/ripgrep/bin/rg --files --hidden --case-sensitive --no-require-git -g '/*.py' -g '!**/.git' -g '!**/.svn' -g '!**/.hg' -g '!**/CVS' -g '!**/.DS_Store' -g '!**/Thumbs.db' -g '!**/node_modules' -g '!**/bower_components' -g '!**/*.code-search' --no-ignore-parent --follow --quiet --no-config --no-ignore-global
+ - cwd: /home/kyle/dev
+ - Sibling clauses: {}
+2025-02-20 17:23:47.588 [debug] ExtHostSearch /usr/share/positron/resources/app/node_modules/@vscode/ripgrep/bin/rg --files --hidden --case-sensitive --no-require-git -g '**/*.{qmd,rmd}' -g '**/_quarto.{yml,yaml}' -g '**/_brand.{yml,yaml}' -g '**/_extension.{yml,yaml}' -g '!**/.git' -g '!**/.svn' -g '!**/.hg' -g '!**/CVS' -g '!**/.DS_Store' -g '!**/Thumbs.db' -g '!**/node_modules' -g '!**/bower_components' -g '!**/*.code-search' --no-ignore-parent --follow --quiet --no-config --no-ignore-global
+ - cwd: /home/kyle/dev
+ - Sibling clauses: {}
+2025-02-20 17:23:47.594 [info] ExtensionService#_doActivateExtension vscode.git, startup: true, activationEvent: '*'
+2025-02-20 17:23:47.665 [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+2025-02-20 17:23:47.693 [debug] ExtHostSearch Search finished. Stats: {"cmdTime":110,"fileWalkTime":110,"directoriesWalked":0,"filesWalked":0,"cmdResultCount":0}
+2025-02-20 17:23:47.693 [debug] Ext host file search time: 111ms
+2025-02-20 17:23:47.693 [debug] ExtHostSearch Search finished. Stats: {"cmdTime":117,"fileWalkTime":117,"directoriesWalked":0,"filesWalked":0,"cmdResultCount":0}
+2025-02-20 17:23:47.693 [debug] Ext host file search time: 119ms
+2025-02-20 17:23:47.708 [debug] ExtHostSearch /usr/share/positron/resources/app/node_modules/@vscode/ripgrep/bin/rg --files --hidden --case-sensitive --no-require-git -g '/{**/*.py,**/*.ipynb,.venv/**/*,.conda/**/*,pyproject.toml,Pipfile,*requirements.txt,.python-version,environment.yml}' -g '!**/.git' -g '!**/.svn' -g '!**/.hg' -g '!**/CVS' -g '!**/.DS_Store' -g '!**/Thumbs.db' -g '!**/node_modules/**' --no-ignore --follow --no-config --no-ignore-global
+ - cwd: /home/kyle/dev
+ - Sibling clauses: {}
+2025-02-20 17:23:47.744 [debug] ExtHostSearch /usr/share/positron/resources/app/node_modules/@vscode/ripgrep/bin/rg --files --hidden --case-sensitive --no-require-git -g '/{**/*.R,**/*.Rmd,.Rprofile,renv.lock,.Rbuildignore,.Renviron,*.Rproj}' -g '!**/.git' -g '!**/.svn' -g '!**/.hg' -g '!**/CVS' -g '!**/.DS_Store' -g '!**/Thumbs.db' -g '!**/node_modules/**' --no-ignore --follow --no-config --no-ignore-global
+ - cwd: /home/kyle/dev
+ - Sibling clauses: {}
+2025-02-20 17:23:47.751 [debug] ExtHostSearch Search finished. Stats: {"cmdTime":49,"fileWalkTime":49,"directoriesWalked":0,"filesWalked":0,"cmdResultCount":0}
+2025-02-20 17:23:47.751 [debug] Ext host file search time: 49ms
+2025-02-20 17:23:47.751 [info] ExtensionService#_doActivateExtension quarto.quarto, startup: true, activationEvent: 'workspaceContains:**/*.{qmd,rmd},**/_quarto.{yml,yaml},**/_brand.{yml,yaml},**/_extension.{yml,yaml}'
+2025-02-20 17:23:48.074 [debug] ExtHostSearch Search finished. Stats: {"cmdTime":336,"fileWalkTime":336,"directoriesWalked":0,"filesWalked":0,"cmdResultCount":38}
+2025-02-20 17:23:48.074 [debug] Ext host file search time: 336ms
+2025-02-20 17:23:48.080 [warning] Could not identify extension for 'positron' require call from file:///usr/share/positron/resources/app/out/bootstrap-fork.js. These are the extension path mappings: 
+	file:///home/kyle/.positron/extensions/ms-python.debugpy-2025.0.1-linux-x64 -> ms-python.debugpy
+	file:///home/kyle/.positron/extensions/ms-toolsai.jupyter-2024.11.0-universal -> ms-toolsai.jupyter
+	file:///home/kyle/.positron/extensions/ms-toolsai.jupyter-renderers-1.1.0-universal -> ms-toolsai.jupyter-renderers
+	file:///home/kyle/.positron/extensions/ms-vscode.js-debug-1.97.1-universal -> ms-vscode.js-debug
+	file:///home/kyle/.positron/extensions/ms-vscode.live-server-0.4.15-universal -> ms-vscode.live-server
+	file:///home/kyle/.positron/extensions/posit.shinyuieditor-0.5.0-universal -> posit.shinyuieditor
+	file:///home/kyle/.positron/extensions/ritwickdey.liveserver-5.7.9-universal -> ritwickdey.LiveServer
+	file:///home/kyle/.positron/extensions/vscode-icons-team.vscode-icons-12.11.0-universal -> vscode-icons-team.vscode-icons
+	file:///usr/share/positron/resources/app/extensions/configuration-editing -> vscode.configuration-editing
+	file:///usr/share/positron/resources/app/extensions/css-language-features -> vscode.css-language-features
+	file:///usr/share/positron/resources/app/extensions/debug-auto-launch -> vscode.debug-auto-launch
+	file:///usr/share/positron/resources/app/extensions/debug-server-ready -> vscode.debug-server-ready
+	file:///usr/share/positron/resources/app/extensions/emmet -> vscode.emmet
+	file:///usr/share/positron/resources/app/extensions/extension-editing -> vscode.extension-editing
+	file:///usr/share/positron/resources/app/extensions/git -> vscode.git
+	file:///usr/share/positron/resources/app/extensions/git-base -> vscode.git-base
+	file:///usr/share/positron/resources/app/extensions/github -> vscode.github
+	file:///usr/share/positron/resources/app/extensions/github-authentication -> vscode.github-authentication
+	file:///usr/share/positron/resources/app/extensions/grunt -> vscode.grunt
+	file:///usr/share/positron/resources/app/extensions/gulp -> vscode.gulp
+	file:///usr/share/positron/resources/app/extensions/html-language-features -> vscode.html-language-features
+	file:///usr/share/positron/resources/app/extensions/ipynb -> vscode.ipynb
+	file:///usr/share/positron/resources/app/extensions/jake -> vscode.jake
+	file:///usr/share/positron/resources/app/extensions/json-language-features -> vscode.json-language-features
+	file:///usr/share/positron/resources/app/extensions/jupyter-adapter -> positron.jupyter-adapter
+	file:///usr/share/positron/resources/app/extensions/markdown-language-features -> vscode.markdown-language-features
+	file:///usr/share/positron/resources/app/extensions/markdown-math -> vscode.markdown-math
+	file:///usr/share/positron/resources/app/extensions/media-preview -> vscode.media-preview
+	file:///usr/share/positron/resources/app/extensions/merge-conflict -> vscode.merge-conflict
+	file:///usr/share/positron/resources/app/extensions/microsoft-authentication -> vscode.microsoft-authentication
+	file:///usr/share/positron/resources/app/extensions/ms-pyright.pyright -> ms-pyright.pyright
+	file:///usr/share/positron/resources/app/extensions/ms-python.black-formatter -> ms-python.black-formatter
+	file:///usr/share/positron/resources/app/extensions/ms-toolsai.vscode-jupyter-cell-tags -> ms-toolsai.vscode-jupyter-cell-tags
+	file:///usr/share/positron/resources/app/extensions/ms-toolsai.vscode-jupyter-slideshow -> ms-toolsai.vscode-jupyter-slideshow
+	file:///usr/share/positron/resources/app/extensions/ms-vscode.js-debug-companion -> ms-vscode.js-debug-companion
+	file:///usr/share/positron/resources/app/extensions/ms-vscode.vscode-js-profile-table -> ms-vscode.vscode-js-profile-table
+	file:///usr/share/positron/resources/app/extensions/npm -> vscode.npm
+	file:///usr/share/positron/resources/app/extensions/open-remote-ssh -> jeanp413.open-remote-ssh
+	file:///usr/share/positron/resources/app/extensions/php-language-features -> vscode.php-language-features
+	file:///usr/share/positron/resources/app/extensions/positron-code-cells -> positron.positron-code-cells
+	file:///usr/share/positron/resources/app/extensions/positron-connections -> positron.positron-connections
+	file:///usr/share/positron/resources/app/extensions/positron-duckdb -> positron.positron-duckdb
+	file:///usr/share/positron/resources/app/extensions/positron-notebook-controllers -> positron.positron-notebook-controllers
+	file:///usr/share/positron/resources/app/extensions/positron-notebooks -> positron.positron-notebooks-helpers
+	file:///usr/share/positron/resources/app/extensions/positron-proxy -> positron.positron-proxy
+	file:///usr/share/positron/resources/app/extensions/positron-python -> ms-python.python
+	file:///usr/share/positron/resources/app/extensions/positron-r -> positron.positron-r
+	file:///usr/share/positron/resources/app/extensions/positron-reticulate -> positron.positron-reticulate
+	file:///usr/share/positron/resources/app/extensions/positron-rstudio-keymap -> positron.positron-rstudio-keymap
+	file:///usr/share/positron/resources/app/extensions/positron-run-app -> positron.positron-run-app
+	file:///usr/share/positron/resources/app/extensions/positron-supervisor -> positron.positron-supervisor
+	file:///usr/share/positron/resources/app/extensions/positron-viewer -> positron.positron-viewer
+	file:///usr/share/positron/resources/app/extensions/quarto.quarto -> quarto.quarto
+	file:///usr/share/positron/resources/app/extensions/references-view -> vscode.references-view
+	file:///usr/share/positron/resources/app/extensions/search-result -> vscode.search-result
+	file:///usr/share/positron/resources/app/extensions/simple-browser -> vscode.simple-browser
+	file:///usr/share/positron/resources/app/extensions/terminal-suggest -> vscode.terminal-suggest
+	file:///usr/share/positron/resources/app/extensions/tunnel-forwarding -> vscode.tunnel-forwarding
+	file:///usr/share/positron/resources/app/extensions/typescript-language-features -> vscode.typescript-language-features
+
+2025-02-20 17:23:48.172 [debug] ProxyResolver#resolveProxy localhost http://localhost:52684/status DIRECT 
+2025-02-20 17:23:48.184 [debug] ExtHostSearch /usr/share/positron/resources/app/node_modules/@vscode/ripgrep/bin/rg --files --hidden --case-sensitive --no-require-git -g '/_extensions/*/*.lua' -g '!**/.git' -g '!**/.svn' -g '!**/.hg' -g '!**/CVS' -g '!**/.DS_Store' -g '!**/Thumbs.db' -g '!**/{node_modules,renv,packrat,venv,env}/**' --no-ignore --follow --no-config --no-ignore-global
+ - cwd: /home/kyle/dev
+ - Sibling clauses: {}
+2025-02-20 17:23:48.217 [debug] ExtHostSearch Search finished. Stats: {"cmdTime":39,"fileWalkTime":39,"directoriesWalked":0,"filesWalked":0,"cmdResultCount":0}
+2025-02-20 17:23:48.217 [debug] Ext host file search time: 40ms
+2025-02-20 17:23:48.288 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onLanguage'
+2025-02-20 17:23:48.543 [info] ExtensionService#_doActivateExtension vscode.github-authentication, startup: false, activationEvent: 'onAuthenticationRequest:github'
+2025-02-20 17:23:48.727 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[plaintext]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[clojure]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[coffeescript]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[csharp]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[css]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[scss]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[less]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[dockerfile]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[fsharp]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[git-commit]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[git-rebase]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[go]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[html]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[handlebars]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[javascript]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[json]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[jsonc]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[julia]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[makefile]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[markdown]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[r]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[jade]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[python]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[latex]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[dot]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[mermaid]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[lua]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[yaml]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[quarto]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[ruby]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[search-result]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.730 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[shellscript]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.731 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[dockercompose]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.871 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[plaintext]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.872 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[clojure]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[coffeescript]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[csharp]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[css]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[scss]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[less]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[dockerfile]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[fsharp]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[git-commit]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[git-rebase]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[go]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[html]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[handlebars]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[javascript]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[json]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[jsonc]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[julia]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[makefile]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[markdown]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[r]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[jade]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[python]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[latex]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[dot]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[mermaid]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[lua]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[yaml]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[quarto]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[ruby]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[search-result]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[shellscript]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:48.873 [warning] [quarto.quarto] Accessing a resource scoped configuration without providing a resource is not expected. To get the effective value for '[dockercompose]', provide the URI of a resource or 'null' for any resource.
+2025-02-20 17:23:49.068 [debug] ProxyResolver#resolveProxy localhost http://localhost:52684/sessions DIRECT 
+2025-02-20 17:23:49.109 [debug] ProxyResolver#resolveProxy localhost http://localhost:52684/sessions/r-63241919/start DIRECT 
+2025-02-20 17:23:49.253 [info] Eager extensions activated
+2025-02-20 17:23:49.263 [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.266 [info] ExtensionService#_doActivateExtension positron.jupyter-adapter, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.275 [error] Activating extension positron.jupyter-adapter failed due to an error:
+2025-02-20 17:23:49.275 [error] Error: No native build was found for platform=linux arch=x64 runtime=electron abi=128 uv=1 libc=glibc node=20.18.1 electron=32.2.6 webpack=true
+    loaded from: /usr/share/positron/resources/app/extensions/jupyter-adapter
+
+	at g.path (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:2621)
+	at g (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:728)
+	at 790 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:30452)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at 809 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:23107)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at 731 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:8019)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at 819 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:30715)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at 117 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:55728)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at 553 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:32445)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at 820 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:60886)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at 533 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:30838)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at 256 (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:80650)
+	at s (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81855)
+	at /usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:81895
+	at Object.<anonymous> (/usr/share/positron/resources/app/extensions/jupyter-adapter/dist/extension.js:1:82000)
+	at Module._compile (node:internal/modules/cjs/loader:1484:14)
+	at Module._extensions..js (node:internal/modules/cjs/loader:1564:10)
+	at Module.load (node:internal/modules/cjs/loader:1295:32)
+	at Module._load (node:internal/modules/cjs/loader:1111:12)
+	at c._load (node:electron/js2c/node_init:2:16955)
+	at Module._load (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:87981:25)
+	at Function.load (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:85082:29)
+	at Function.load [as _load] (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:81194:25)
+	at Module.require (node:internal/modules/cjs/loader:1318:19)
+	at require (node:internal/modules/helpers:179:18)
+	at $8Mc.xb (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:85150:11)
+	at async Promise.all (index 0)
+2025-02-20 17:23:49.275 [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.295 [info] ExtensionService#_doActivateExtension positron.positron-code-cells, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.300 [info] ExtensionService#_doActivateExtension positron.positron-connections, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.302 [info] ExtensionService#_doActivateExtension positron.positron-duckdb, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.362 [info] ExtensionService#_doActivateExtension positron.positron-notebook-controllers, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.366 [info] ExtensionService#_doActivateExtension positron.positron-notebooks-helpers, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.367 [info] ExtensionService#_doActivateExtension positron.positron-proxy, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.432 [info] ExtensionService#_doActivateExtension positron.positron-rstudio-keymap, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.432 [info] ExtensionService#_doActivateExtension positron.positron-run-app, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.434 [info] ExtensionService#_doActivateExtension ritwickdey.LiveServer, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:49.438 [info] ExtensionService#_doActivateExtension vscode-icons-team.vscode-icons, startup: false, activationEvent: 'onStartupFinished'
+2025-02-20 17:23:50.582 [debug] ExtHostSearch /usr/share/positron/resources/app/node_modules/@vscode/ripgrep/bin/rg --files --hidden --case-sensitive --no-require-git -g '**/package.json' -g '!**/.git' -g '!**/.svn' -g '!**/.hg' -g '!**/CVS' -g '!**/.DS_Store' -g '!**/Thumbs.db' -g '!**/node_modules/**' --no-ignore --follow --no-config --no-ignore-global
+ - cwd: /home/kyle/dev
+ - Sibling clauses: {}
+2025-02-20 17:23:50.589 [debug] ProxyResolver#resolveProxy localhost http://localhost:52684/sessions/r-63241919/channels DIRECT 
+2025-02-20 17:23:50.590 [debug] ExtHostSearch Search finished. Stats: {"cmdTime":19,"fileWalkTime":19,"directoriesWalked":0,"filesWalked":0,"cmdResultCount":0}
+2025-02-20 17:23:50.590 [debug] Ext host file search time: 19ms
+2025-02-20 17:23:50.665 [info] Extension host terminating: renderer closed the MessagePort
+2025-02-20 17:23:50.685 [error] Canceled: Canceled
+	at new $DAc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15203:14)
+	at _$GAc.U (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15589:14)
+	at target.<computed> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15405:25)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44147:42)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at registration.registerCommand.description (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44080:41)
+	at $OW2.h (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44175:29)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44120:19)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at Object.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:78645:32)
+	at UniqueContainer.L [as value] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:975601)
+	at $ze.B (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3278:16)
+	at $ze.C (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3287:12)
+	at $ze.fire (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3307:12)
+	at Object.p [as dispose] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:997158)
+	at /usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003280
+	at Array.forEach (<anonymous>)
+	at b.dispose (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003266)
+	at $MT2.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31938:24)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $MT2.<anonymous> (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:978080)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $Xc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2171:13)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47683:9
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2197:7
+	at Object.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:918:19)
+	at $8Mc.eb (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47536:28)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47399:21
+	at Array.map (<anonymous>)
+	at $8Mc.$ (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47398:41)
+	at $8Mc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47418:40)
+	at _$xMc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:48295:12)
+	at onTerminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88246:47)
+	at MessagePortMain.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88024:11)
+	at MessagePortMain.emit (node:events:518:28)
+	at MessagePortMain._internalPort.emit (node:electron/js2c/utility_init:2:2949) setContext undefined
+2025-02-20 17:23:50.685 [error] Canceled: Canceled
+	at new $DAc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15203:14)
+	at _$GAc.U (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15589:14)
+	at target.<computed> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15405:25)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44147:42)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at registration.registerCommand.description (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44080:41)
+	at $OW2.h (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44175:29)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44120:19)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at Object.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:78645:32)
+	at UniqueContainer.L [as value] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:975601)
+	at $ze.B (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3278:16)
+	at $ze.C (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3287:12)
+	at $ze.fire (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3307:12)
+	at Object.p [as dispose] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:997158)
+	at /usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003280
+	at Array.forEach (<anonymous>)
+	at b.dispose (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003266)
+	at $MT2.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31938:24)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $MT2.<anonymous> (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:978080)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $Xc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2171:13)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47683:9
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2197:7
+	at Object.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:918:19)
+	at $8Mc.eb (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47536:28)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47399:21
+	at Array.map (<anonymous>)
+	at $8Mc.$ (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47398:41)
+	at $8Mc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47418:40)
+	at _$xMc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:48295:12)
+	at onTerminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88246:47)
+	at MessagePortMain.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88024:11)
+	at MessagePortMain.emit (node:events:518:28)
+	at MessagePortMain._internalPort.emit (node:electron/js2c/utility_init:2:2949) setContext undefined
+2025-02-20 17:23:50.686 [error] Canceled: Canceled
+	at new $DAc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15203:14)
+	at _$GAc.U (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15589:14)
+	at target.<computed> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15405:25)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44147:42)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at registration.registerCommand.description (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44080:41)
+	at $OW2.h (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44175:29)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44120:19)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at Object.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:78645:32)
+	at UniqueContainer.L [as value] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:975601)
+	at $ze.B (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3278:16)
+	at $ze.C (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3287:12)
+	at $ze.fire (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3307:12)
+	at Object.p [as dispose] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:997158)
+	at /usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003280
+	at Array.forEach (<anonymous>)
+	at b.dispose (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003266)
+	at $MT2.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31938:24)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $MT2.<anonymous> (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:978080)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $Xc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2171:13)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47683:9
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2197:7
+	at Object.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:918:19)
+	at $8Mc.eb (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47536:28)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47399:21
+	at Array.map (<anonymous>)
+	at $8Mc.$ (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47398:41)
+	at $8Mc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47418:40)
+	at _$xMc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:48295:12)
+	at onTerminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88246:47)
+	at MessagePortMain.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88024:11)
+	at MessagePortMain.emit (node:events:518:28)
+	at MessagePortMain._internalPort.emit (node:electron/js2c/utility_init:2:2949) setContext undefined
+2025-02-20 17:23:50.686 [error] Canceled: Canceled
+	at new $DAc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15203:14)
+	at _$GAc.U (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15589:14)
+	at target.<computed> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15405:25)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44147:42)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at registration.registerCommand.description (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44080:41)
+	at $OW2.h (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44175:29)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44120:19)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at Object.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:78645:32)
+	at UniqueContainer.L [as value] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:975601)
+	at $ze.B (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3278:16)
+	at $ze.C (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3287:12)
+	at $ze.fire (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3307:12)
+	at Object.p [as dispose] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:997158)
+	at /usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003280
+	at Array.forEach (<anonymous>)
+	at b.dispose (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003266)
+	at $MT2.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31938:24)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $MT2.<anonymous> (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:978080)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $Xc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2171:13)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47683:9
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2197:7
+	at Object.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:918:19)
+	at $8Mc.eb (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47536:28)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47399:21
+	at Array.map (<anonymous>)
+	at $8Mc.$ (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47398:41)
+	at $8Mc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47418:40)
+	at _$xMc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:48295:12)
+	at onTerminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88246:47)
+	at MessagePortMain.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88024:11)
+	at MessagePortMain.emit (node:events:518:28)
+	at MessagePortMain._internalPort.emit (node:electron/js2c/utility_init:2:2949) setContext undefined
+2025-02-20 17:23:50.687 [error] Canceled: Canceled
+	at new $DAc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15203:14)
+	at _$GAc.U (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15589:14)
+	at target.<computed> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:15405:25)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44147:42)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at registration.registerCommand.description (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44080:41)
+	at $OW2.h (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44175:29)
+	at $OW2.g (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44120:19)
+	at $OW2.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:44115:17)
+	at Object.executeCommand (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:78645:32)
+	at set hasGitHubRepositories (/usr/share/positron/resources/app/extensions/github/dist/extension.js:2:328633)
+	at /usr/share/positron/resources/app/extensions/github/dist/extension.js:2:329592
+	at UniqueContainer.value (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:1088462)
+	at $ze.B (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3278:16)
+	at $ze.C (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3287:12)
+	at $ze.fire (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:3307:12)
+	at Object.p [as dispose] (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:997158)
+	at /usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003280
+	at Array.forEach (<anonymous>)
+	at b.dispose (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:1003266)
+	at $MT2.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31938:24)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $MT2.<anonymous> (/usr/share/positron/resources/app/extensions/git/dist/main.js:2:978080)
+	at $MT2.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:31951:26)
+	at $Xc (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2171:13)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47683:9
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:2197:7
+	at Object.dispose (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:918:19)
+	at $8Mc.eb (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47536:28)
+	at file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47399:21
+	at Array.map (<anonymous>)
+	at $8Mc.$ (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47398:41)
+	at $8Mc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:47418:40)
+	at _$xMc.terminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:48295:12)
+	at onTerminate (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88246:47)
+	at MessagePortMain.<anonymous> (file:///usr/share/positron/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:88024:11)
+	at MessagePortMain.emit (node:events:518:28)
+	at MessagePortMain._internalPort.emit (node:electron/js2c/utility_init:2:2949) setContext undefined
+2025-02-20 17:23:50.689 [info] Extension host with pid 47968 exiting with code 0

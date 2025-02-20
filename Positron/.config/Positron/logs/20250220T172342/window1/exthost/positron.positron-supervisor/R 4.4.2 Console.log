@@ -1,0 +1,134 @@
+2025-02-20 17:23:49.107 [info] R 4.4.2 session 'r-63241919' created in /home/kyle/dev with command:
+2025-02-20 17:23:49.107 [info] /usr/share/positron/resources/app/extensions/positron-r/resources/ark/ark --connection_file {connection_file} --log /tmp/kernel-bj1FuY/kernel.log --startup-file /usr/share/positron/resources/app/extensions/positron-r/resources/scripts/startup.R --session-mode console -- --interactive --no-restore-data
+2025-02-20 17:23:49.108 [debug] State: uninitialized => starting (invoking start API)
+2025-02-20 17:23:49.898 [debug] No UI comm open yet; queueing request 'setConsoleWidth'
+2025-02-20 17:23:50.589 [debug] Connecting to websocket: ws://localhost:52684/sessions/r-63241919/channels
+2025-02-20 17:23:50.597 [debug] Connected to websocket ws://localhost:52684/sessions/r-63241919/channels.
+2025-02-20 17:23:50.597 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"starting","reason":"start API called"}}
+2025-02-20 17:23:50.597 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"ready","reason":"initial heartbeat received"}}
+2025-02-20 17:23:50.597 [info] Kernel is ready.
+2025-02-20 17:23:50.597 [debug] State: starting => ready (initial heartbeat received)
+2025-02-20 17:23:50.597 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"kernel_info_request"}}
+2025-02-20 17:23:50.597 [debug] State: ready => idle (kernel_info_request)
+2025-02-20 17:23:50.597 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.597 [info] Kernel is ready.
+2025-02-20 17:23:50.597 [debug] State: idle => ready (new session)
+2025-02-20 17:23:50.598 [info] Starting Positron LSP server on port 44902
+2025-02-20 17:23:50.598 [info] Starting LSP server positron-lsp-r-93758a93 for 127.0.0.1:44902
+2025-02-20 17:23:50.598 [debug] >>> SEND comm_open [shell]: {"target_name":"positron.lsp","comm_id":"positron-lsp-r-93758a93","data":{"client_address":"127.0.0.1:44902"}}
+2025-02-20 17:23:50.598 [debug] Starting DAP server positron-dap-r-2ddecd22 for 127.0.0.1:65059
+2025-02-20 17:23:50.599 [debug] >>> SEND comm_open [shell]: {"target_name":"positron.dap","comm_id":"positron-dap-r-2ddecd22","data":{"client_address":"127.0.0.1:65059"}}
+2025-02-20 17:23:50.599 [debug] >>> SEND comm_open [shell]: {"target_name":"positron.variables","comm_id":"positron-variables-r-0-a9b3a930","data":{}}
+2025-02-20 17:23:50.600 [debug] >>> SEND comm_open [shell]: {"target_name":"positron.ui","comm_id":"positron-ui-r-1-b84b6085","data":{}}
+2025-02-20 17:23:50.601 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_open"}}
+2025-02-20 17:23:50.601 [debug] State: ready => busy (comm_open)
+2025-02-20 17:23:50.601 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.601 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_open"}}
+2025-02-20 17:23:50.601 [debug] State: busy => idle (comm_open)
+2025-02-20 17:23:50.601 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.601 [debug] <<< RECV comm_msg [iopub]: {"comm_id":"positron-lsp-r-93758a93","data":{"content":{},"msg_type":"server_started"}}
+2025-02-20 17:23:50.601 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_open"}}
+2025-02-20 17:23:50.601 [debug] State: idle => busy (comm_open)
+2025-02-20 17:23:50.601 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.601 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_open"}}
+2025-02-20 17:23:50.601 [debug] State: busy => idle (comm_open)
+2025-02-20 17:23:50.601 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.601 [debug] <<< RECV comm_msg [iopub]: {"comm_id":"positron-dap-r-2ddecd22","data":{"content":{},"msg_type":"server_started"}}
+2025-02-20 17:23:50.601 [info] Unknown DAP command: server_started
+2025-02-20 17:23:50.609 [debug] Sending queued UI comm request 'setConsoleWidth' (1 of 1)
+2025-02-20 17:23:50.611 [debug] >>> SEND comm_msg [shell]: {"comm_id":"positron-ui-r-1-b84b6085","data":{"jsonrpc":"2.0","method":"call_method","params":{"method":"setConsoleWidth","params":[55]}}}
+2025-02-20 17:23:50.612 [debug] >>> SEND comm_info_request [shell]: {"target_name":"positron.help"}
+2025-02-20 17:23:50.612 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_open"}}
+2025-02-20 17:23:50.612 [debug] State: idle => busy (comm_open)
+2025-02-20 17:23:50.612 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.619 [debug] >>> SEND comm_info_request [shell]: {"target_name":"positron.help"}
+2025-02-20 17:23:50.619 [debug] >>> SEND comm_info_request [shell]: {"target_name":"positron.plot"}
+2025-02-20 17:23:50.620 [debug] >>> SEND comm_info_request [shell]: {"target_name":""}
+2025-02-20 17:23:50.622 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_open"}}
+2025-02-20 17:23:50.622 [debug] State: busy => idle (comm_open)
+2025-02-20 17:23:50.636 [info] Set initial console width to 55
+2025-02-20 17:23:50.636 [debug] >>> SEND comm_msg [shell]: {"comm_id":"positron-ui-r-1-b84b6085","data":{"jsonrpc":"2.0","method":"call_method","params":{"method":"setConsoleWidth","params":[55]}}}
+2025-02-20 17:23:50.637 [info] Starting Positron LSP server on port 56413
+2025-02-20 17:23:50.637 [info] Starting LSP server positron-lsp-r-50f1d0ee for 127.0.0.1:56413
+2025-02-20 17:23:50.637 [debug] >>> SEND comm_open [shell]: {"target_name":"positron.lsp","comm_id":"positron-lsp-r-50f1d0ee","data":{"client_address":"127.0.0.1:56413"}}
+2025-02-20 17:23:50.638 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.638 [debug] <<< RECV comm_info_reply [shell]: {"comms":{},"status":"ok"}
+2025-02-20 17:23:50.638 [debug] <<< RECV comm_info_reply [shell]: {"comms":{},"status":"ok"}
+2025-02-20 17:23:50.638 [debug] <<< RECV comm_info_reply [shell]: {"comms":{},"status":"ok"}
+2025-02-20 17:23:50.638 [debug] <<< RECV comm_info_reply [shell]: {"comms":{"positron-dap-r-2ddecd22":{"target_name":"positron.dap"},"positron-lsp-r-93758a93":{"target_name":"positron.lsp"},"positron-ui-r-1-b84b6085":{"target_name":"positron.ui"},"positron-variables-r-0-a9b3a930":{"target_name":"positron.variables"}},"status":"ok"}
+2025-02-20 17:23:50.638 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_open"}}
+2025-02-20 17:23:50.638 [debug] State: idle => busy (comm_open)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_open"}}
+2025-02-20 17:23:50.639 [debug] State: busy => idle (comm_open)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_msg"}}
+2025-02-20 17:23:50.639 [debug] State: idle => busy (comm_msg)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_msg"}}
+2025-02-20 17:23:50.639 [debug] State: busy => idle (comm_msg)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_info_request"}}
+2025-02-20 17:23:50.639 [debug] State: idle => busy (comm_info_request)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_info_request"}}
+2025-02-20 17:23:50.639 [debug] State: busy => idle (comm_info_request)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_info_request"}}
+2025-02-20 17:23:50.639 [debug] State: idle => busy (comm_info_request)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_info_request"}}
+2025-02-20 17:23:50.639 [debug] State: busy => idle (comm_info_request)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_info_request"}}
+2025-02-20 17:23:50.639 [debug] State: idle => busy (comm_info_request)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_info_request"}}
+2025-02-20 17:23:50.639 [debug] State: busy => idle (comm_info_request)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_info_request"}}
+2025-02-20 17:23:50.639 [debug] State: idle => busy (comm_info_request)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.639 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_info_request"}}
+2025-02-20 17:23:50.639 [debug] State: busy => idle (comm_info_request)
+2025-02-20 17:23:50.639 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.639 [debug] Starting DAP server positron-dap-r-566fead6 for 127.0.0.1:59180
+2025-02-20 17:23:50.639 [debug] >>> SEND comm_open [shell]: {"target_name":"positron.dap","comm_id":"positron-dap-r-566fead6","data":{"client_address":"127.0.0.1:59180"}}
+2025-02-20 17:23:50.640 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_msg"}}
+2025-02-20 17:23:50.640 [debug] State: idle => busy (comm_msg)
+2025-02-20 17:23:50.640 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.640 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_msg"}}
+2025-02-20 17:23:50.640 [debug] State: busy => idle (comm_msg)
+2025-02-20 17:23:50.640 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.640 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_open"}}
+2025-02-20 17:23:50.640 [debug] State: idle => busy (comm_open)
+2025-02-20 17:23:50.640 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.640 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_open"}}
+2025-02-20 17:23:50.640 [debug] State: busy => idle (comm_open)
+2025-02-20 17:23:50.640 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.640 [debug] <<< RECV comm_msg [iopub]: {"comm_id":"positron-lsp-r-50f1d0ee","data":{"content":{},"msg_type":"server_started"}}
+2025-02-20 17:23:50.640 [debug] <<< RECV comm_msg [iopub]: {"comm_id":"positron-variables-r-0-a9b3a930","data":{"method":"refresh","params":{"length":0,"variables":[],"version":1}}}
+2025-02-20 17:23:50.646 [debug] >>> SEND comm_open [shell]: {"target_name":"positron.help","comm_id":"positron-help-r-2-df7ae19d","data":{}}
+2025-02-20 17:23:50.647 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_open"}}
+2025-02-20 17:23:50.647 [debug] State: idle => busy (comm_open)
+2025-02-20 17:23:50.647 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.647 [debug] <<< RECV comm_msg [iopub]: {"comm_id":"positron-dap-r-566fead6","data":{"content":{},"msg_type":"server_started"}}
+2025-02-20 17:23:50.647 [info] Unknown DAP command: server_started
+2025-02-20 17:23:50.647 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_open"}}
+2025-02-20 17:23:50.647 [debug] State: busy => idle (comm_open)
+2025-02-20 17:23:50.647 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.647 [debug] >>> SEND comm_open [shell]: {"target_name":"positron.help","comm_id":"positron-help-r-3-3b2af6b8","data":{}}
+2025-02-20 17:23:50.647 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_open"}}
+2025-02-20 17:23:50.648 [debug] State: idle => busy (comm_open)
+2025-02-20 17:23:50.648 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.654 [info] Set initial console width to 55
+2025-02-20 17:23:50.654 [debug] >>> SEND comm_msg [shell]: {"comm_id":"positron-ui-r-1-b84b6085","data":{"jsonrpc":"2.0","method":"call_method","params":{"method":"setConsoleWidth","params":[55]}}}
+2025-02-20 17:23:50.688 [debug] <<< RECV comm_msg [iopub]: {"comm_id":"positron-ui-r-1-b84b6085","data":{"method":"CallMethodReply","result":80}}
+2025-02-20 17:23:50.688 [debug] <<< RECV comm_msg [iopub]: {"comm_id":"positron-ui-r-1-b84b6085","data":{"method":"prompt_state","params":{"continuation_prompt":"+ ","input_prompt":">> "}}}
+2025-02-20 17:23:50.688 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"idle","reason":"comm_open"}}
+2025-02-20 17:23:50.688 [debug] State: busy => idle (comm_open)
+2025-02-20 17:23:50.688 [debug] <<< RECV status [iopub]: {"execution_state":"idle"}
+2025-02-20 17:23:50.688 [debug] <<< RECV [kernel]: {"kind":"kernel","status":{"status":"busy","reason":"comm_open"}}
+2025-02-20 17:23:50.688 [debug] State: idle => busy (comm_open)
+2025-02-20 17:23:50.688 [debug] <<< RECV status [iopub]: {"execution_state":"busy"}
+2025-02-20 17:23:50.688 [info] Set console width from 80 to 55

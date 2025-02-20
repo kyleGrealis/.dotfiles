@@ -1,0 +1,160 @@
+// Place your key bindings in this file to override the defaults
+[
+    // custom bindings
+    {
+      "key": "ctrl+shift+m",
+      "command": "type",
+      "args": {
+        "text": " |> "
+      },
+      "when": "editorTextFocus"
+    },
+  
+    {
+      "key": "alt+shift+.",
+      "command": "type",
+      "args": {
+        "text": " |> "
+      },
+      "when": "editorTextFocus"
+    },
+  
+    {
+      "key": "alt+-",
+      "command": "type",
+      "args": {
+        "text": " <- "
+      },
+      "when": "editorTextFocus"
+    },
+  
+  
+    // overwritten defaults
+    {
+      "key": "ctrl+d",
+      "command": "editor.action.deleteLines",
+      "when": "textInputFocus && !editorReadonly"
+    },
+    {
+      "key": "ctrl+shift+k",
+      "command": "-editor.action.deleteLines",
+      "when": "textInputFocus && !editorReadonly"
+    },
+    {
+      "key": "ctrl+d",
+      "command": "-editor.action.addSelectionToNextFindMatch",
+      "when": "editorFocus"
+    },
+    {
+      "key": "ctrl+shift+d",
+      "command": "editor.action.copyLinesDownAction",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "shift+alt+down",
+      "command": "-editor.action.copyLinesDownAction",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "ctrl+shift+d",
+      "command": "-workbench.view.debug",
+      "when": "viewContainer.workbench.view.debug.enabled"
+    },
+    {
+      "key": "ctrl+alt+i",
+      "command": "-workbench.action.chat.open",
+      "when": "hasChatProvider"
+    },
+    {
+      "key": "ctrl+alt+i",
+      "command": "quarto.insertCodeCell",
+      "when": "editorTextFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'quarto'"
+    },
+    {
+      "key": "ctrl+shift+i",
+      "command": "-quarto.insertCodeCell",
+      "when": "editorTextFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'quarto'"
+    },
+    {
+      "key": "alt+backspace",
+      "command": "deleteAllLeft"
+    },
+    {
+      "key": "ctrl+shift+/",
+      "command": "github.copilot.acceptCursorPanelSolution",
+      "when": "github.copilot.activated && github.copilot.panelVisible"
+    },
+    {
+      "key": "ctrl+/",
+      "command": "-github.copilot.acceptCursorPanelSolution",
+      "when": "github.copilot.activated && github.copilot.panelVisible"
+    },
+    {
+      "key": "alt+left",
+      "command": "-workbench.action.navigateBack",
+      "when": "canNavigateBack"
+    },
+    {
+      "key": "alt+left",
+      "command": "cursorLineStart"
+    },
+    {
+      "key": "alt+right",
+      "command": "cursorLineEnd"
+    },
+    {
+      "key": "shift+alt+left",
+      "command": "cursorLineStartSelect"
+    },
+    {
+      "key": "shift+alt+right",
+      "command": "cursorLineEndSelect"
+    },
+    {
+      "key": "ctrl+alt+l",
+      "command": "editor.action.insertSnippet",
+      "args": {
+          "snippet": "::: {.callout}\n$0\n:::"
+      }
+    },
+    {
+      "key": "ctrl+alt+n ctrl+alt+w",
+      "command": "workbench.action.newWindow"
+    },
+    {
+      "key": "ctrl+shift+n",
+      "command": "-workbench.action.newWindow"
+    },
+    {
+      "key": "alt+2",
+      "command": "workbench.action.focusSecondEditorGroup"
+    },
+    {
+      "key": "ctrl+2",
+      "command": "-workbench.action.focusSecondEditorGroup"
+    },
+    {
+      "key": "ctrl+shift+3",
+      "command": "continue.focusContinueInput"
+    },
+    {
+      "key": "ctrl+l",
+      "command": "-continue.focusContinueInput"
+    },
+    {
+      "key": "ctrl+shift+l",
+      "command": "continue.focusContinueInputWithoutClear"
+    },
+    {
+      "key": "ctrl+shift+l",
+      "command": "-continue.focusContinueInputWithoutClear"
+    },
+    {
+      "key": "shift+alt+enter",
+      "command": "continue.acceptDiff"
+    },
+    {
+      "key": "ctrl+shift+enter",
+      "command": "-continue.acceptDiff"
+    }
+  ]

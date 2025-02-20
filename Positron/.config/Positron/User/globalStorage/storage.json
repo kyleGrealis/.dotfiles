@@ -1,0 +1,63 @@
+{
+    "telemetry.sqmId": "",
+    "telemetry.machineId": "8f351543ad001a6a7582ebc0acc3abc264e6774827c5e370627db628638823e8",
+    "telemetry.devDeviceId": "b7d61a48-66b2-4fc5-a078-105009351dfd",
+    "backupWorkspaces": {
+        "workspaces": [],
+        "folders": [
+            {
+                "folderUri": "file:///home/kyle/dev"
+            }
+        ],
+        "emptyWindows": []
+    },
+    "windowControlHeight": 35,
+    "profileAssociations": {
+        "workspaces": {
+            "file:///home/kyle/dev": "__default__profile__"
+        },
+        "emptyWindows": {}
+    },
+    "windowsState": {
+        "lastActiveWindow": {
+            "folder": "file:///home/kyle/dev",
+            "backupPath": "/home/kyle/.config/Positron/Backups/f53251a5369b4d411c07762ac3ff9cb1",
+            "uiState": {
+                "mode": 0,
+                "x": 323,
+                "y": 150,
+                "width": 1514,
+                "height": 900
+            }
+        },
+        "openedWindows": []
+    },
+    "theme": "vs-dark",
+    "themeBackground": "#2e3440",
+    "windowSplash": {
+        "zoomLevel": 0.8,
+        "baseTheme": "vs-dark",
+        "colorInfo": {
+            "foreground": "#d8dee9",
+            "background": "#2e3440",
+            "editorBackground": "#2e3440",
+            "titleBarBackground": "#2e3440",
+            "titleBarBorder": "rgba(46, 52, 64, 0)",
+            "activityBarBackground": "#2e3440",
+            "sideBarBackground": "#2e3440",
+            "sideBarBorder": "#3b4252",
+            "statusBarBackground": "#6b7fa1",
+            "statusBarBorder": "rgba(59, 66, 82, 0)",
+            "statusBarNoFolderBackground": "#3b4252"
+        },
+        "layoutInfo": {
+            "sideBarSide": "left",
+            "editorPartMinWidth": 220,
+            "titleBarHeight": 30,
+            "activityBarWidth": 48,
+            "sideBarWidth": 236,
+            "statusBarHeight": 22,
+            "windowBorder": false
+        }
+    }
+}

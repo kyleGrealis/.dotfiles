@@ -1,0 +1,79 @@
+2025-02-20 17:23:47.557 [info] Starting Python Locator /usr/share/positron/resources/app/extensions/positron-python/python-env-tools/pet server
+2025-02-20 17:23:47.557 [debug] Env PATH: ["/usr/local/bin", "/usr/bin", "/bin", "/usr/local/games", "/usr/games", "/home/kyle/.local/bin"]
+2025-02-20 17:23:47.557 [debug] Setting cache directory to "/home/kyle/.config/Positron/User/globalStorage/ms-python.python/pythonLocator"
+2025-02-20 17:23:47.557 [debug] Configuring locators: Configuration { workspace_directories: Some(["/home/kyle/dev"]), executables: None, conda_executable: None, poetry_executable: Some("poetry"), environment_directories: Some([]), cache_directory: Some("/home/kyle/.config/Positron/User/globalStorage/ms-python.python/pythonLocator") }
+2025-02-20 17:23:47.557 [debug] Start refreshing environments, config: Configuration { workspace_directories: Some(["/home/kyle/dev"]), executables: None, conda_executable: None, poetry_executable: Some("poetry"), environment_directories: Some([]), cache_directory: Some("/home/kyle/.config/Positron/User/globalStorage/ms-python.python/pythonLocator") }
+2025-02-20 17:23:47.557 [debug] Searching for environments in global folders: ["/usr/local/bin", "/usr/bin", "/bin", "/usr/local/games", "/usr/games", "/etc", "/lib", "/lib/x86_64-linux-gnu", "/lib64", "/sbin", "/usr/include", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/usr/lib64", "/usr/libexec", "/usr/local", "/usr/local/etc", "/usr/local/lib", "/usr/local/sbin", "/usr/sbin", "/usr/share", "/opt"]
+2025-02-20 17:23:47.559 [debug] Searching for environments in global venv folders: []
+2025-02-20 17:23:47.560 [debug] Searching for environments in workspace folders: ["/home/kyle/dev"]
+2025-02-20 17:23:47.561 [debug] Searching using locator: PyEnv
+2025-02-20 17:23:47.562 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:47.563 [debug] PyEnv versions directory not found
+2025-02-20 17:23:47.566 [debug] Completed searching using locator: PyEnv in 125.441µs
+2025-02-20 17:23:47.573 [debug] Searching using locator: Poetry
+2025-02-20 17:23:47.589 [debug] Poetry exe not found
+2025-02-20 17:23:47.693 [debug] Poetry Manager None
+2025-02-20 17:23:47.715 [debug] Poetry cache (default): Some("/home/kyle/.cache/pypoetry")
+2025-02-20 17:23:47.737 [debug] Poetry config file => None, virtualenv.path => "/home/kyle/.cache/pypoetry/virtualenvs", cache_dir => Some("/home/kyle/.cache/pypoetry"), virtualenvs_in_project => None
+2025-02-20 17:23:47.750 [debug] pyproject.toml not found in any workspace directory
+2025-02-20 17:23:48.075 [debug] Completed searching using locator: Poetry in 124.921µs
+2025-02-20 17:23:48.164 [debug] Searching using locator: Pixi
+2025-02-20 17:23:48.186 [debug] Completed searching using locator: Pixi in 20.065µs
+2025-02-20 17:23:48.189 [debug] Searching using locator: PipEnv
+2025-02-20 17:23:48.208 [debug] Completed searching using locator: PipEnv in 15.37µs
+2025-02-20 17:23:48.216 [debug] Searching using locator: Conda
+2025-02-20 17:23:48.233 [debug] Searching using locator: VirtualEnvWrapper
+2025-02-20 17:23:48.245 [debug] Completed searching using locator: VirtualEnvWrapper in 14.681µs
+2025-02-20 17:23:48.286 [debug] No Conda environments in .condarc
+2025-02-20 17:23:48.307 [debug] Conda environments in known paths ["/bin", "/etc", "/lib", "/lib/x86_64-linux-gnu", "/lib64", "/opt", "/sbin", "/usr/bin", "/usr/games", "/usr/include", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/usr/lib64", "/usr/libexec", "/usr/local", "/usr/local/bin", "/usr/local/etc", "/usr/local/games", "/usr/local/lib", "/usr/local/sbin", "/usr/sbin", "/usr/share"]
+2025-02-20 17:23:48.329 [debug] Searching using locator: Homebrew
+2025-02-20 17:23:48.345 [debug] Completed searching using locator: Homebrew in 61.151µs
+2025-02-20 17:23:48.369 [debug] Searching using locator: LinuxGlobal
+2025-02-20 17:23:48.398 [debug] Searching using locator: VirtualEnv
+2025-02-20 17:23:48.415 [debug] Completed searching using locator: VirtualEnv in 18.034µs
+2025-02-20 17:23:48.442 [debug] Searching using locator: Venv
+2025-02-20 17:23:48.468 [debug] Completed searching using locator: Venv in 13.439µs
+2025-02-20 17:23:48.500 [debug] Using cache from "/home/kyle/.config/Positron/User/globalStorage/ms-python.python/pythonLocator/916dbcbb3f70747c.3.json" for "/bin/python3"
+2025-02-20 17:23:48.522 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:48.582 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:48.664 [debug] Using cache from "/home/kyle/.config/Positron/User/globalStorage/ms-python.python/pythonLocator/31f2aee4e71d21fb.3.json" for "/usr/bin/python3"
+2025-02-20 17:23:48.692 [debug] Time taken to get conda environment paths: 9.720257ms
+2025-02-20 17:23:48.726 [debug] Completed searching using locator: Conda in 9.768591ms
+2025-02-20 17:23:48.780 [debug] Reporting Environment PythonEnvironment { display_name: None, name: None, executable: Some("/bin/python3"), kind: Some(LinuxGlobal), version: Some("3.13.2.final.0"), prefix: Some("/usr"), manager: None, project: None, arch: Some(X64), symlinks: Some(["/bin/python3", "/bin/python3.13"]) }
+2025-02-20 17:23:48.823 [info] Discovered env: /bin/python3
+2025-02-20 17:23:48.870 [debug] Reporting Environment PythonEnvironment { display_name: None, name: None, executable: Some("/usr/bin/python3"), kind: Some(LinuxGlobal), version: Some("3.13.2.final.0"), prefix: Some("/usr"), manager: None, project: None, arch: Some(X64), symlinks: Some(["/usr/bin/python3", "/usr/bin/python3.13"]) }
+2025-02-20 17:23:48.886 [info] Discovered env: /usr/bin/python3
+2025-02-20 17:23:48.925 [debug] Completed searching using locator: LinuxGlobal in 11.5108ms
+2025-02-20 17:23:48.979 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:49.015 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:49.036 [debug] Env ("/bin/python3") in Path resolved as Some(LinuxGlobal)
+2025-02-20 17:23:49.067 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:49.095 [debug] Env ("/usr/bin/python3") in Path resolved as Some(LinuxGlobal)
+2025-02-20 17:23:49.105 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:49.108 [debug] Using cache from "/home/kyle/.config/Positron/User/globalStorage/ms-python.python/pythonLocator/8544b3b66cebbf8d.3.json" for "/usr/bin/python3.13"
+2025-02-20 17:23:49.128 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:49.143 [debug] Using cache from "/home/kyle/.config/Positron/User/globalStorage/ms-python.python/pythonLocator/0403da0954771eea.3.json" for "/bin/python3.13"
+2025-02-20 17:23:49.179 [debug] PyEnv Info PyEnvInfo { exe: None, versions: None, version: None }
+2025-02-20 17:23:49.183 [debug] Env ("/usr/bin/python3.13") in Path resolved as Some(LinuxGlobal)
+2025-02-20 17:23:49.192 [debug] Env ("/bin/python3.13") in Path resolved as Some(LinuxGlobal)
+2025-02-20 17:23:49.193 [info] Locator Conda took 9.774301ms
+2025-02-20 17:23:49.198 [info] Locator Homebrew took 68.459µs
+2025-02-20 17:23:49.198 [info] Locator LinuxGlobal took 11.530642ms
+2025-02-20 17:23:49.198 [info] Locator PipEnv took 21.403µs
+2025-02-20 17:23:49.198 [info] Locator Pixi took 25.562µs
+2025-02-20 17:23:49.198 [info] Locator Poetry took 130.022µs
+2025-02-20 17:23:49.198 [info] Locator PyEnv took 132.49µs
+2025-02-20 17:23:49.198 [info] Locator Venv took 18.937µs
+2025-02-20 17:23:49.198 [info] Locator VirtualEnv took 25.534µs
+2025-02-20 17:23:49.198 [info] Locator VirtualEnvWrapper took 27.251µs
+2025-02-20 17:23:49.198 [info] Locator GlobalVirtualEnvs took 56.346µs
+2025-02-20 17:23:49.199 [info] Locator Locators took 14.63717ms
+2025-02-20 17:23:49.199 [info] Locator Path took 38.997923ms
+2025-02-20 17:23:49.199 [info] Locator Workspaces took 4.54578ms
+2025-02-20 17:23:49.199 [debug] Finished refreshing environments in 39.163059ms
+2025-02-20 17:23:49.199 [info] Refresh completed in 39ms
+2025-02-20 17:23:49.202 [debug] Telemetry event "RefreshPerformance"
+2025-02-20 17:23:49.204 [debug] Executing Conda: "conda" info --json -a
+2025-02-20 17:23:49.204 [debug] No Conda environments in .condarc
+2025-02-20 17:23:49.204 [debug] Conda environments in known paths ["/bin", "/etc", "/lib", "/lib/x86_64-linux-gnu", "/lib64", "/opt", "/sbin", "/usr/bin", "/usr/games", "/usr/include", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/usr/lib64", "/usr/libexec", "/usr/local", "/usr/local/bin", "/usr/local/etc", "/usr/local/games", "/usr/local/lib", "/usr/local/sbin", "/usr/sbin", "/usr/share"]
+2025-02-20 17:23:49.212 [debug] Time taken to get conda environment paths: 8.706967ms

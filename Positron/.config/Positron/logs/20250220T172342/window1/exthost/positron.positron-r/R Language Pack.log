@@ -1,0 +1,42 @@
+2025-02-20 17:23:47.562 [info] Log level: Debug
+2025-02-20 17:23:47.562 [info] Refreshing testthat status
+2025-02-20 17:23:47.562 [info] Not working in an R package
+2025-02-20 17:23:47.562 [info] Context key 'testthatIsConfigured' is 'false'
+2025-02-20 17:23:47.562 [info] Context key 'testthatHasTests' is 'false'
+2025-02-20 17:23:47.711 [info] Possibly found R on PATH: /usr/bin/R.
+2025-02-20 17:23:47.711 [info] Resolved R binary at /usr/bin/R
+2025-02-20 17:23:47.712 [info] Skipping registry check on non-Windows platform
+2025-02-20 17:23:47.713 [info] Candidate R binary at /usr/bin/R
+2025-02-20 17:23:47.713 [info] R installation discovered: {
+  "usable": true,
+  "supported": true,
+  "reasonDiscovered": [
+    "Found in PATH, via the `which` command",
+    "Found in a conventional location for symlinked R binaries"
+  ],
+  "reasonRejected": null,
+  "binpath": "/usr/bin/R",
+  "homepath": "/usr/lib/R",
+  "semVersion": {
+    "options": {},
+    "loose": false,
+    "includePrerelease": false,
+    "raw": "4.4.2",
+    "major": 4,
+    "minor": 4,
+    "patch": 2,
+    "prerelease": [],
+    "build": [],
+    "version": "4.4.2"
+  },
+  "version": "4.4.2",
+  "arch": "x86_64",
+  "current": true,
+  "orthogonal": true
+}
+2025-02-20 17:23:50.611 [info] Creating Positron R 4.4.2 language client (port 44902)
+2025-02-20 17:23:50.611 [info] ARK (R 4.4.2) language client state changed uninitialized => starting
+2025-02-20 17:23:50.631 [info] ARK (R 4.4.2) language client init successful
+2025-02-20 17:23:50.631 [info] ARK (R 4.4.2) language client state changed starting => running
+2025-02-20 17:23:50.641 [info] Creating Positron R 4.4.2 language client (port 56413)
+2025-02-20 17:23:50.641 [info] ARK (R 4.4.2) language client state changed running => starting
