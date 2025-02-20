@@ -1,0 +1,50 @@
+# restart terminal session ----------------------
+alias restart='source ~/.bashrc'
+
+# git -------------------------------------------
+alias gst='git status'
+alias gau='git add --update' # only for modified & deleted files
+alias ga='git add'           # add any files
+alias gm='git commit -m'
+alias gpush='git push'
+alias gpull='git pull'
+
+# this function takes in a list of files and a commit message
+# `gam . 'initial commit'` will add all files in the current directory and commit with the message 'initial commit'
+gam() {
+  for file in "${@:1:$#-1}"; do
+    git add $file
+  done
+  git commit -m "${!#}"
+}
+
+
+# miscellaneous options -------------------------
+
+# have `rm` move to recycle bin and NOT permanently erase
+function safe_rm() {
+  for file in "$@"; do
+    read -p "Are you sure you want to move $file to the trash? (y/n) " REPLY
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      if trash-put "$file"; then
+        echo "Moved $file to trash"
+      else
+        echo "Failed to move $file to trash"
+      fi
+    fi
+  done
+}
+alias rm='safe_rm'
+
+# human readable file & directory
+alias ls='ls -alh --color=auto'
+
+# get date & time now
+alias now='date +%F\ %T'
+
+# get the weather
+alias weather='curl wttr.in/Dallas?0'
+
+# run git status checking script
+alias gstatus='check-git.sh'
+
