@@ -1,9 +1,0 @@
-[init "default"]
-	branch = main
-[user]
-	name = Kyle Grealis
-	email = kyle@azimuth-project.tech
-[credential]
-	helper = cache
-[core]
-	excludesFile = ~/.gitignore
