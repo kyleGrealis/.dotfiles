@@ -145,7 +145,7 @@ parse_git_branch() {
 }
 
 # Custom prompt
-PS1="\n\[${bgreen}\][debian]\[${purple}\]\$(parse_git_branch)\[${bblue}\] \W \[\033[0m\]\n>>\[\033[0m\] "
+PS1="\n\[${bgreen}\][-3ncod3d-]\[${purple}\]\$(parse_git_branch)\[${bblue}\] \W \[\033[0m\]\n>>\[\033[0m\] "
 # will look like this:
 # [debian] (dev) repo
 # >> 
