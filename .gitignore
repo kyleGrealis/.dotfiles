@@ -4,3 +4,8 @@
 .httr-oauth
 .DS_Store
 .quarto
+Positron/.config/Positron/Cache/Cache_Data/
+Positron/.config/Positron/CachedData/
+Positron/.config/Positron/Local Storage/
+
+
