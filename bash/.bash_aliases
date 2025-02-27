@@ -34,9 +34,6 @@ alias now='date +%F\ %T'
 # get the weather
 alias weather='curl wttr.in/Dallas?0'
 
-# neofetch vs neowofetch
-alias neofetch='neowofetch'
-
 # add yazi
 alias yazi='flatpak run io.github.sxyazi.yazi'
 
