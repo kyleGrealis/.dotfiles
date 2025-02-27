@@ -6,7 +6,7 @@
         "workspaces": [],
         "folders": [
             {
-                "folderUri": "file:///home/kyle/dev"
+                "folderUri": "file:///home/kyle/dev/r-accessories"
             }
         ],
         "emptyWindows": []
@@ -14,20 +14,21 @@
     "windowControlHeight": 35,
     "profileAssociations": {
         "workspaces": {
-            "file:///home/kyle/dev": "__default__profile__"
+            "file:///home/kyle/dev": "__default__profile__",
+            "file:///home/kyle/dev/r-accessories": "__default__profile__"
         },
         "emptyWindows": {}
     },
     "windowsState": {
         "lastActiveWindow": {
-            "folder": "file:///home/kyle/dev",
-            "backupPath": "/home/kyle/.config/Positron/Backups/f53251a5369b4d411c07762ac3ff9cb1",
+            "folder": "file:///home/kyle/dev/r-accessories",
+            "backupPath": "/home/kyle/.config/Positron/Backups/181ba18c50467cfa8e5bc6c5e83b6396",
             "uiState": {
                 "mode": 0,
-                "x": 323,
-                "y": 150,
-                "width": 1514,
-                "height": 900
+                "x": 0,
+                "y": 32,
+                "width": 1920,
+                "height": 1168
             }
         },
         "openedWindows": []

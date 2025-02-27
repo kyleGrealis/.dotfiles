@@ -1,2 +1,3 @@
-2025/02/20-17:23:40.207 b307 Creating DB /home/kyle/.config/Positron/Session Storage since it was missing.
-2025/02/20-17:23:40.219 b307 Reusing MANIFEST /home/kyle/.config/Positron/Session Storage/MANIFEST-000001
+2025/02/26-18:47:30.245 e73 Reusing MANIFEST /home/kyle/.config/Positron/Session Storage/MANIFEST-000001
+2025/02/26-18:47:30.245 e73 Recovering log #3
+2025/02/26-18:47:30.246 e73 Reusing old log /home/kyle/.config/Positron/Session Storage/000003.log 
