@@ -4,9 +4,11 @@
 .httr-oauth
 .DS_Store
 .quarto
-Positron/.config/Positron/Cache/Cache_Data/
+Positron/.config/Positron/Cache
 Positron/.config/Positron/CachedData/
 Positron/.config/Positron/Local Storage/
 Positron/.config/Positron/User/globalStorage
 Positron/.config/Positron/logs/
-
+Positron/.config/Positron/User/workspaceStorage/
+Positron/.config/Positron/SharedStorage
+Positron/.config/Positron/User/History
