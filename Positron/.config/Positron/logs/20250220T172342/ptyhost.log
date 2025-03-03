@@ -1,7 +1,0 @@
-2025-02-20 17:23:47.862 [debug] MutationLogger "Persistent process "1" interaction state" set to "None", reason: initialized
-2025-02-20 17:23:47.862 [debug] MutationLogger "Persistent process "1" interaction state" set to "Session", reason: setTitle
-2025-02-20 17:23:47.862 [debug] MutationLogger "Persistent process "2" interaction state" set to "None", reason: initialized
-2025-02-20 17:23:47.870 [warning] Shell integration cannot be enabled for executable "/usr/share/positron/resources/app/extensions/positron-supervisor/resources/supervisor-wrapper.sh" and args ["/tmp/kallichore-dc68632.out.log","/usr/share/positron/resources/app/extensions/positron-supervisor/resources/kallichore/kcserver","--port","52684","--token","/tmp/kallichore-dc68632.token","--log-level","debug","--log-file","/tmp/kallichore-dc68632.log","--idle-shutdown-hours","1"]
-2025-02-20 17:23:47.932 [debug] CommandDetectionCapability#setPromptTerminator  
-2025-02-20 17:23:47.933 [debug] CommandDetectionCapability#handlePromptStart 0 0
-2025-02-20 17:23:47.934 [debug] CommandDetectionCapability#handleCommandStart 3 2
