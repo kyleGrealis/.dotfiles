@@ -7,3 +7,5 @@
 	helper = cache
 [core]
 	excludesFile = ~/.gitignore
+[init]
+	defaultBranch = main
