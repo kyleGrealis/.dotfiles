@@ -11,7 +11,7 @@
         "statusBar.foreground": "#fff",
         "editor.foreground": "#aaa"
     },
-    "quarto.cells.background.dark": "#32363e90",
+    "quarto.cells.background.color": "#useTheme",
     "editor.rulers": [90],
     "editor.wordWrap": "bounded",
     "editor.wordWrapColumn": 90,
