@@ -12,10 +12,10 @@ local({
 
 
 # Custom prompt
-cat("\n-------------------------------------------\n")
-cat(paste0("[Today is ", format(Sys.Date(), "%Y-%m-%d"), "]\n"))
-cat(paste0("Using R ", R.version$major, ".", R.version$minor, "\n"))
-cat("-------------------------------------------\n\n")
+# cat("\n-------------------------------------------\n")
+# cat(paste0("[Today is ", format(Sys.Date(), "%Y-%m-%d"), "]\n"))
+# cat(paste0("Using R ", R.version$major, ".", R.version$minor, "\n"))
+# cat("-------------------------------------------\n\n")
 
 options(
   prompt = ">> ",
