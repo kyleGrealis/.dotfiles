@@ -139,10 +139,10 @@ fi
 # export bcyan='\033[1;36m'        # Cyan
 # export bwhite='\033[1;37m'       # White
 
-# Git branch parsing for prompt
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
+# Load custom functions from .bash_profile
+if [ -f ~/.bash_profile ]; then
+    . ~/.bash_profile
+fi
 
 # Custom prompt
 PS1="\n\[${bgreen}\][ubuntu]\[${purple}\]\$(parse_git_branch)\[${bblue}\] \W \[\033[0m\]\n>>\[\033[0m\] "
