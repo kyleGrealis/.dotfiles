@@ -58,7 +58,7 @@ com.ubuntu.update-manager window-width 1
 com.ubuntu.update-notifier end-system-uids 500
 com.ubuntu.update-notifier hide-reboot-notification false
 com.ubuntu.update-notifier no-show-notifications false
-com.ubuntu.update-notifier notify-ubuntu-advantage-available false
+com.ubuntu.update-notifier notify-ubuntu-advantage-available true
 com.ubuntu.update-notifier regular-auto-launch-interval 7
 com.ubuntu.update-notifier release-check-time uint32 1746635858
 com.ubuntu.update-notifier show-apport-crashes true
@@ -352,7 +352,7 @@ org.gnome.Terminal.Legacy.Settings always-check-default-terminal true
 org.gnome.Terminal.Legacy.Settings confirm-close true
 org.gnome.Terminal.Legacy.Settings context-info ['numbers']
 org.gnome.Terminal.Legacy.Settings default-show-menubar true
-org.gnome.Terminal.Legacy.Settings headerbar @mb false
+org.gnome.Terminal.Legacy.Settings headerbar @mb nothing
 org.gnome.Terminal.Legacy.Settings menu-accelerator-enabled true
 org.gnome.Terminal.Legacy.Settings mnemonics-enabled false
 org.gnome.Terminal.Legacy.Settings new-tab-position 'last'
@@ -362,7 +362,7 @@ org.gnome.Terminal.Legacy.Settings shell-integration-enabled true
 org.gnome.Terminal.Legacy.Settings shortcuts-enabled true
 org.gnome.Terminal.Legacy.Settings tab-policy 'automatic'
 org.gnome.Terminal.Legacy.Settings tab-position 'top'
-org.gnome.Terminal.Legacy.Settings theme-variant 'system'
+org.gnome.Terminal.Legacy.Settings theme-variant 'dark'
 org.gnome.Terminal.Legacy.Settings unified-menu false
 org.gnome.Terminal.Legacy.Keybindings close-tab '<Control><Shift>w'
 org.gnome.Terminal.Legacy.Keybindings close-window '<Control><Shift>q'
@@ -562,7 +562,7 @@ org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/Starry_p
 org.gnome.desktop.background picture-uri-dark 'file:///usr/share/backgrounds/Starry_plucky_by_tnazarova-dark.png'
 org.gnome.desktop.background primary-color '#000000'
 org.gnome.desktop.background secondary-color '#000000'
-org.gnome.desktop.background show-desktop-icons false
+org.gnome.desktop.background show-desktop-icons true
 org.gnome.desktop.break-reminders selected-breaks @as []
 org.gnome.desktop.break-reminders.eyesight countdown false
 org.gnome.desktop.break-reminders.eyesight delay-seconds uint32 180
@@ -611,13 +611,13 @@ org.gnome.desktop.interface cursor-blink true
 org.gnome.desktop.interface cursor-blink-time 1200
 org.gnome.desktop.interface cursor-blink-timeout 10
 org.gnome.desktop.interface cursor-size 24
-org.gnome.desktop.interface cursor-theme 'DMZ-White'
-org.gnome.desktop.interface document-font-name 'Cantarell 11'
+org.gnome.desktop.interface cursor-theme 'Yaru'
+org.gnome.desktop.interface document-font-name 'Sans 11'
 org.gnome.desktop.interface enable-animations true
-org.gnome.desktop.interface enable-hot-corners true
-org.gnome.desktop.interface font-antialiasing 'grayscale'
+org.gnome.desktop.interface enable-hot-corners false
+org.gnome.desktop.interface font-antialiasing 'rgba'
 org.gnome.desktop.interface font-hinting 'slight'
-org.gnome.desktop.interface font-name 'Cantarell 11'
+org.gnome.desktop.interface font-name 'Ubuntu Sans 11'
 org.gnome.desktop.interface font-rendering 'automatic'
 org.gnome.desktop.interface font-rgba-order 'rgb'
 org.gnome.desktop.interface gtk-color-palette 'black:white:gray50:red:purple:blue:light blue:green:yellow:orange:lavender:brown:goldenrod4:dodger blue:pink:light green:gray10:gray30:gray75:gray90'
@@ -686,7 +686,7 @@ org.gnome.desktop.peripherals.pointingstick accel-profile 'default'
 org.gnome.desktop.peripherals.pointingstick scroll-method 'default'
 org.gnome.desktop.peripherals.pointingstick speed 0.0
 org.gnome.desktop.peripherals.touchpad accel-profile 'default'
-org.gnome.desktop.peripherals.touchpad click-method 'fingers'
+org.gnome.desktop.peripherals.touchpad click-method 'default'
 org.gnome.desktop.peripherals.touchpad disable-while-typing true
 org.gnome.desktop.peripherals.touchpad edge-scrolling-enabled false
 org.gnome.desktop.peripherals.touchpad left-handed 'mouse'
@@ -780,23 +780,23 @@ org.gnome.desktop.wm.keybindings cycle-panels-backward ['<Shift><Control><Alt>Es
 org.gnome.desktop.wm.keybindings cycle-windows ['<Alt>Escape']
 org.gnome.desktop.wm.keybindings cycle-windows-backward ['<Shift><Alt>Escape']
 org.gnome.desktop.wm.keybindings lower @as []
-org.gnome.desktop.wm.keybindings maximize ['<Primary><Super>Up', '<Super>Up', '<Primary><Alt>KP_5']
+org.gnome.desktop.wm.keybindings maximize @as []
 org.gnome.desktop.wm.keybindings maximize-horizontally @as []
 org.gnome.desktop.wm.keybindings maximize-vertically @as []
-org.gnome.desktop.wm.keybindings minimize ['<Primary><Alt>KP_0']
+org.gnome.desktop.wm.keybindings minimize ['<Super>h']
 org.gnome.desktop.wm.keybindings move-to-center @as []
-org.gnome.desktop.wm.keybindings move-to-corner-ne ['<Primary><Alt>KP_Prior']
-org.gnome.desktop.wm.keybindings move-to-corner-nw ['<Primary><Alt>KP_Home']
-org.gnome.desktop.wm.keybindings move-to-corner-se ['<Primary><Alt>KP_Next']
-org.gnome.desktop.wm.keybindings move-to-corner-sw ['<Primary><Alt>KP_End']
+org.gnome.desktop.wm.keybindings move-to-corner-ne @as []
+org.gnome.desktop.wm.keybindings move-to-corner-nw @as []
+org.gnome.desktop.wm.keybindings move-to-corner-se @as []
+org.gnome.desktop.wm.keybindings move-to-corner-sw @as []
 org.gnome.desktop.wm.keybindings move-to-monitor-down ['<Super><Shift>Down']
 org.gnome.desktop.wm.keybindings move-to-monitor-left ['<Super><Shift>Left']
 org.gnome.desktop.wm.keybindings move-to-monitor-right ['<Super><Shift>Right']
 org.gnome.desktop.wm.keybindings move-to-monitor-up ['<Super><Shift>Up']
-org.gnome.desktop.wm.keybindings move-to-side-e ['<Primary><Alt>KP_Right']
-org.gnome.desktop.wm.keybindings move-to-side-n ['<Primary><Alt>KP_Up']
-org.gnome.desktop.wm.keybindings move-to-side-s ['<Primary><Alt>KP_Down']
-org.gnome.desktop.wm.keybindings move-to-side-w ['<Primary><Alt>KP_Left']
+org.gnome.desktop.wm.keybindings move-to-side-e @as []
+org.gnome.desktop.wm.keybindings move-to-side-n @as []
+org.gnome.desktop.wm.keybindings move-to-side-s @as []
+org.gnome.desktop.wm.keybindings move-to-side-w @as []
 org.gnome.desktop.wm.keybindings move-to-workspace-1 ['<Super><Shift>Home']
 org.gnome.desktop.wm.keybindings move-to-workspace-10 @as []
 org.gnome.desktop.wm.keybindings move-to-workspace-11 @as []
@@ -819,9 +819,9 @@ org.gnome.desktop.wm.keybindings panel-run-dialog ['<Alt>F2']
 org.gnome.desktop.wm.keybindings raise @as []
 org.gnome.desktop.wm.keybindings raise-or-lower @as []
 org.gnome.desktop.wm.keybindings set-spew-mark @as []
-org.gnome.desktop.wm.keybindings show-desktop @as []
-org.gnome.desktop.wm.keybindings switch-applications ['<Super>Tab', '<Alt>Tab']
-org.gnome.desktop.wm.keybindings switch-applications-backward ['<Shift><Super>Tab', '<Shift><Alt>Tab']
+org.gnome.desktop.wm.keybindings show-desktop ['<Primary><Super>d', '<Primary><Alt>d', '<Super>d']
+org.gnome.desktop.wm.keybindings switch-applications ['<Super>Tab']
+org.gnome.desktop.wm.keybindings switch-applications-backward ['<Shift><Super>Tab']
 org.gnome.desktop.wm.keybindings switch-group ['<Super>Above_Tab', '<Alt>Above_Tab']
 org.gnome.desktop.wm.keybindings switch-group-backward ['<Shift><Super>Above_Tab', '<Shift><Alt>Above_Tab']
 org.gnome.desktop.wm.keybindings switch-input-source ['<Super>space', 'XF86Keyboard']
@@ -845,30 +845,30 @@ org.gnome.desktop.wm.keybindings switch-to-workspace-last ['<Super>End']
 org.gnome.desktop.wm.keybindings switch-to-workspace-left ['<Super>Page_Up', '<Super><Alt>Left', '<Control><Alt>Left']
 org.gnome.desktop.wm.keybindings switch-to-workspace-right ['<Super>Page_Down', '<Super><Alt>Right', '<Control><Alt>Right']
 org.gnome.desktop.wm.keybindings switch-to-workspace-up ['<Control><Alt>Up']
-org.gnome.desktop.wm.keybindings switch-windows @as []
-org.gnome.desktop.wm.keybindings switch-windows-backward @as []
+org.gnome.desktop.wm.keybindings switch-windows ['<Alt>Tab']
+org.gnome.desktop.wm.keybindings switch-windows-backward ['<Shift><Alt>Tab']
 org.gnome.desktop.wm.keybindings toggle-above @as []
 org.gnome.desktop.wm.keybindings toggle-fullscreen @as []
-org.gnome.desktop.wm.keybindings toggle-maximized ['<Primary><Alt>KP_5']
+org.gnome.desktop.wm.keybindings toggle-maximized ['<Alt>F10']
 org.gnome.desktop.wm.keybindings toggle-on-all-workspaces @as []
-org.gnome.desktop.wm.keybindings unmaximize ['<Primary><Super>Down', '<Super>Down', '<Alt>F5']
+org.gnome.desktop.wm.keybindings unmaximize @as []
 org.gnome.desktop.wm.preferences action-double-click-titlebar 'toggle-maximize'
-org.gnome.desktop.wm.preferences action-middle-click-titlebar 'none'
+org.gnome.desktop.wm.preferences action-middle-click-titlebar 'lower'
 org.gnome.desktop.wm.preferences action-right-click-titlebar 'menu'
 org.gnome.desktop.wm.preferences audible-bell true
 org.gnome.desktop.wm.preferences auto-raise false
 org.gnome.desktop.wm.preferences auto-raise-delay 500
-org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
+org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
 org.gnome.desktop.wm.preferences disable-workarounds false
 org.gnome.desktop.wm.preferences focus-mode 'click'
 org.gnome.desktop.wm.preferences focus-new-windows 'smart'
-org.gnome.desktop.wm.preferences mouse-button-modifier '<Alt>'
+org.gnome.desktop.wm.preferences mouse-button-modifier '<Super>'
 org.gnome.desktop.wm.preferences num-workspaces 4
 org.gnome.desktop.wm.preferences raise-on-click true
 org.gnome.desktop.wm.preferences resize-with-right-button false
 org.gnome.desktop.wm.preferences theme 'Adwaita'
-org.gnome.desktop.wm.preferences titlebar-font 'Adwaita Sans Bold 11'
-org.gnome.desktop.wm.preferences titlebar-uses-system-font true
+org.gnome.desktop.wm.preferences titlebar-font 'Ubuntu Sans Bold 11'
+org.gnome.desktop.wm.preferences titlebar-uses-system-font false
 org.gnome.desktop.wm.preferences visual-bell false
 org.gnome.desktop.wm.preferences visual-bell-type 'fullscreen-flash'
 org.gnome.desktop.wm.preferences workspace-names @as []
@@ -1088,19 +1088,19 @@ org.gnome.login-screen logo '/usr/share/plymouth/ubuntu-logo.png'
 org.gnome.mousetweaks click-type-window-geometry ''
 org.gnome.mousetweaks click-type-window-orientation 'vertical'
 org.gnome.mousetweaks click-type-window-style 'both'
-org.gnome.mutter attach-modal-dialogs false
+org.gnome.mutter attach-modal-dialogs true
 org.gnome.mutter auto-maximize true
 org.gnome.mutter center-new-windows true
 org.gnome.mutter check-alive-timeout uint32 5000
 org.gnome.mutter draggable-border-width 10
-org.gnome.mutter dynamic-workspaces false
+org.gnome.mutter dynamic-workspaces true
 org.gnome.mutter edge-tiling false
 org.gnome.mutter experimental-features @as []
-org.gnome.mutter focus-change-on-pointer-rest false
+org.gnome.mutter focus-change-on-pointer-rest true
 org.gnome.mutter locate-pointer-key 'Control_L'
 org.gnome.mutter output-luminance [('eDP-1', 'SDC', '0x4165', '0x00000000', uint32 1, 116.66666666666666)]
 org.gnome.mutter overlay-key 'Super'
-org.gnome.mutter workspaces-only-on-primary false
+org.gnome.mutter workspaces-only-on-primary true
 org.gnome.mutter.keybindings cancel-input-capture ['<Super><Shift>Escape']
 org.gnome.mutter.keybindings rotate-monitor ['XF86RotateWindows']
 org.gnome.mutter.keybindings switch-monitor ['<Super>p', 'XF86Display']
@@ -1126,7 +1126,7 @@ org.gnome.mutter.wayland.keybindings switch-to-session-9 ['<Primary><Alt>F9']
 org.gnome.mutter.x11 fractional-scale-mode 'scale-ui-down'
 org.gnome.nautilus.compression default-compression-format 'zip'
 org.gnome.nautilus.icon-view captions ['none', 'none', 'none']
-org.gnome.nautilus.icon-view default-zoom-level 'medium'
+org.gnome.nautilus.icon-view default-zoom-level 'small'
 org.gnome.nautilus.list-view default-column-order ['name', 'size', 'type', 'owner', 'group', 'permissions', 'mime_type', 'where', 'date_modified', 'date_modified_with_time', 'date_accessed', 'date_created', 'recency', 'starred']
 org.gnome.nautilus.list-view default-visible-columns ['name', 'size', 'date_modified']
 org.gnome.nautilus.list-view default-zoom-level 'medium'
@@ -1143,7 +1143,7 @@ org.gnome.nautilus.preferences migrated-gtk-settings true
 org.gnome.nautilus.preferences mouse-back-button uint32 8
 org.gnome.nautilus.preferences mouse-forward-button uint32 9
 org.gnome.nautilus.preferences mouse-use-extra-buttons true
-org.gnome.nautilus.preferences open-folder-on-dnd-hover true
+org.gnome.nautilus.preferences open-folder-on-dnd-hover false
 org.gnome.nautilus.preferences recursive-search 'local-only'
 org.gnome.nautilus.preferences search-filter-time-type 'last_modified'
 org.gnome.nautilus.preferences show-create-link false
@@ -1321,7 +1321,7 @@ org.gnome.settings-daemon.plugins.xsettings disabled-gtk-modules @as []
 org.gnome.settings-daemon.plugins.xsettings enabled-gtk-modules @as []
 org.gnome.settings-daemon.plugins.xsettings overrides @a{sv} {}
 org.gnome.shell allow-extension-installation true
-org.gnome.shell always-show-log-out false
+org.gnome.shell always-show-log-out true
 org.gnome.shell app-picker-layout [{'software-properties-drivers.desktop': <{'position': <0>}>, 'org.gnome.Calculator.desktop': <{'position': <1>}>, 'org.gnome.Papers.desktop': <{'position': <2>}>, 'org.gnome.clocks.desktop': <{'position': <3>}>, 'firmware-updater_firmware-updater.desktop': <{'position': <4>}>, 'org.gnome.eog.desktop': <{'position': <5>}>, 'gnome-language-selector.desktop': <{'position': <6>}>, 'org.gnome.Settings.desktop': <{'position': <7>}>, 'nvidia-settings.desktop': <{'position': <8>}>, 'org.gnome.PowerStats.desktop': <{'position': <9>}>, 'desktop-security-center_desktop-security-center.desktop': <{'position': <10>}>, 'org.gnome.Characters.desktop': <{'position': <11>}>, 'Utilities': <{'position': <12>}>, 'System': <{'position': <13>}>, 'software-properties-gtk.desktop': <{'position': <14>}>, 'update-manager.desktop': <{'position': <15>}>, 'yelp.desktop': <{'position': <16>}>, 'gnome-session-properties.desktop': <{'position': <17>}>, 'org.gnome.Terminal.desktop': <{'position': <18>}>, 'org.gnome.TextEditor.desktop': <{'position': <19>}>, 'snap-store_snap-store.desktop': <{'position': <20>}>, 'com.mattjakeman.ExtensionManager.desktop': <{'position': <21>}>, 'htop.desktop': <{'position': <22>}>, 'display-im7.q16.desktop': <{'position': <23>}>}, {'org.gnome.Software.desktop': <{'position': <0>}>, 'org.gnome.tweaks.desktop': <{'position': <1>}>, 'com.bitwarden.desktop.desktop': <{'position': <2>}>, 'com.github.tchx84.Flatseal.desktop': <{'position': <3>}>, 'Zoom.desktop': <{'position': <4>}>}]
 org.gnome.shell command-history @as []
 org.gnome.shell development-tools true
@@ -1386,21 +1386,21 @@ org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen false
 org.gnome.shell.extensions.dash-to-dock background-color '#ffffff'
 org.gnome.shell.extensions.dash-to-dock background-opacity 0.80000000000000004
 org.gnome.shell.extensions.dash-to-dock bolt-support true
-org.gnome.shell.extensions.dash-to-dock click-action 'cycle-windows'
+org.gnome.shell.extensions.dash-to-dock click-action 'focus-or-appspread'
 org.gnome.shell.extensions.dash-to-dock custom-background-color false
 org.gnome.shell.extensions.dash-to-dock custom-theme-customize-running-dots false
 org.gnome.shell.extensions.dash-to-dock custom-theme-running-dots-border-color '#ffffff'
 org.gnome.shell.extensions.dash-to-dock custom-theme-running-dots-border-width 0
 org.gnome.shell.extensions.dash-to-dock custom-theme-running-dots-color '#ffffff'
-org.gnome.shell.extensions.dash-to-dock custom-theme-shrink false
+org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
 org.gnome.shell.extensions.dash-to-dock customize-alphas false
 org.gnome.shell.extensions.dash-to-dock dance-urgent-applications true
 org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 30
 org.gnome.shell.extensions.dash-to-dock default-windows-preview-to-open false
-org.gnome.shell.extensions.dash-to-dock disable-overview-on-startup false
-org.gnome.shell.extensions.dash-to-dock dock-fixed false
-org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
-org.gnome.shell.extensions.dash-to-dock extend-height false
+org.gnome.shell.extensions.dash-to-dock disable-overview-on-startup true
+org.gnome.shell.extensions.dash-to-dock dock-fixed true
+org.gnome.shell.extensions.dash-to-dock dock-position 'LEFT'
+org.gnome.shell.extensions.dash-to-dock extend-height true
 org.gnome.shell.extensions.dash-to-dock force-straight-corner false
 org.gnome.shell.extensions.dash-to-dock height-fraction 0.90000000000000002
 org.gnome.shell.extensions.dash-to-dock hide-delay 0.20000000000000001
@@ -1408,9 +1408,9 @@ org.gnome.shell.extensions.dash-to-dock hide-tooltip false
 org.gnome.shell.extensions.dash-to-dock hot-keys true
 org.gnome.shell.extensions.dash-to-dock hotkeys-overlay true
 org.gnome.shell.extensions.dash-to-dock hotkeys-show-dock true
-org.gnome.shell.extensions.dash-to-dock icon-size-fixed false
+org.gnome.shell.extensions.dash-to-dock icon-size-fixed true
 org.gnome.shell.extensions.dash-to-dock intellihide true
-org.gnome.shell.extensions.dash-to-dock intellihide-mode 'FOCUS_APPLICATION_WINDOWS'
+org.gnome.shell.extensions.dash-to-dock intellihide-mode 'ALL_WINDOWS'
 org.gnome.shell.extensions.dash-to-dock isolate-locations true
 org.gnome.shell.extensions.dash-to-dock isolate-monitors false
 org.gnome.shell.extensions.dash-to-dock isolate-workspaces false
@@ -1426,12 +1426,12 @@ org.gnome.shell.extensions.dash-to-dock pressure-threshold 100.0
 org.gnome.shell.extensions.dash-to-dock preview-size-scale 0.0
 org.gnome.shell.extensions.dash-to-dock require-pressure-to-show true
 org.gnome.shell.extensions.dash-to-dock running-indicator-dominant-color false
-org.gnome.shell.extensions.dash-to-dock running-indicator-style 'DEFAULT'
-org.gnome.shell.extensions.dash-to-dock scroll-action 'do-nothing'
+org.gnome.shell.extensions.dash-to-dock running-indicator-style 'DOTS'
+org.gnome.shell.extensions.dash-to-dock scroll-action 'switch-workspace'
 org.gnome.shell.extensions.dash-to-dock scroll-switch-workspace true
 org.gnome.shell.extensions.dash-to-dock scroll-to-focused-application true
-org.gnome.shell.extensions.dash-to-dock shift-click-action 'minimize'
-org.gnome.shell.extensions.dash-to-dock shift-middle-click-action 'launch'
+org.gnome.shell.extensions.dash-to-dock shift-click-action 'launch'
+org.gnome.shell.extensions.dash-to-dock shift-middle-click-action 'minimize'
 org.gnome.shell.extensions.dash-to-dock shortcut ['<Super>q']
 org.gnome.shell.extensions.dash-to-dock shortcut-text '<Super>q'
 org.gnome.shell.extensions.dash-to-dock shortcut-timeout 2.0
@@ -1444,7 +1444,7 @@ org.gnome.shell.extensions.dash-to-dock show-icons-emblems true
 org.gnome.shell.extensions.dash-to-dock show-icons-notifications-counter true
 org.gnome.shell.extensions.dash-to-dock show-mounts false
 org.gnome.shell.extensions.dash-to-dock show-mounts-network true
-org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
+org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted false
 org.gnome.shell.extensions.dash-to-dock show-running true
 org.gnome.shell.extensions.dash-to-dock show-show-apps-button true
 org.gnome.shell.extensions.dash-to-dock show-trash false
@@ -1453,7 +1453,7 @@ org.gnome.shell.extensions.dash-to-dock transparency-mode 'DEFAULT'
 org.gnome.shell.extensions.dash-to-dock unity-backlit-items false
 org.gnome.shell.extensions.dash-to-dock workspace-agnostic-urgent-windows true
 org.gnome.shell.extensions.ding add-volumes-opposite true
-org.gnome.shell.extensions.ding arrangeorder 'NAME'
+org.gnome.shell.extensions.ding arrangeorder 'DESCENDINGNAME'
 org.gnome.shell.extensions.ding check-x11wayland true
 org.gnome.shell.extensions.ding dark-text-in-labels false
 org.gnome.shell.extensions.ding icon-size 'standard'
@@ -1463,10 +1463,10 @@ org.gnome.shell.extensions.ding show-drop-place true
 org.gnome.shell.extensions.ding show-home false
 org.gnome.shell.extensions.ding show-link-emblem true
 org.gnome.shell.extensions.ding show-network-volumes false
-org.gnome.shell.extensions.ding show-trash true
-org.gnome.shell.extensions.ding show-volumes true
+org.gnome.shell.extensions.ding show-trash false
+org.gnome.shell.extensions.ding show-volumes false
 org.gnome.shell.extensions.ding sort-special-folders false
-org.gnome.shell.extensions.ding start-corner 'top-left'
+org.gnome.shell.extensions.ding start-corner 'bottom-right'
 org.gnome.shell.extensions.ding unstackedtypes @as []
 org.gnome.shell.extensions.ding use-nemo false
 org.gnome.shell.extensions.tiling-assistant activate-layout0 @as []
@@ -1671,7 +1671,7 @@ org.gtk.Settings.FileChooser sidebar-width 160
 org.gtk.Settings.FileChooser sort-column 'name'
 org.gtk.Settings.FileChooser sort-directories-first true
 org.gtk.Settings.FileChooser sort-order 'descending'
-org.gtk.Settings.FileChooser startup-mode 'recent'
+org.gtk.Settings.FileChooser startup-mode 'cwd'
 org.gtk.Settings.FileChooser type-format 'category'
 org.gtk.Settings.FileChooser window-position (26, 23)
 org.gtk.Settings.FileChooser window-size (1231, 902)
