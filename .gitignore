@@ -23,3 +23,4 @@ Positron/.config/Positron/code.lock
 Positron/.config/Positron/machineid
 Positron/.config/Positron/Network Persistent State
 Positron/.config/Positron/User/workspaceStorage/
+ssh/.ssh/id_ed25519*
