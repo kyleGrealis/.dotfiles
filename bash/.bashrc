@@ -145,7 +145,7 @@ if [ -f ~/.bash_profile ]; then
 fi
 
 # Custom prompt
-PS1="\n\[${bgreen}\][ubuntu]\[${purple}\]\$(parse_git_branch)\[${bblue}\] \W \[\033[0m\]\n>>\[\033[0m\] "
+PS1="\n\[${bgreen}\][debian]\[${purple}\]\$(parse_git_branch)\[${bblue}\] \W \[\033[0m\]\n>>\[\033[0m\] "
 # will look like this:
 # [ubuntu] (dev) repo
 # >> 
