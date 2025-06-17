@@ -22,7 +22,7 @@ gam() {
 # change directory AND list contents of the directory
 cdl() {
 	cd "$@";
-	ls -alhF;
+	ls -alh;
 }
 
 # human readable file & directory
