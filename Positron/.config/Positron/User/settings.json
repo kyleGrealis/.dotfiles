@@ -24,7 +24,7 @@
     },
     "[r]": {
         // Posit's Air Extension as default R formatter:
-        "editor.formatOnSave": true,
+        // "editor.formatOnSave": true,
         "editor.defaultFormatter": "Posit.air-vscode",
 
         "editor.formatOnType": true,
