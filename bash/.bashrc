@@ -145,10 +145,7 @@ if [ -f ~/.bash_profile ]; then
 fi
 
 # Custom prompt
-PS1="\n\[${bgreen}\][debian]\[${purple}\]\$(parse_git_branch)\[${bblue}\] \W \[\033[0m\]\n>>\[\033[0m\] "
-# will look like this:
-# [ubuntu] (dev) repo
-# >> 
+PS1="\n\[${bblue}\]\W\[${purple}\]\$(parse_git_branch) \[\033[0m\]\n>>\[\033[0m\] "
 
 # Add Quarto to PATH
 export PATH=$PATH:~/.local/bin
@@ -158,3 +155,7 @@ PATH=$(echo $PATH | tr ':' '\n' | awk '!seen[$0]++' | tr '\n' ':' | sed 's/:$//'
 export PATH
 
 #cat ~/Documents/.love.txt
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
