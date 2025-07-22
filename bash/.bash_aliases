@@ -34,10 +34,10 @@ alias now='date +%F\ %T'
 # get the weather
 alias weather='curl wttr.in/Dallas?0'
 
-# Tailscale
-vpn-status() {
-  bash "$HOME/bash-scripts/tailscale/vpn-status.sh"
-}
+# # Tailscale
+# vpn-status() {
+#   bash "$HOME/bash-scripts/tailscale/vpn-status.sh"
+# }
 
-# GitHub repos backup to cloud
-alias backup='rsync -aH --delete --info=progress2 "$HOME/dev/" piCloud/kyle-backup/dev/'
+# # GitHub repos backup to cloud
+# alias backup='rsync -aH --delete --copy-unsafe-links --info=progress2 "$HOME/dev/" piCloud/kyle-backup/dev/'
