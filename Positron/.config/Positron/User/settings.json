@@ -78,7 +78,8 @@
     "terminal.integrated.fontFamily": "monospace",
     "terminal.integrated.stickyScroll.enabled": false,
     "files.associations": {
-        "*.qmd": "quarto"
+        "*.qmd": "quarto",
+        "renv.lock": "json"
     },
     "editor.fontSize": 12,
     "positron.r.kernel.logLevel": "error",
