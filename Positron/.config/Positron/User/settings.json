@@ -90,12 +90,18 @@
     "diffEditor.codeLens": true,
     "files.autoSaveDelay": 10000,
     "files.dialog.defaultPath": "/home/kyle/dev/",
-    "window.zoomLevel": 0.8,
     "positron.plots.darkFilter": "off",
 
     // New (May 2025)
     "window.menuBarVisibility": "compact",
     "window.density.editorTabHeight": "compact",
     "editor.scrollbar.verticalScrollbarSize": 5,
-    "workbench.keybindings.rstudioKeybindings": true
+    "workbench.keybindings.rstudioKeybindings": true,
+    "window.zoomLevel": 0.8,
+
+    // New (August 2025)
+    "editor.minimap.enabled": true,
+    "editor.minimap.side": "right",
+
+    "editor.stickyScroll.enabled": true
 }
