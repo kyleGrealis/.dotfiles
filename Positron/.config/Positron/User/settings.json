@@ -103,5 +103,6 @@
     "editor.minimap.enabled": true,
     "editor.minimap.side": "right",
 
-    "editor.stickyScroll.enabled": true
+    "editor.stickyScroll.enabled": true,
+    "console.fontSize": 12
 }
