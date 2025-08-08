@@ -104,5 +104,7 @@
     "editor.minimap.side": "right",
 
     "editor.stickyScroll.enabled": true,
-    "console.fontSize": 12
+    "console.fontSize": 12,
+    "console.fontLigatures": true,
+    "console.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace"
 }
