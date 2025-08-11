@@ -105,6 +105,7 @@
 
     "editor.stickyScroll.enabled": true,
     "console.fontSize": 12,
-    "console.fontLigatures": true,
-    "console.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace"
+    "console.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
+    "workbench.statusBar.visible": false,
+    "console.fontLigatures": true
 }
