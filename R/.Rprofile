@@ -32,7 +32,7 @@ options(
       given = "Kyle",
       family = "Grealis",
       role = c("aut", "cre"),
-      email = "kyle@azimuth-project.tech",
+      email = "kyle@kyleGrealis.com",
       comment = c(ORCID = "0000-0002-9223-8854")
     )'
   )
