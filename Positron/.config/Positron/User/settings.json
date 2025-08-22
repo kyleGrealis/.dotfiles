@@ -106,5 +106,5 @@
     "console.fontSize": 12,
     "console.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
     "console.fontLigatures": true,
-    "workbench.statusBar.visible": false
+    "files.eol": "\n"
 }
