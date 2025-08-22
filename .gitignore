@@ -7,6 +7,9 @@
 
 ssh/.ssh/id_ed25519*
 
-# Positron configs -- ignore everything but the User dir
+# Positron configs - ignore everything except specific files
 Positron/.config/Positron/*
 !Positron/.config/Positron/User/
+Positron/.config/Positron/User/*
+!Positron/.config/Positron/User/keybindings.json
+!Positron/.config/Positron/User/settings.json
