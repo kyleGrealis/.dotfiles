@@ -4,23 +4,9 @@
 .httr-oauth
 .DS_Store
 .quarto
-Positron/.config/Positron/Cache*
-Positron/.config/Positron/CachedData
-Positron/.config/Positron/Dawn*
-Positron/.config/Positron/Local*
-Positron/.config/Positron/GPU*
-Positron/.config/Positron/Session*
-Positron/.config/Positron/Transport*
-Positron/.config/Positron/Local Storage/
-Positron/.config/Positron/User/globalStorage
-Positron/.config/Positron/logs/
-Positron/.config/Positron/User/workspaceStorage/
-Positron/.config/Positron/SharedStorage
-Positron/.config/Positron/User/History
-Positron/.config/Positron/.org.chromium.Chromium.OMuh0M
-Positron/.config/Positron/SharedStorage-wal
-Positron/.config/Positron/code.lock
-Positron/.config/Positron/machineid
-Positron/.config/Positron/Network Persistent State
-Positron/.config/Positron/User/workspaceStorage/
+
 ssh/.ssh/id_ed25519*
+
+# Positron configs -- ignore everything but the User dir
+Positron/.config/Positron/*
+!Positron/.config/Positron/User/
