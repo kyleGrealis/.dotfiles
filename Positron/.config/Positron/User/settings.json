@@ -97,7 +97,6 @@
     "window.density.editorTabHeight": "compact",
     "editor.scrollbar.verticalScrollbarSize": 5,
     "workbench.keybindings.rstudioKeybindings": true,
-    "window.zoomLevel": 0.8,
 
     // New (August 2025)
     "editor.minimap.enabled": true,
@@ -106,6 +105,6 @@
     "editor.stickyScroll.enabled": true,
     "console.fontSize": 12,
     "console.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
-    "workbench.statusBar.visible": false,
-    "console.fontLigatures": true
+    "console.fontLigatures": true,
+    "workbench.statusBar.visible": false
 }
