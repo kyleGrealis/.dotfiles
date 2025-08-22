@@ -13,3 +13,4 @@ Positron/.config/Positron/*
 Positron/.config/Positron/User/*
 !Positron/.config/Positron/User/keybindings.json
 !Positron/.config/Positron/User/settings.json
+!Positron/.config/Positron/User/snippets/
