@@ -44,7 +44,8 @@ alias weather='curl wttr.in/Dallas?0'
 
 # WSL2 Positron alias
 if grep -q microsoft /proc/version 2>/dev/null; then
-    alias code='DONT_PROMPT_WSL_INSTALL=1 GDK_SCALE=2 positron'
+    # alias code='DONT_PROMPT_WSL_INSTALL=1 GDK_SCALE=2 positron'
+    echo "you're using windows"
 else
-	alias code='positron'
+	# alias code='positron'
 fi
