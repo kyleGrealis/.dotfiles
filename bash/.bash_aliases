@@ -5,6 +5,7 @@ alias restart='source ~/.bashrc'
 alias gst='git status'
 alias gpush='git push'
 alias gpull='git pull'
+alias gd='git diff -U0'
 
 # This function takes in a list of files and a commit message
 # Example: `gam . 'initial commit'` 
@@ -34,12 +35,9 @@ alias now='date +%F\ %T'
 # get the weather
 alias weather='curl wttr.in/Dallas?0'
 
-# # Tailscale
-# vpn-status() {
-#   bash "$HOME/bash-scripts/tailscale/vpn-status.sh"
-# }
-
 # # GitHub repos backup to cloud
 #alias backup='rsync -aH --delete --copy-unsafe-links --info=progress2 "$HOME/dev/" piCloud/kyle-backup/dev/'
 
 alias code='positron'
+#alias rebuild='sudo nixos-rebuild switch -I nixos-config=/home/kyle/nixos/configuration.nix'
+alias rsync='rsync -azH --info=progress2'
