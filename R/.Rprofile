@@ -12,19 +12,13 @@ local({
 })
 
 
-# Custom prompt
-# cat("\n-------------------------------------------\n")
-# cat(paste0("[Today is ", format(Sys.Date(), "%Y-%m-%d"), "]\n"))
-# cat(paste0("Using R ", R.version$major, ".", R.version$minor, "\n"))
-# cat("-------------------------------------------\n\n")
-
 options(
   prompt = ">> ",
   shiny.port = 7209,
   digits = 4
 )
 
-# who am i?
+
 options(
   usethis.full_name = 'Kyle Grealis',
   usethis.description = list(
@@ -37,3 +31,16 @@ options(
     )'
   )
 )
+
+
+# For NixOS -- for now...
+# if (Sys.info()[["nodename"]] == "nixos") {
+#   # Find the current R installation path dynamically
+#   r_home <- R.home()
+#   if (grepl("/nix/store", r_home)) {
+#     nix_lib <- file.path(dirname(r_home), "R/library")
+#     if (dir.exists(nix_lib)) {
+#       .libPaths(c(nix_lib, .libPaths()))
+#     }
+#   }
+# }
