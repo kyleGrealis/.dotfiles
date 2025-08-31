@@ -107,4 +107,5 @@
     "console.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
     "console.fontLigatures": true,
     "files.eol": "\n"
+
 }
