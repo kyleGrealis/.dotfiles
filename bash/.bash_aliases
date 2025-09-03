@@ -40,5 +40,6 @@ alias weather='curl wttr.in/Dallas?0'
 # # GitHub repos backup to cloud
 #alias backup='rsync -aH --delete --copy-unsafe-links --info=progress2 "$HOME/dev/" piCloud/kyle-backup/dev/'
 
-alias code='nohup positron >/dev/null 2>&1 &'
+alias code="positron"
 alias rsync='rsync -azH --info=progress2'
+
