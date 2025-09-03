@@ -42,4 +42,4 @@ alias weather='curl wttr.in/Dallas?0'
 
 alias code="positron"
 alias rsync='rsync -azH --info=progress2'
-
+alias nv="nvim"
