@@ -1,5 +1,7 @@
 # restart terminal session ----------------------
-alias restart='source ~/.bashrc'
+restart() {
+	source "$HOME/.bashrc" 2>/dev/null || source "$HOME/.bashrc"
+}
 
 # git -------------------------------------------
 alias gst='git status'
@@ -38,6 +40,5 @@ alias weather='curl wttr.in/Dallas?0'
 # # GitHub repos backup to cloud
 #alias backup='rsync -aH --delete --copy-unsafe-links --info=progress2 "$HOME/dev/" piCloud/kyle-backup/dev/'
 
-alias code='positron'
-#alias rebuild='sudo nixos-rebuild switch -I nixos-config=/home/kyle/nixos/configuration.nix'
+alias code='nohup positron >/dev/null 2>&1 &'
 alias rsync='rsync -azH --info=progress2'
