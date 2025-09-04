@@ -106,5 +106,6 @@
     "console.fontSize": 12,
     "console.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
     "console.fontLigatures": true,
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "window.zoomLevel": 0.4
 }
