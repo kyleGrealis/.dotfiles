@@ -5,6 +5,7 @@ alias restart='source ~/.bashrc'
 alias gst='git status'
 alias gpush='git push'
 alias gpull='git pull'
+alias gd='git diff -U0'
 
 # This function takes in a list of files and a commit message
 # Example: `gam . 'initial commit'` 
