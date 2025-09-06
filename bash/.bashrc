@@ -147,7 +147,8 @@ if [ -f ~/.bash_profile ]; then
 fi
 
 # Custom prompt
-PS1="\n\[${bblue}\]\W\[${purple}\]\$(parse_git_branch) \[\033[0m\]\n>>\[\033[0m\] "
+# PS1="\n\[${bblue}\]\W\[${purple}\]\$(parse_git_branch) \[\033[0m\]\n>>\[\033[0m\] "
+PS1='\n\[\033[1;34m\]\W\[\033[0;35m\]$(parse_git_branch) \[\033[0m\]\n\[\033[0;32m\]\u@\h\[\033[0m\] >> '
 
 # Add Quarto to PATH
 export PATH=$PATH:~/.local/bin
@@ -162,5 +163,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Adding hook for direnv (Nix)
-eval "$(direnv hook bash)"
