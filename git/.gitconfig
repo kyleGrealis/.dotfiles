@@ -9,4 +9,11 @@
 	excludesFile = ~/.gitignore
 	autocrlf = false
 [init]
-	defaultBranch = main
+	defaultBranch = master
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+[pull]
+	rebase = true

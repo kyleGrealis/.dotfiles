@@ -7,3 +7,4 @@ parse_git_branch() {
 
 # Watch the tailnet log in live time as autoswitching occurs
 taillog () { tail -f /var/log/tailscale-autoswitch.log; }
+. "$HOME/.cargo/env"

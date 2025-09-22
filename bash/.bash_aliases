@@ -1,17 +1,51 @@
-# restart terminal session ----------------------
-restart() {
-	source "$HOME/.bashrc" 2>/dev/null || source "$HOME/.bashrc"
+# File system
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
+alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
+
+# Smart cd with zoxide integration (Omarchy's)
+alias cd="zd"
+zd() {
+  if [ $# -eq 0 ]; then
+    builtin cd ~ && return
+  elif [ -d "$1" ]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
 }
 
-# git -------------------------------------------
+# Enhanced cdl function using smart navigation (yours + his)
+cdl() {
+    zd "$@"
+    eza -lh --group-directories-first --icons=auto
+}
+
+open() {
+  xdg-open "$@" >/dev/null 2>&1 &
+}
+
+# Directories
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Tools
+alias d='docker'
+alias r='rails'
+n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
+
+# Git (enhanced with your additions)
+alias g='git'
 alias gst='git status'
-alias gpush='git push'
-alias gpull='git pull'
+alias gcm='git commit -m'
+alias gcam='git commit -a -m'
+alias gcad='git commit -a --amend'
 alias gd='git diff -U0'
 
-# This function takes in a list of files and a commit message
-# Example: `gam . 'initial commit'` 
-# Will add all files in the current directory and commit with the message 'initial commit'
+# Custom git function for selective commits (yours)
 gam() {
   for file in "${@:1:$#-1}"; do
     git add $file
@@ -19,26 +53,12 @@ gam() {
   git commit -m "${!#}"
 }
 
-
-# miscellaneous options -------------------------
-
-# change directory AND list contents of the directory
-cdl() {
-	cd "$@";
-	ls -alh;
+# Utilities (yours)
+restart() {
+    source "$HOME/.bashrc" 2>/dev/null || source "$HOME/.bashrc"
 }
 
-# human readable file & directory
-alias ls='ls -alh --color=auto'
-
-# get date & time now
 alias now='date +%F\ %T'
-
-# get the weather
 alias weather='curl wttr.in/Dallas?0'
-
-# # GitHub repos backup to cloud
-#alias backup='rsync -aH --delete --copy-unsafe-links --info=progress2 "$HOME/dev/" piCloud/kyle-backup/dev/'
-
-alias code="positron"
 alias rsync='rsync -azH --info=progress2'
+alias code='uwsm app -- /usr/share/positron/bin/positron --disable-gpu'
