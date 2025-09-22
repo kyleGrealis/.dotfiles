@@ -13,8 +13,10 @@ cdl() {
     eza -lh --group-directories-first --icons=auto
 }
 
-alias gst='git status'
 alias gd='git diff -U0'
+alias gst='git status'
+alias gpull='gitpull'
+alias gpush='git push'
 
 gam() {
   for file in "${@:1:$#-1}"; do
