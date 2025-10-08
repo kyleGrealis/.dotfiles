@@ -110,5 +110,9 @@
     "window.zoomLevel": 1.2,
     "workbench.preferredDarkColorTheme": "Owlet (One)",
     "terminal.integrated.persistentSessionScrollback": 1000,
-    "workbench.statusBar.visible": false
+    "workbench.statusBar.visible": false,
+    "terminal.integrated.sendKeybindingsToShell": false,
+    "terminal.integrated.commandsToSkipShell": [
+        "workbench.view.explorer"
+    ]
 }
