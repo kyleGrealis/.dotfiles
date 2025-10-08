@@ -5,7 +5,7 @@ alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
 alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 
-# Smart cd with zoxide integration (Omarchy's)
+# Smart cd with zoxide integration
 alias cd="zd"
 zd() {
   if [ $# -eq 0 ]; then
@@ -20,7 +20,7 @@ zd() {
 # Enhanced cdl function using smart navigation (yours + his)
 cdl() {
     zd "$@"
-    eza -lh --group-directories-first --icons=auto
+    eza -lha --group-directories-first --icons=auto
 }
 
 open() {
@@ -28,13 +28,11 @@ open() {
 }
 
 # Directories
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
+alias ..='cdl ..'
+alias ...='cdl ../..'
+alias ....='cdl ../../..'
 
 # Tools
-alias d='docker'
-alias r='rails'
 n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
 
 # Git (enhanced with your additions)
@@ -44,6 +42,8 @@ alias gcm='git commit -m'
 alias gcam='git commit -a -m'
 alias gcad='git commit -a --amend'
 alias gd='git diff -U0'
+alias gpush='git push'
+alias gpull='git pull'
 
 # Custom git function for selective commits (yours)
 gam() {
@@ -61,4 +61,4 @@ restart() {
 alias now='date +%F\ %T'
 alias weather='curl wttr.in/Dallas?0'
 alias rsync='rsync -azH --info=progress2'
-alias code='uwsm app -- /usr/share/positron/bin/positron --disable-gpu'
+alias code='/usr/share/positron/bin/positron --disable-gpu'

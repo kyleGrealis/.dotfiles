@@ -1,35 +1,22 @@
-# All the default Omarchy aliases and functions
-# (don't mess with these directly, just overwrite them here!)
-source ~/.local/share/omarchy/default/bash/rc
+# Source aliases and functions
+[ -f ~/.bash_aliases ] && source ~/.bash_aliases
+[ -f ~/.bash_profile ] && source ~/.bash_profile
 
-# Add your own exports, aliases, and functions here.
-#
-# Make an alias for invoking commands you use constantly
-# alias p='python'
+# Add custom PATH or other environment variables here if needed
+# export PATH="$HOME/.local/bin:$PATH"
 
-# Enhanced cdl function using smart navigation (yours + his)
-cdl() {
-    zd "$@"
-    eza -lh --group-directories-first --icons=auto
-}
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth:erasedups
 
-alias gd='git diff -U0'
-alias gst='git status'
-alias gpull='gitpull'
-alias gpush='git push'
+# append to the history file, don't overwrite it
+shopt -s histappend
 
-gam() {
-  for file in "${@:1:$#-1}"; do
-    git add $file
-  done
-  git commit -m "${!#}"
-}
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=10000
+HISTFILESIZE=10000
 
-restart() {
-    source "$HOME/.bashrc" 2>/dev/null || source "$HOME/.bashrc"
-}
+# custom prompt
+PS1='\n\[\033[1;34m\]\W\[\033[0;35m\]$(parse_git_branch) \[\033[0m\]\n\[\033[0;32m\]\u@\h\[\033[0m\] >> '
 
-alias now='date +%F\ %T'
-alias weather='curl wttr.in/Dallas?0'
-alias rsync='rsync -azH --info=progress2'
-alias code='uwsm app -- /usr/share/positron/bin/positron --disable-gpu'
+export PATH=$PATH:~/.local/bin

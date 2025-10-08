@@ -176,5 +176,29 @@
       "key": "ctrl+shift+\\",
       "command": "-editor.action.jumpToBracket",
       "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+4",
+      "command": "workbench.view.explorer",
+      "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+      "key": "ctrl+shift+e",
+      "command": "-workbench.view.explorer",
+      "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+      "key": "ctrl+5",
+      "command": "workbench.panel.positronHelp"
+    },
+    {
+      "key": "ctrl+6",
+      "command": "workbench.action.positron.togglePreview",
+      "when": "workbench.panel.positronPreview.active"
+    },
+    {
+      "key": "ctrl+shift+h",
+      "command": "-workbench.action.positron.togglePreview",
+      "when": "workbench.panel.positronPreview.active"
     }
   ]
