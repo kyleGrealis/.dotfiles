@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+scan="sudo nmap -sn 192.168.1.0/24"
+
+#if [[ "$1" == "-y" ]]; then
+	$scan | grep "scan report";
+#else
+#	$scan
+#fi

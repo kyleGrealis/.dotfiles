@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# Add more known networks if needed
+KNOWN_NETS=("Go_Canes" "Canes_guest")
+
+LOG_FILE="/var/log/tailscale-autoswitch.log"
+
+log() {
+    echo "$(date): $*" >> "$LOG_FILE"
+}
+
+# Function to get current WiFi SSID using iw command
+get_current_ssid() {
+    # Find active wifi interface
+    for iface in /sys/class/net/*/; do
+        iface_name=$(basename "$iface")
+        if [ -d "/sys/class/net/$iface_name/wireless" ]; then
+            # Check if interface is up and has an IP
+            if ip addr show "$iface_name" | grep -q "inet " && \
+               [ "$(cat /sys/class/net/$iface_name/operstate)" = "up" ]; then
+                # Get SSID using iw
+                ssid=$(iw dev "$iface_name" link | grep "SSID:" | sed 's/.*SSID: //')
+                if [ -n "$ssid" ]; then
+                    echo "$ssid"
+                    return 0
+                fi
+            fi
+        fi
+    done
+    return 1
+}
+
+log "Network change detected"
+
+# Get current SSID
+CURRENT_SSID=$(get_current_ssid)
+
+if [ -n "$CURRENT_SSID" ]; then
+    log "Connected to SSID: $CURRENT_SSID"
+
+    # Check if network is known
+    KNOWN=false
+    for NETWORK in "${KNOWN_NETS[@]}"; do
+        if [ "$CURRENT_SSID" = "$NETWORK" ]; then
+            KNOWN=true
+            break
+        fi
+    done
+
+    if [ "$KNOWN" = true ]; then
+        log "Home network detected: $CURRENT_SSID. Running home script..."
+        /home/kyle/.local/bin/tailscale-home >> "$LOG_FILE" 2>&1
+    else
+        log "Unknown network detected: $CURRENT_SSID. Running protect script..."
+        /home/kyle/.local/bin/tailscale-protect >> "$LOG_FILE" 2>&1
+    fi
+else
+    log "No active WiFi connection found"
+fi
+
+exit 0

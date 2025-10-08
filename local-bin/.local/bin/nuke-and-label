@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# This is a function that will wipe a device and relabel it. The idea
+#  behind this function was for taking a USB device that has an odd name
+#  and completely formatting it. For example, if the USB device is named
+#  "My Installer", it can be wiped clean and assigned a new name.
+
+# Example: nuke_and_relabel /mnt/sdaX aNewUSB
+
+nuke_and_label() {
+  if [ $# -ne 2 ]; then
+    echo "Usage: usb_nuke_and_label /dev/sdX NEW_LABEL"
+    return 1
+  fi
+
+  USB_DEVICE="$1"
+  NEW_LABEL="$2"
+
+  echo "📋 Device info:"
+  lsblk "$USB_DEVICE" 2>/dev/null || echo "Device not found in lsblk"
+
+  echo "⚠️ WARNING: This will erase everything on $USB_DEVICE"
+  read -p "Type YES to continue: " confirm
+  [ "$confirm" != "YES" ] && { echo "Aborted."; return 1; }
+
+  echo "💥 Unmounting any partitions..."
+  sudo umount "${USB_DEVICE}"?* 2>/dev/null
+
+  echo "💣 Wiping $USB_DEVICE..."
+  sudo wipefs -a "$USB_DEVICE"
+  sudo dd if=/dev/zero of="$USB_DEVICE" bs=1M count=100 status=progress
+
+  echo "🛠️ Creating new partition..."
+  sudo parted "$USB_DEVICE" --script mklabel msdos
+  sudo parted -a optimal "$USB_DEVICE" --script mkpart primary fat32 0% 100%
+
+  echo "🔠 Formatting with label '$NEW_LABEL'..."
+  sudo mkfs.vfat -F32 -n "$NEW_LABEL" "${USB_DEVICE}1"
+
+  echo "✅ Done! $USB_DEVICE is now labeled '$NEW_LABEL'"
+}

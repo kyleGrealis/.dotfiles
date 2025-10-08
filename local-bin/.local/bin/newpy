@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+# newpy - Create a new Python project with venv and starter packages
+# Usage: newpy <project_name>
+
+set -e  # Exit on any error
+
+if [ -z "$1" ]; then
+    echo "Usage: newpy <project_name>"
+    echo "Creates a Python project in ~/dev/<project_name>"
+    exit 1
+fi
+
+PROJECT_NAME="$1"
+PROJECT_DIR="$HOME/dev/$PROJECT_NAME"
+PKG_NAME=$(echo "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9_')
+
+# Check if project already exists
+if [ -d "$PROJECT_DIR" ]; then
+    echo "❌ Project '$PROJECT_NAME' already exists at $PROJECT_DIR"
+    exit 1
+fi
+
+echo "🐸 Creating Python project '$PROJECT_NAME'..."
+
+# Create project structure
+mkdir -p "$PROJECT_DIR/src/$PKG_NAME"
+cd "$PROJECT_DIR" || exit 1
+
+# Initialize with git
+echo "Initializing git..."
+git init
+
+# Create Python virtual environment
+echo "📦 Setting up virtual environment..."
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Upgrade pip to latest
+pip install --upgrade pip
+
+# Install core packages
+echo "📊 Installing pandas and polars..."
+pip install pandas polars
+
+# Freeze to requirements.txt
+echo "💾 Freezing dependencies..."
+pip freeze > requirements.txt
+
+# Create minimal src package structure
+touch "src/$PKG_NAME/__init__.py"
+
+# Create setup.py for editable install
+cat > setup.py <<EOL
+from setuptools import setup, find_packages
+
+setup(
+    name="$PKG_NAME",
+    version="0.1.0",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+)
+EOL
+
+# Create basic .gitignore
+cat > .gitignore <<EOL
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Data files (add specific extensions as needed)
+*.csv
+*.xlsx
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# Output
+output/
+plots/
+*.png
+*.jpg
+*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+EOL
+
+# Install in editable mode so imports work
+pip install -e .
+
+# Create minimal README
+echo "# $PROJECT_NAME" > README.md
+
+# Success message
+echo ""
+echo "✅ Project '$PROJECT_NAME' created successfully!"
+echo "📁 Location: $PROJECT_DIR"
+echo "🐍 Virtual environment: activated"
+echo ""
+echo "💡 Ready to code:"
+echo "   cd $PROJECT_DIR"
+echo "   # Start writing in src/$PKG_NAME/"
+echo ""
+echo "🔄 To reactivate venv later:"
+echo "   source $PROJECT_DIR/.venv/bin/activate"
+
