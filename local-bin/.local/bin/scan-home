@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+#=================================================================
+# scan-home
+# Purpose: Quick network scan to find active devices on home LAN
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
+
 scan="sudo nmap -sn 192.168.1.0/24"
 
 #if [[ "$1" == "-y" ]]; then

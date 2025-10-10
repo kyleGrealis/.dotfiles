@@ -1,0 +1,1 @@
+kyle ALL=(ALL) NOPASSWD: /usr/bin/tailscale up, /usr/bin/tailscale down

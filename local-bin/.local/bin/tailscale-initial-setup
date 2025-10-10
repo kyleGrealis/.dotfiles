@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+#=================================================================
+# tailscale-initial-setup
+# Purpose: One-time setup script - installs dispatcher and system files
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
+
+# Create & copy over the main dispatcher script
+sudo cp ~/.local/bin/99-tailscale-autoswitch /etc/NetworkManager/dispatcher.d/
+sudo chmod +x /etc/NetworkManager/dispatcher.d/99-tailscale-autoswitch
+
+# Copy the sudoers file to needed location
+sudo cp ~/.local/bin/tailscale-sudoers /etc/sudoers.d/tailscale-autoswitch
+
+# Create the initial log file
+sudo touch /var/log/tailscale-autoswitch.log
+sudo chown $USER:$USER /var/log/tailscale-autoswitch.log
+
+echo "✅ Tailscale autoswitch installed!"

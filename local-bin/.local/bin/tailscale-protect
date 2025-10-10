@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+
+#=================================================================
+# tailscale-protect
+# Purpose: Enables Tailscale exit node protection for untrusted networks
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
+
 PI5_IP="100.125.173.109"
 echo "🛡️ Switching to protection mode..."
 sudo tailscale up --exit-node=$PI5_IP

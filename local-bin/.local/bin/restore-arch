@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
-# Restore Arch system from dotfiles backup
+
+#=================================================================
+# restore-arch
+# Purpose: Restore Arch system from dotfiles backup (packages + stow)
+# Author: Kyle Grealis
+# Date: October 10, 2025
 # WARNING: Only use on a fresh Arch installation!
+#=================================================================
 
 set -e  # Exit on any error
 

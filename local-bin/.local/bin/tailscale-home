@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+
+#=================================================================
+# tailscale-home
+# Purpose: Disables Tailscale exit node for home networks
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
+
 echo "🏠 Switching to home mode..."
 sudo tailscale up --exit-node=""
 

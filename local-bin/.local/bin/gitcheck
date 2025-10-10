@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-# gitcheck — Scan ~/dev for git repos and show status
+
+#=================================================================
+# gitcheck
+# Purpose: Scan ~/dev for git repositories and display status
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
 
 DEV_DIR="$HOME/dev"
 

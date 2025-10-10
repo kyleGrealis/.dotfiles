@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-# Backup Arch package lists to dotfiles
+
+#=================================================================
+# backup-arch
+# Purpose: Backup Arch package lists to dotfiles repository
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
 
 DOTFILES="$HOME/.dotfiles"
 DATE=$(date +"%Y-%m-%d %H:%M")

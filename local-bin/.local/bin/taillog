@@ -1,2 +1,10 @@
 #!/usr/bin/env bash
+
+#=================================================================
+# taillog
+# Purpose: Monitor tailscale autoswitch log file in real-time
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
+
 sudo tail -f /var/log/tailscale-autoswitch.log

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+#=================================================================
+# 99-tailscale-autoswitch
+# Purpose: NetworkManager dispatcher - triggers tailscale-autoswitch on network changes
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
+
+# Log what NetworkManager is sending (for troubleshooting)
+echo "$(date): Dispatcher called - Interface: $1, Action: $2" >> /var/log/tailscale-autoswitch.log
+
+# Only run on interface up events
+case "$2" in
+    up)
+        /home/kyle/.local/bin/tailscale-autoswitch &
+        ;;
+esac

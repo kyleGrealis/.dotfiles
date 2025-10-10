@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+#=================================================================
+# tailscale-autoswitch
+# Purpose: Detects current WiFi SSID and switches between home/protect modes
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
+
 # Add more known networks if needed
 KNOWN_NETS=("Go_Canes" "Canes_guest")
 

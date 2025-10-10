@@ -1,271 +1,37 @@
-# Tailscale Auto-Switch Setup for Arch Linux
-
-Automatically switches between home mode (no exit node) and protect mode (exit node through Pi5) based on which network you connect to.
+# Tailscale Auto-Switch Setup for Arch Linux (NetworkManager)
 
 ## Prerequisites
-```bash
-sudo pacman -S iw tailscale
-```
+sudo pacman -S iw tailscale networkmanager
 
 ## Installation Steps
 
-### 1. Create script directory
-```bash
-mkdir -p ~/.local/bin
-```
+### 1. Install user scripts (via stow or manually)
+# Scripts go in ~/.local/bin/:
+- tailscale-protect
+- tailscale-home  
+- taillog
 
-### 2. Create `tailscale-protect` script
+### 2. Create NetworkManager dispatcher script
+sudo micro /etc/NetworkManager/dispatcher.d/99-tailscale-autoswitch
 
-**Location:** `~/.local/bin/tailscale-protect`
-```bash
-#!/usr/bin/env bash
-PI5_IP="100.125.173.109"
-echo "🛡️ Switching to protection mode..."
-sudo tailscale up --exit-node=$PI5_IP
+[contents of dispatcher script]
 
-# Verification logic
-STATUS=$(tailscale status)
-if echo "$STATUS" | grep -q "; exit node;"; then
-  echo "⚠️ -------------------- WARNING!! ---------------------"
-  echo "✅ Exit node protection ENABLED!! All traffic now routes through your Tailnet."
-  echo "⚠️ ----------------------------------------------------"
-else
-  echo "❌ Something went wrong. Please check tailscale status."
-fi
-```
+sudo chmod +x /etc/NetworkManager/dispatcher.d/99-tailscale-autoswitch
 
-### 3. Create `tailscale-home` script
-
-**Location:** `~/.local/bin/tailscale-home`
-```bash
-#!/usr/bin/env bash
-echo "🏠 Switching to home mode..."
-sudo tailscale up --exit-node=""
-
-# Verification logic
-STATUS=$(tailscale status)
-if echo "$STATUS" | grep -q "offers exit node"; then
-  echo "✅ Exit node protection disabled! Traffic now routes normally."
-else
-  echo "❌ Something went wrong. Please check tailscale status."
-fi
-```
-
-### 4. Create `tailscale-autoswitch-networkd` script
-
-**Location:** `~/.local/bin/tailscale-autoswitch-networkd`
-```bash
-#!/usr/bin/env bash
-
-# Add more known networks if needed
-KNOWN_NETS=("Go_Canes" "Canes_guest")
-
-LOG_FILE="/var/log/tailscale-autoswitch.log"
-
-log() {
-    echo "$(date): $*" >> "$LOG_FILE"
-}
-
-# Function to get current WiFi SSID using iw command
-get_current_ssid() {
-    # Find active wifi interface
-    for iface in /sys/class/net/*/; do
-        iface_name=$(basename "$iface")
-        if [ -d "/sys/class/net/$iface_name/wireless" ]; then
-            # Check if interface is up and has an IP
-            if ip addr show "$iface_name" | grep -q "inet " && \
-               [ "$(cat /sys/class/net/$iface_name/operstate)" = "up" ]; then
-                # Get SSID using iw
-                ssid=$(iw dev "$iface_name" link | grep "SSID:" | sed 's/.*SSID: //')
-                if [ -n "$ssid" ]; then
-                    echo "$ssid"
-                    return 0
-                fi
-            fi
-        fi
-    done
-    return 1
-}
-
-log "Network change detected"
-
-# Get current SSID
-CURRENT_SSID=$(get_current_ssid)
-
-if [ -n "$CURRENT_SSID" ]; then
-    log "Connected to SSID: $CURRENT_SSID"
-
-    # Check if network is known
-    KNOWN=false
-    for NETWORK in "${KNOWN_NETS[@]}"; do
-        if [ "$CURRENT_SSID" = "$NETWORK" ]; then
-            KNOWN=true
-            break
-        fi
-    done
-
-    if [ "$KNOWN" = true ]; then
-        log "Home network detected: $CURRENT_SSID. Running home script..."
-        /home/kyle/.local/bin/tailscale-home >> "$LOG_FILE" 2>&1
-    else
-        log "Unknown network detected: $CURRENT_SSID. Running protect script..."
-        /home/kyle/.local/bin/tailscale-protect >> "$LOG_FILE" 2>&1
-    fi
-else
-    log "No active WiFi connection found"
-fi
-
-exit 0
-```
-
-### 5. Create `taillog` helper script
-
-**Location:** `~/.local/bin/taillog`
-```bash
-#!/usr/bin/env bash
-sudo tail -f /var/log/tailscale-autoswitch.log
-```
-
-### 6. Make all scripts executable
-```bash
-chmod +x ~/.local/bin/tailscale-protect
-chmod +x ~/.local/bin/tailscale-home
-chmod +x ~/.local/bin/tailscale-autoswitch-networkd
-chmod +x ~/.local/bin/taillog
-```
-
-### 7. Create sudoers entry
-```bash
+### 3. Create sudoers entry
 sudo micro /etc/sudoers.d/tailscale-autoswitch
-```
 
-Add this line (replace `kyle` with your username):
-```
-kyle ALL=(ALL) NOPASSWD: /usr/bin/tailscale up, /usr/bin/tailscale down
-```
+[sudoers content]
 
-Save and exit.
-
-### 8. Create systemd service file
-
-**Location:** `/etc/systemd/system/tailscale-autoswitch.service`
-```bash
-sudo micro /etc/systemd/system/tailscale-autoswitch.service
-```
-
-Add this content:
-```ini
-[Unit]
-Description=Tailscale Auto Switch
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/home/kyle/.local/bin/tailscale-autoswitch-networkd
-User=root
-```
-
-### 9. Create systemd path file
-
-**Location:** `/etc/systemd/system/tailscale-autoswitch.path`
-```bash
-sudo micro /etc/systemd/system/tailscale-autoswitch.path
-```
-
-Add this content:
-```ini
-[Unit]
-Description=Monitor network changes for Tailscale autoswitch
-After=systemd-networkd.service
-
-[Path]
-PathChanged=/sys/class/net
-Unit=tailscale-autoswitch.service
-
-[Install]
-WantedBy=multi-user.target
-```
-
-### 10. Create log file with proper permissions
-```bash
+### 4. Create log file
 sudo touch /var/log/tailscale-autoswitch.log
-sudo chown kyle:kyle /var/log/tailscale-autoswitch.log
+sudo chown $USER:$USER /var/log/tailscale-autoswitch.log
 sudo chmod 644 /var/log/tailscale-autoswitch.log
-```
 
-### 11. Enable and start the service
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable --now tailscale-autoswitch.path
-```
-
-### 12. Verify everything is running
-```bash
-sudo systemctl status tailscale-autoswitch.path
-```
-
-You should see: `Active: active (waiting)`
-
-## Testing
-
-### Manual test
-```bash
-tailscale-autoswitch-networkd
+### 5. Test
 taillog
-```
-
-### View logs
-```bash
-taillog
-```
-
-Or:
-```bash
-cat /var/log/tailscale-autoswitch.log
-```
+# Switch networks - should auto-trigger!
 
 ## Configuration
-
-### Adding more home networks
-
-Edit `~/.local/bin/tailscale-autoswitch-networkd` and modify the `KNOWN_NETS` array:
-```bash
-KNOWN_NETS=("Go_Canes" "Canes_guest" "YourNetwork")
-```
-
-### Changing the exit node IP
-
-Edit `~/.local/bin/tailscale-protect` and modify the `PI5_IP` variable:
-```bash
-PI5_IP="100.125.173.109"
-```
-
-## How It Works
-
-- **Home Networks:** When connected to networks in `KNOWN_NETS`, the system disables exit node routing
-- **Unknown Networks:** When connected to any other network, all traffic routes through the Pi5 exit node
-- **Monitoring:** The systemd path unit watches `/sys/class/net` for network interface changes and triggers the autoswitch script automatically
-
-## Troubleshooting
-
-### Check service status
-```bash
-sudo systemctl status tailscale-autoswitch.path
-sudo systemctl status tailscale-autoswitch.service
-```
-
-### View detailed logs
-```bash
-sudo journalctl -u tailscale-autoswitch.service -f
-```
-
-### Manually trigger network check
-```bash
-tailscale-autoswitch-networkd
-```
-
-### Verify Tailscale status
-```bash
-tailscale status
-```
+Edit KNOWN_NETS in the dispatcher script at:
+/etc/NetworkManager/dispatcher.d/99-tailscale-autoswitch

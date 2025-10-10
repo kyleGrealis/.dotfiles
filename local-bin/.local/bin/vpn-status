@@ -1,4 +1,11 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
+
+#=================================================================
+# vpn-status
+# Purpose: Check current IP location and Tailscale exit node status
+# Author: Kyle Grealis
+# Date: October 10, 2025
+#=================================================================
 
 echo "🌐 Checking network routing status..."
 
