@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/urs/bin/env bash
 # Backup Arch package lists to dotfiles
 
 DOTFILES="$HOME/.dotfiles"
