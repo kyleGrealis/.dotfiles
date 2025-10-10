@@ -1,0 +1,23 @@
+#!/bin/bash
+# Backup Arch package lists to dotfiles
+
+DOTFILES="$HOME/.dotfiles"
+DATE=$(date +"%Y-%m-%d %H:%M")
+
+echo "📦 Backing up Arch package lists..."
+
+pacman -Qqe > "$DOTFILES/arch-packages.txt"
+pacman -Qqm > "$DOTFILES/aur-packages.txt"
+
+echo "✓ Package lists updated"
+
+cd "$DOTFILES"
+git add arch-packages.txt aur-packages.txt
+
+if git diff --staged --quiet; then
+    echo "ℹ️  No changes to commit"
+else
+    git commit -m "updated: $DATE"
+    git push
+    echo "✓ Changes committed and pushed"
+fi
