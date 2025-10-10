@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Claude AI
+Comment=Claude AI Projects
+Exec=brave --app=https://www.claude.ai/projects --ozone-platform=wayland
+Terminal=false
+Type=Application
+Icon=/home/kyle/.local/share/icons/claude-ai.png
+StartupNotify=true
+Categories=Network;WebBrowser;

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=reddit
+Comment=reddit
+Exec=brave --app=https://www.reddit.com/ --ozone-platform=wayland
+Terminal=false
+Type=Application
+Icon=/home/kyle/.local/share/icons/reddit.png
+StartupNotify=true
+Categories=Network;WebBrowser;

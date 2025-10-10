@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=YouTubeTV
+Comment=YouTubeTV
+Exec=brave --app=https://tv.youtube.com --ozone-platform=wayland
+Terminal=false
+Type=Application
+Icon=/home/kyle/.local/share/icons/youtube.png
+StartupNotify=true
+Categories=Network;WebBrowser;
