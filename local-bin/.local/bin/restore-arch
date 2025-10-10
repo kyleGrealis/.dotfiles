@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Restore Arch system from dotfiles backup
+# WARNING: Only use on a fresh Arch installation!
+
+set -e  # Exit on any error
+
+DOTFILES="$HOME/.dotfiles"
+
+# Color codes
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+echo -e "${YELLOW}⚠️  ARCH SYSTEM RESTORE${NC}"
+echo "This script will install packages and stow dotfiles."
+echo "This is kinda a big F|_|<kin& deal... tread lightly!"
+echo ""
+
+# Check: Is yay installed?
+if ! command -v yay &> /dev/null; then
+    echo -e "${RED}ERROR: yay is not installed!${NC}"
+    echo ""
+    echo "Install yay first:"
+    echo "  sudo pacman -S --needed git base-devel"
+    echo "  git clone https://aur.archlinux.org/yay.git"
+    echo "  cd yay && makepkg -si"
+    exit 1
+fi
+
+# Check: Do package files exist?
+if [ ! -f "$DOTFILES/arch-packages.txt" ]; then
+    echo -e "${RED}ERROR: $DOTFILES/arch-packages.txt not found${NC}"
+    exit 1
+fi
+
+# Check: Are dotfiles already stowed?
+if [ -L "$HOME/.config/cosmic" ]; then
+    echo -e "${YELLOW}⚠️  Dotfiles appear already stowed.${NC}"
+    read -p "Continue anyway? (y/N): " continue
+    [[ ! "$continue" =~ ^[Yy]$ ]] && exit 0
+fi
+
+# Final confirmation
+echo ""
+echo -e "${YELLOW}This will:${NC}"
+echo "  • Install $(wc -l < "$DOTFILES/arch-packages.txt") official packages"
+echo "  • Install $(wc -l < "$DOTFILES/aur-packages.txt") AUR packages"
+echo "  • Stow dotfiles (cosmic, my-desktop-apps, local-bin)"
+echo ""
+read -p "Proceed? (y/N): " confirm
+[[ ! "$confirm" =~ ^[Yy]$ ]] && exit 0
+
+# Install packages
+echo -e "\n${GREEN}📦 Installing packages...${NC}"
+sudo pacman -S --needed - < "$DOTFILES/arch-packages.txt"
+yay -S --needed - < "$DOTFILES/aur-packages.txt"
+
+# Stow dotfiles
+echo -e "\n${GREEN}🔗 Stowing dotfiles...${NC}"
+cd "$DOTFILES"
+stow -vt "$HOME" cosmic
+stow -vt "$HOME" my-desktop-apps
+stow -vt "$HOME" local-bin
+
+echo -e "\n${GREEN}✓ Done! Log out and back in.${NC}"
