@@ -1,0 +1,128 @@
+{
+    (
+        modifiers: [
+            Super,
+        ],
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "a",
+        description: Some("Claude AI (projects)"),
+    ): Spawn("brave --app=https://www.claude.ai/projects"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "s",
+        description: Some("Slack"),
+    ): Spawn("slack"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "p",
+        description: Some("Positron"),
+    ): Spawn("/usr/share/positron/bin/positron --disable-gpu"),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "b",
+        description: Some("Brave (incognito)"),
+    ): Spawn("brave --incognito"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "o",
+        description: Some("Obsidian"),
+    ): Spawn("obsidian"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "l",
+    ): System(LockScreen),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "a",
+    ): System(AppLibrary),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "0",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "s",
+    ): System(Screenshot),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "m",
+        description: Some("Spotify"),
+    ): Spawn("spotify"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "d",
+        description: Some("Discord"),
+    ): Spawn("discord"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "c",
+        description: Some("Thunderbird Calendar"),
+    ): Spawn("thunderbird -calendar"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "space",
+    ): System(Launcher),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "t",
+        description: Some("btop"),
+    ): Spawn("alacritty -e btop"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "slash",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "Return",
+    ): System(Terminal),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "j",
+    ): ToggleOrientation,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "e",
+        description: Some("Thunderbird"),
+    ): Spawn("thunderbird"),
+}
