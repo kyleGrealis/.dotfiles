@@ -8,12 +8,32 @@
 #=================================================================
 
 DEV_DIR="$HOME/dev"
+DOTFILES_DIR="$HOME/.dotfiles"
 
 # Color codes
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No color
+
+echo -e "\n🔍 Checking $DOTFILES_DIR...\n"
+
+# Check dotfiles first
+if [[ -d "$DOTFILES_DIR/.git" ]]; then
+    cd "$DOTFILES_DIR" || exit
+    repo_name="dotfiles"
+    
+    status=$(git status --porcelain)
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+    if [[ -z "$status" ]]; then
+        echo -e "${GREEN}✔ $repo_name${NC} [$branch] — clean"
+    else
+        echo -e "${RED}✗ $repo_name${NC} [$branch] — changes detected:"
+        git status -s
+        echo
+    fi
+fi
 
 echo -e "\n🔍 Checking git repos in $DEV_DIR...\n"
 
