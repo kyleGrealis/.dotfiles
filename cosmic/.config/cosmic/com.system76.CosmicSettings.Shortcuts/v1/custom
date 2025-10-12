@@ -10,7 +10,7 @@
         ],
         key: "a",
         description: Some("Claude AI (projects)"),
-    ): Spawn("brave --app=https://www.claude.ai/projects"),
+    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai/projects"),
     (
         modifiers: [
             Super,
@@ -32,7 +32,7 @@
         ],
         key: "b",
         description: Some("Brave (incognito)"),
-    ): Spawn("brave --incognito"),
+    ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
     (
         modifiers: [
             Super,
