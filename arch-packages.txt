@@ -44,6 +44,7 @@ linux-headers
 micro
 nano
 nautilus
+ncspot
 network-manager-applet
 networkmanager
 nmap
@@ -68,6 +69,7 @@ spotify
 stow
 sushi
 tailscale
+tcpdump
 tealdeer
 tecla
 thunderbird
