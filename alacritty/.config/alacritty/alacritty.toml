@@ -18,7 +18,7 @@ unfocused_hollow = false
 
 # OneDark color scheme
 [colors.primary]
-background = "#1e2127"
+background = "#282c34"
 foreground = "#abb2bf"
 bright_foreground = "#e6efff"
 
@@ -35,10 +35,10 @@ text = "CellForeground"
 background = "#3e4451"
 
 [colors.normal]
-black = "#1e2127"
+black = "#282c34"
 red = "#e06c75"
 green = "#98c379"
-yellow = "#d19a66"
+yellow = "#e5c07b"
 blue = "#61afef"
 magenta = "#c678dd"
 cyan = "#56b6c2"
@@ -48,17 +48,17 @@ white = "#828791"
 black = "#5c6370"
 red = "#e06c75"
 green = "#98c379"
-yellow = "#d19a66"
+yellow = "#e5c07b"
 blue = "#61afef"
 magenta = "#c678dd"
 cyan = "#56b6c2"
 white = "#828791"
 
 [colors.dim]
-black = "#1e2127"
+black = "#282c34"
 red = "#e06c75"
 green = "#98c379"
-yellow = "#d19a66"
+yellow = "#e5c07b"
 blue = "#61afef"
 magenta = "#c678dd"
 cyan = "#56b6c2"
