@@ -1,0 +1,66 @@
+[window]
+padding = { x = 15, y = 5 }
+dynamic_padding = true
+decorations = "none"
+opacity = 0.98
+blur = true
+
+[font]
+normal = { family = "FiraCode" }
+size = 11.5
+offset = { x = 0, y = 2 }
+
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+blink_interval = 500
+blink_timeout = 8
+unfocused_hollow = false
+
+# OneDark color scheme
+[colors.primary]
+background = "#1e2127"
+foreground = "#abb2bf"
+bright_foreground = "#e6efff"
+
+[colors.cursor]
+text = "#000000"
+cursor = "#abb2bf"
+
+[colors.vi_mode_cursor]
+text = "CellBackground"
+cursor = "CellForeground"
+
+[colors.selection]
+text = "CellForeground"
+background = "#3e4451"
+
+[colors.normal]
+black = "#1e2127"
+red = "#e06c75"
+green = "#98c379"
+yellow = "#d19a66"
+blue = "#61afef"
+magenta = "#c678dd"
+cyan = "#56b6c2"
+white = "#828791"
+
+[colors.bright]
+black = "#5c6370"
+red = "#e06c75"
+green = "#98c379"
+yellow = "#d19a66"
+blue = "#61afef"
+magenta = "#c678dd"
+cyan = "#56b6c2"
+white = "#828791"
+
+[colors.dim]
+black = "#1e2127"
+red = "#e06c75"
+green = "#98c379"
+yellow = "#d19a66"
+blue = "#61afef"
+magenta = "#c678dd"
+cyan = "#56b6c2"
+white = "#828791"
+
