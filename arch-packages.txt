@@ -8,6 +8,7 @@ btop
 chaotic-keyring
 chaotic-mirrorlist
 cifs-utils
+cmatrix
 cosmic-session
 cosmic-store
 discord
@@ -44,7 +45,6 @@ linux-headers
 micro
 nano
 nautilus
-ncspot
 network-manager-applet
 networkmanager
 nmap
