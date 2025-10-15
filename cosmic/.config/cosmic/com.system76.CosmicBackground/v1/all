@@ -1,9 +1,9 @@
 (
     output: "all",
-    source: Path("/home/kyle/Pictures/336332.jpg"),
+    source: Path("/home/kyle/.dotfiles/img/tux-background.jpg"),
     filter_by_theme: true,
     rotation_frequency: 300,
     filter_method: Lanczos,
-    scaling_mode: Fit((0.0, 0.0, 0.0)),
+    scaling_mode: Zoom,
     sampling_method: Alphanumeric,
 )
