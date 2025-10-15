@@ -1,6 +1,7 @@
 Some(([
     "com.system76.CosmicPanelWorkspacesButton",
     "com.system76.CosmicAppletTiling",
+    "io.github.cosmic_utils.cosmic-ext-applet-external-monitor-brightness",
 ], [
     "io.github.cosmic_utils.cosmic-ext-applet-clipboard-manager",
     "com.system76.CosmicAppletStatusArea",
