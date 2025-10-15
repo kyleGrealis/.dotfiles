@@ -64,3 +64,4 @@ alias now='date +%F\ %T'
 alias weather='curl wttr.in/Dallas?0'
 alias rsync='rsync -azH --info=progress2'
 alias code='/usr/share/positron/bin/positron --disable-gpu'
+alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
