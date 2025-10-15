@@ -11,7 +11,7 @@ Usage:
 git clone https://github.com/kyleGrealis/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
    
-# Restore packages
+# Restore Arch packages
 sudo pacman -S --needed - < arch-packages.txt
 yay -S --needed - < aur-packages.txt
    
