@@ -1,0 +1,812 @@
+---
+title: ""
+date: last-modified
+---
+
+---
+
+{{< brand logo large >}}
+
+
+```{r}
+#| label: set up
+#| echo: false
+source("R/_libraries.R")
+source('R/custom_functions.R')
+
+if (!fs::dir_exists('data')) fs::dir_create('data')
+```
+
+```{r}
+#| label: custom function
+#| echo: false
+
+# This URL will direct you to the list of interviewer manuals & questionnaire instruments
+# https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/questionnaires.aspx?Cycle=2021-2023
+
+# NOTE: the PDF links on the page provide a questionnaire, but not all variables may be 
+# listed compared to when using `nhanes("DIQ_L") |> names()`.
+# The custom `get_url()` function is needed to get the link to the full set of variables
+# from the codebook!
+
+#----------------------------------------------------------------------------------------
+#' Custom function to retrieve the codebook URL
+#' @param table Character. The table where variable information is needed.
+#' @returns Full URL to CDC data documentation, codebook, & frequencies.
+get_url <- function(table) {
+  paste0(
+    "https://wwwn.cdc.gov",
+    nhanesManifest() |> 
+      filter(Table == table) |> 
+      pull(DocURL)
+  ) |> 
+  message()
+}
+```
+
+
+```{r}
+#| label: data pull function
+
+#' Function to pull all datasets with the same base name
+#' @param nhanes_table Character. NOT case-sensitive! Lowercase is allowed.
+#' @param selected_variables Character vector. Default is NULL to grab all variables 
+#' from the dataset. Do not use `everything()`... just don't enter an argument value.
+#' @returns Tibble of datasets across cycles; using `bind_rows()`.
+pull_nhanes <- function(nhanes_table, selected_variables = NULL) {
+
+  nhanes_table <- stringr::str_to_upper(nhanes_table)
+  message(sprintf('\nDataset: %s', nhanes_table))
+
+  # Starting with B through L, skipping K
+  table_suffixes <- c(LETTERS[2:10], LETTERS[12])
+
+  start_dfr <- tibble(
+    # Append the suffix to tables. First table has no letter suffix.
+    # Will create something like DEMO_B & LAB_X
+    code = c(nhanes_table, paste0(nhanes_table, '_', table_suffixes)),
+    # The data for 2019-2020 was not collected the same way. See full docs.
+    # This creates years: 1999-2017 & 2021
+    year = c(seq(1999, 2017, by = 2), 2021)
+  )
+
+  # Initialize dataset
+  combined_data <- tibble()
+
+  for (i in seq_len(nrow(start_dfr))) {
+    code <- start_dfr$code[i]  # the dataset name with suffix
+    yr   <- start_dfr$year[i]  # corresponding year
+
+    message(sprintf('Processing NHANES data for year: %s', yr))
+    data <- nhanes(code)
+
+    # Skip if dataset doesn't exist
+    if (is.null(data)) {
+      message(sprintf('Dataset %s not available, skipping...', code))
+      next
+    }
+
+    if (is.null(selected_variables)) {
+      current_data <- data |> mutate(year = yr, .before = 1) |> janitor::clean_names()
+    } else {
+      # Select only certain variables if a vector was passed
+      current_data <- data |> 
+        select(any_of(stringr::str_to_upper(selected_variables))) |> 
+        mutate(year = yr, .before = 1) |> janitor::clean_names()
+    }
+
+    # browser()
+
+    if (nrow(combined_data) == 0) {
+      combined_data <- current_data
+    } else {
+      combined_data <- tryCatch({
+        bind_rows(combined_data, current_data)
+      }, error = function(e) {
+        # Previous attmempts to combine data from multiple cycles has led to type
+        # mismatching: one was factor while the other was character, you get the point...
+        # Find the common variables and attempt to harmonize types
+        common_cols <- intersect(names(combined_data), names(current_data))
+
+        for (col in common_cols) {
+          if (col == 'year') next
+
+          existing_var_type <- typeof(combined_data[[col]])
+          entering_var_type <- typeof(current_data[[col]])
+
+          if (existing_var_type != entering_var_type) {
+            message(sprintf(
+              'Type mismatch in %s: %s vs %s... converting types now...', 
+              col, existing_var_type, entering_var_type
+            ))
+            num_types <- c('double', 'integer')
+            if (existing_var_type %in% num_types & entering_var_type %in% num_types) {
+              combined_data[[col]] <- as.double(combined_data[[col]])
+              current_data[[col]]  <- as.double(current_data[[col]])
+            } else {
+              combined_data[[col]] <- as.character(combined_data[[col]])
+              current_data[[col]]  <- as.character(current_data[[col]])
+            }
+          }
+        }
+
+        bind_rows(combined_data, current_data)
+      })
+    }
+  }
+
+  mapped_dfr <- combined_data |> 
+    mutate(
+      year = as.integer(year),
+      seqn = as.integer(seqn)
+    )
+
+  return(mapped_dfr)
+}
+
+# test function: selecting variables
+# demo1 <- pull_nhanes('DEMO', c('SEQN', 'RIDAGEYR'))
+# test function: all the DEMO data across cycles
+# demo2 <- pull_nhanes('DEMO')
+```
+
+```{r}
+#| label: demographics
+# Find the tables for demographic data
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'DEMO')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+# https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DEMO.htm
+
+#     Table                                             DocURL     Years
+# 1  DEMO_L /Nchs/Data/Nhanes/Public/2021/DataFiles/DEMO_L.htm 2021-2023
+# 3  DEMO_J /Nchs/Data/Nhanes/Public/2017/DataFiles/DEMO_J.htm 2017-2018
+# 4  DEMO_I /Nchs/Data/Nhanes/Public/2015/DataFiles/DEMO_I.htm 2015-2016
+# 5  DEMO_H /Nchs/Data/Nhanes/Public/2013/DataFiles/DEMO_H.htm 2013-2014
+# 6  DEMO_G /Nchs/Data/Nhanes/Public/2011/DataFiles/DEMO_G.htm 2011-2012
+# 7  DEMO_F /Nchs/Data/Nhanes/Public/2009/DataFiles/DEMO_F.htm 2009-2010
+# 8  DEMO_E /Nchs/Data/Nhanes/Public/2007/DataFiles/DEMO_E.htm 2007-2008
+# 9  DEMO_D /Nchs/Data/Nhanes/Public/2005/DataFiles/DEMO_D.htm 2005-2006
+# 10 DEMO_C /Nchs/Data/Nhanes/Public/2003/DataFiles/DEMO_C.htm 2003-2004
+# 11 DEMO_B /Nchs/Data/Nhanes/Public/2001/DataFiles/DEMO_B.htm 2001-2002
+# 12   DEMO   /Nchs/Data/Nhanes/Public/1999/DataFiles/DEMO.htm 1999-2000
+demo_vars <- c(
+  "SEQN", "SDDSRVYR",
+  "WTMEC2YR", "WTINT2YR",
+  "WTMEC4YR", "WTINT4YR",
+  "SDMVPSU", "SDMVSTRA",
+  "RIAGENDR", "RIDAGEYR", "RIDRETH1", "RIDRETH2", "RIDRETH3", "DMDEDUC2", "INDHHIN2"
+)
+
+demographics <- pull_nhanes('DEMO', demo_vars)
+
+names(demographics)
+# year: First year of survey
+# seqn: Participant ID
+# sddsrvyr: Data Release Number
+# riagendr: Gender
+# ridageyr: Age in years at screening
+# wtmec2yr: Full sample 2-year MEC exam weight
+# wtint2yr: Full sample 2-year interview weight
+# wtmec4yr: Full sample 4-year MEC exam weight
+# wtint4yr: Full sample 4-year interview weight
+# sdmvpsu: Masked variance pseudo-PSU
+# smvstra: Masked variance pseudo-stratum
+# ridreth1: Race/Hispanic origin
+# ridreth2: Race/Hispanic origin
+# ridreth3: Race/Hispanic origin w/ NH Asian
+# dmdeduc2: Education level - Adults 20+
+# indhhin2: Annual household income
+```
+
+```{r}
+#| label: diabetes data
+# Find the tables for diabetes data
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'DIQ')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#    Table                                            DocURL     Years
+# 1  DIQ_L /Nchs/Data/Nhanes/Public/2021/DataFiles/DIQ_L.htm 2021-2023
+# 2  P_DIQ /Nchs/Data/Nhanes/Public/2017/DataFiles/P_DIQ.htm 2017-2020
+# 3  DIQ_J /Nchs/Data/Nhanes/Public/2017/DataFiles/DIQ_J.htm 2017-2018
+# 4  DIQ_I /Nchs/Data/Nhanes/Public/2015/DataFiles/DIQ_I.htm 2015-2016
+# 5  DIQ_H /Nchs/Data/Nhanes/Public/2013/DataFiles/DIQ_H.htm 2013-2014
+# 6  DIQ_G /Nchs/Data/Nhanes/Public/2011/DataFiles/DIQ_G.htm 2011-2012
+# 7  DIQ_F /Nchs/Data/Nhanes/Public/2009/DataFiles/DIQ_F.htm 2009-2010
+# 8  DIQ_E /Nchs/Data/Nhanes/Public/2007/DataFiles/DIQ_E.htm 2007-2008
+# 9  DIQ_D /Nchs/Data/Nhanes/Public/2005/DataFiles/DIQ_D.htm 2005-2006
+# 10 DIQ_C /Nchs/Data/Nhanes/Public/2003/DataFiles/DIQ_C.htm 2003-2004
+# 11 DIQ_B /Nchs/Data/Nhanes/Public/2001/DataFiles/DIQ_B.htm 2001-2002
+# 12   DIQ   /Nchs/Data/Nhanes/Public/1999/DataFiles/DIQ.htm 1999-2000
+
+# diab_vars <- c('SEQN', 'DIQ010', 'DID040', 'DIQ160', 'DIQ050', 'DID060', 'DIQ060U', 'DIQ070')
+# diabetes <- pull_nhanes('DIQ', diab_vars)
+diabetes_full <- pull_nhanes('DIQ')
+
+# NOTE: Many of the variables changed across survey cycles. This section will redo and 
+# standardize those variables:
+
+# Label	                          1999–2000	2001–2004	2005–2008	2009–2018
+# --------------------------------------------------------------------------------------
+# Age when first told 
+#   you had diabetes	            DIQ040G   DID040G   DID040    DID040
+# Number of years of age          DIQ040Q   DID040Q
+# --------------------------------------------------------------------------------------
+#
+# How long taking insulin         DIQ060G   DID060G   DID060    DID060
+# Number of mos/yrs taking
+#   insulin                       DIQ060Q   DID060Q  
+# --------------------------------------------------------------------------------------
+# 
+# Take diabetic pills to
+#   lower blood sugar             DIQ070    DIQ070    DID070    DIQ070
+
+diabetes <- diabetes_full |> 
+  mutate(
+    # If the age was reported at less than 1 year, setting default to 0.5 for calculation
+    # of diabetes duration
+    age_told_diabetes = case_when(
+      # For 1999-2000 cycle: Uses DIQ040G (gate) + DIQ040Q (numeric)
+      year <= 2000 & diq040g == 'Enter number' ~ diq040q,
+      year <= 2000 & diq040g == 'Less than 1 year' ~ 0.5,
+      year <= 2000 & diq040g %in% c('Refused', "Don't know") ~ NA_real_,
+      year <= 2000 & is.na(diq040g) ~ NA_real_,
+
+      # For 2001-2004 cycles: Uses DID040G (gate) + DID040Q (numeric)
+      year >= 2001 & year <= 2004 & did040g == 'Enter number' ~ did040q,
+      year >= 2001 & year <= 2004 & did040g == 'Less than 1 year' ~ 0.5,
+      year >= 2001 & year <= 2004 & did040g %in% c('Refused', "Don't know") ~ NA_real_,
+      year >= 2001 & year <= 2004 & is.na(did040g) ~ NA_real_,
+
+      # For 2005+ cycles: Uses DID040 only (single variable with numeric values)
+      # Valid ages: 1-79, plus special codes
+      year >= 2005 & did040 >= 1 & did040 <= 79 ~ as.numeric(did040),
+      year >= 2005 & did040 <= 150 ~ 80,  # "80 years or older"
+      year >= 2005 & did040 == 666 ~ 0.5,  # "Less than 1 year"
+      year >= 2005 & did040 %in% c(777, 999) ~ NA_real_,  # Refused, Don't know
+      year >= 2005 & is.na(did040) ~ NA_real_,
+      
+      .default = NA_real_
+    ),
+    # Convert insulin duration to years
+    insulin_duration_yrs = case_when(
+      # For 1999-2000 cycle: Uses DIQ060G (gate) + DIQ060Q (numeric) + DIQ060U (unit)
+      year <= 2000 & diq060g == 'Less than 1 month' ~ 0.5 / 12,  # ~0.04 years
+      year <= 2000 & diq060g == 'Enter number (of months or years)' & diq060u == 'Years' ~ diq060q,
+      year <= 2000 & diq060g == 'Enter number (of months or years)' & diq060u == 'Months' ~ diq060q / 12,
+      year <= 2000 & diq060g %in% c('Refused', "Don't know") ~ NA_real_,
+      year <= 2000 & is.na(diq060g) ~ NA_real_,
+
+      # For 2001-2004 cycles: Uses DID060G (gate) + DID060Q (numeric) + DID060U (unit)
+      year >= 2001 & year <= 2004 & did060g == 'Less than 1 month' ~ 0.5 / 12,
+      year >= 2001 & year <= 2004 & diq060u == 'Years' ~ did060q,
+      year >= 2001 & year <= 2004 & diq060u == 'Months' ~ did060q / 12,
+      year >= 2001 & year <= 2004 & did060g %in% c('Refused', "Don't know") ~ NA_real_,
+      year >= 2001 & year <= 2004 & is.na(did060g) ~ NA_real_,
+
+      # For 2005+ cycles: Uses DID060 (numeric) + DID060U (unit)
+      year >= 2005 & did060 == 666 ~ 0.5 / 12,  # "Less than 1 month"
+      year >= 2005 & diq060u == 'Years' ~ did060,
+      year >= 2005 & diq060u == 'Months' ~ did060 / 12,
+      year >= 2005 & did060 %in% c(777, 999) ~ NA_real_,  # Refused, Don't know
+      year >= 2005 & is.na(did060) ~ NA_real_,
+      
+      .default = NA_real_
+    ),
+    # Standardize take diabetic pills
+    take_diabetic_pills = case_when(
+      year <= 2000 ~ diq070,
+      year <= 2004 ~ diq070,
+      year <= 2008 ~ did070,
+      year > 2008  ~ diq070,
+    )    
+  ) |> 
+  select(
+    year, seqn, diq010, age_told_diabetes, diq160, diq050, 
+    insulin_duration_yrs, take_diabetic_pills
+  )
+  
+
+names(diabetes)
+# year: First year of survey
+# seqn: Participant ID
+# diq010: Doctor told you have diabetes
+# age_told_diabetes: Age when first told you had diabetes
+# diq160: Ever told you have prediabetes
+# diq050: Taking insulin now
+# insulin_duration_yrs: How long taking insulin
+# take_diabetic_pills: Take diabetic pills to lower blood sugar
+```
+
+```{r}
+#| label: test join
+# left_join(demographics, diabetes, by = c('year', 'seqn')) |> nrow()
+```
+
+```{r}
+#| label: body composition measures
+# Find the tables for body composition measures data
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'BMX')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#    Table                                            DocURL     Years
+# 1  BMX_L /Nchs/Data/Nhanes/Public/2021/DataFiles/BMX_L.htm 2021-2023
+# 2  P_BMX /Nchs/Data/Nhanes/Public/2017/DataFiles/P_BMX.htm 2017-2020
+# 3  BMX_J /Nchs/Data/Nhanes/Public/2017/DataFiles/BMX_J.htm 2017-2018
+# 4  BMX_I /Nchs/Data/Nhanes/Public/2015/DataFiles/BMX_I.htm 2015-2016
+# 5  BMX_H /Nchs/Data/Nhanes/Public/2013/DataFiles/BMX_H.htm 2013-2014
+# 6  BMX_G /Nchs/Data/Nhanes/Public/2011/DataFiles/BMX_G.htm 2011-2012
+# 7  BMX_F /Nchs/Data/Nhanes/Public/2009/DataFiles/BMX_F.htm 2009-2010
+# 8  BMX_E /Nchs/Data/Nhanes/Public/2007/DataFiles/BMX_E.htm 2007-2008
+# 9  BMX_D /Nchs/Data/Nhanes/Public/2005/DataFiles/BMX_D.htm 2005-2006
+# 10 BMX_C /Nchs/Data/Nhanes/Public/2003/DataFiles/BMX_C.htm 2003-2004
+# 11 BMX_B /Nchs/Data/Nhanes/Public/2001/DataFiles/BMX_B.htm 2001-2002
+# 12   BMX   /Nchs/Data/Nhanes/Public/1999/DataFiles/BMX.htm 1999-2000
+
+body_vars <- c('SEQN', 'BMXWT', 'BMXHT', 'BMXBMI', 'BMXWAIST')
+body <- pull_nhanes('BMX', body_vars)
+
+names(body)
+# year: First year of survey
+# seqn: Participant ID
+# bmxwt: Weight (kg)
+# bmxht: Standing Height (cm)
+# bmxbmi: Body Mass Index (kg/m^2)
+# bmxwaist: Waist Circumference (cm)
+```
+
+```{r}
+#| label: body fat % 
+# Find tables for body fat % from body scan
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'DXX_')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#     Table                                              DocURL     Years
+# 1   DXX_J   /Nchs/Data/Nhanes/Public/2017/DataFiles/DXX_J.htm 2017-2018
+# 2   DXX_I   /Nchs/Data/Nhanes/Public/2015/DataFiles/DXX_I.htm 2015-2016
+# 3   DXX_H   /Nchs/Data/Nhanes/Public/2013/DataFiles/DXX_H.htm 2013-2014
+# 4   DXX_G   /Nchs/Data/Nhanes/Public/2011/DataFiles/DXX_G.htm 2011-2012
+# 5 DXX_2_B /Nchs/Data/Nhanes/Public/2001/DataFiles/DXX_2_B.htm 2001-2002
+
+scan_vars <- c(
+  'SEQN', 'DXDLAPF', 'DXDLLPF', 'DXDRAPF', 'DXDRLPF', 'DXDTRPF', 
+  'DXDSTPF', 'DXDTOPF', 'DXDTOFAT'
+)
+bodyscan <- pull_nhanes('DXX', scan_vars)
+
+unique(bodyscan$year)
+# [1] 2005 2011 2013 2015 2017
+
+names(bodyscan)
+# year: First year of survey
+# seqn: Participant ID
+# dxdlapf: Left Arm Percent Fat
+# dxdllpf: Left Leg Percent Fat
+# dxdrapf: Right Arm Percent Fat
+# dxdrlpf: Right Leg Percent Fat
+# dxdtrpf: Trunk Percent Fat
+# dxdstpf: Subtotal Percent Fat
+# dxdtopf: Total Percent Fat
+# dxdtofat: Total Fat (g)
+```
+
+```{r}
+#| label: more dexa data
+# # Find tables for more dexa scan 
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'DXXAG_')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#     Table                                              DocURL     Years
+# 1 DXXAG_J /Nchs/Data/Nhanes/Public/2017/DataFiles/DXXAG_J.htm 2017-2018
+# 2 DXXAG_I /Nchs/Data/Nhanes/Public/2015/DataFiles/DXXAG_I.htm 2015-2016
+# 3 DXXAG_H /Nchs/Data/Nhanes/Public/2013/DataFiles/DXXAG_H.htm 2013-2014
+# 4 DXXAG_G /Nchs/Data/Nhanes/Public/2011/DataFiles/DXXAG_G.htm 2011-2012
+# 5 DXXAG_D /Nchs/Data/Nhanes/Public/2005/DataFiles/DXXAG_D.htm 2005-2006
+# 6 DXXAG_C /Nchs/Data/Nhanes/Public/2003/DataFiles/DXXAG_C.htm 2003-2004
+
+dexa_vars <- c(
+  'year', 'seqn', 'dxxanfm', 'dxxanlm', 'dxxgyfm', 'dxxgylm', 'dxxagrat', 
+  'dxxsatm', 'dxxtatm', 'dxxvfatm'
+)
+dexa <- pull_nhanes('DXXAG', dexa_vars)
+unique(dexa$year)
+# [1] 2003 2005 2011 2013 2015 2017
+
+names(dexa)
+
+# year: First year of survey
+# seqn: Participant ID
+# dxxanfm: Android fat mass
+# dxxanlm: Android lean mass
+# dxxgyfm: Gynoid fat mass
+# dxxgylm: Gynoid lean mass
+# dxxagrat: Android to Gynoid ration
+# dxxsatm: Subcutaneous fat mass
+# dxxtatm:  Total abdominal fat mass
+# dxxvfatm: Visceral adipose tissue mass
+```
+
+
+```{r}
+#| label: glycohemoglobin data
+# Find tables for glycohemoglobin for diabetes identification
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'GHB_')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+  # arrange(desc(Years))
+
+#   Table                                            DocURL     Years
+# 1 GHB_L /Nchs/Data/Nhanes/Public/2021/DataFiles/GHB_L.htm 2021-2023
+# 2 GHB_J /Nchs/Data/Nhanes/Public/2017/DataFiles/GHB_J.htm 2017-2018
+# 3 GHB_I /Nchs/Data/Nhanes/Public/2015/DataFiles/GHB_I.htm 2015-2016
+# 4 GHB_H /Nchs/Data/Nhanes/Public/2013/DataFiles/GHB_H.htm 2013-2014
+# 5 GHB_G /Nchs/Data/Nhanes/Public/2011/DataFiles/GHB_G.htm 2011-2012
+# 6 GHB_F /Nchs/Data/Nhanes/Public/2009/DataFiles/GHB_F.htm 2009-2010
+# 7 GHB_E /Nchs/Data/Nhanes/Public/2007/DataFiles/GHB_E.htm 2007-2008
+# 8 GHB_D /Nchs/Data/Nhanes/Public/2005/DataFiles/GHB_D.htm 2005-2006
+
+glyco_vars <- c('seqn', 'lbxgh')
+glyco <- pull_nhanes('L10', glyco_vars)  # older data with lbxgh
+glyco2 <- pull_nhanes('GHB', glyco_vars)
+glyco <- bind_rows(glyco, glyco2)
+unique(glyco$year)
+# [1] 2005 2007 2009 2011 2013 2015 2017 2021
+
+names(glyco)
+# year: First year of survey
+# seqn: Participant ID
+# lbxgh: Glycohemoglobin % / HbA1c %
+```
+
+```{r}
+#| label: triglyceride data
+# Find tables for triglyceride data
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'TRIGLY_')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#      Table                                               DocURL     Years
+# 1 TRIGLY_J /Nchs/Data/Nhanes/Public/2017/DataFiles/TRIGLY_J.htm 2017-2018
+# 2 TRIGLY_I /Nchs/Data/Nhanes/Public/2015/DataFiles/TRIGLY_I.htm 2015-2016
+# 3 TRIGLY_H /Nchs/Data/Nhanes/Public/2013/DataFiles/TRIGLY_H.htm 2013-2014
+# 4 TRIGLY_G /Nchs/Data/Nhanes/Public/2011/DataFiles/TRIGLY_G.htm 2011-2012
+# 5 TRIGLY_F /Nchs/Data/Nhanes/Public/2009/DataFiles/TRIGLY_F.htm 2009-2010
+# 6 TRIGLY_E /Nchs/Data/Nhanes/Public/2007/DataFiles/TRIGLY_E.htm 2007-2008
+# 7 TRIGLY_D /Nchs/Data/Nhanes/Public/2005/DataFiles/TRIGLY_D.htm 2005-2006
+
+tri_vars <- c('seqn', 'wtsaf2yr', 'lbxtr', 'lbdldl')
+trigly <- pull_nhanes('TRIGLY', tri_vars)
+unique(trigly$year)
+# [1] 2005 2007 2009 2011 2013 2015 2017
+
+names(trigly)
+# year: First year of survey
+# seqn: Participant ID
+# wtsaf2yr: Fasting sumbsample 2 year MEC weight -- must be used to analyze these vars!!
+# lbxtr: Triglyceride (mg/dL)
+# lbdldl: LDL-Cholesterol, Friedewald (mg/dL)
+```
+
+```{r}
+#| label: cholesterol data
+# Find tables for choloesterol data
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'TCHOL_')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#     Table                                              DocURL     Years
+# 1 TCHOL_L /Nchs/Data/Nhanes/Public/2021/DataFiles/TCHOL_L.htm 2021-2023
+# 2 TCHOL_J /Nchs/Data/Nhanes/Public/2017/DataFiles/TCHOL_J.htm 2017-2018
+# 3 TCHOL_I /Nchs/Data/Nhanes/Public/2015/DataFiles/TCHOL_I.htm 2015-2016
+# 4 TCHOL_H /Nchs/Data/Nhanes/Public/2013/DataFiles/TCHOL_H.htm 2013-2014
+# 5 TCHOL_G /Nchs/Data/Nhanes/Public/2011/DataFiles/TCHOL_G.htm 2011-2012
+# 6 TCHOL_F /Nchs/Data/Nhanes/Public/2009/DataFiles/TCHOL_F.htm 2009-2010
+# 7 TCHOL_E /Nchs/Data/Nhanes/Public/2007/DataFiles/TCHOL_E.htm 2007-2008
+# 8 TCHOL_D /Nchs/Data/Nhanes/Public/2005/DataFiles/TCHOL_D.htm 2005-2006
+
+chole_vars <- c('seqn', 'lbxtc')
+chole <- pull_nhanes('TCHOL', chole_vars)
+unique(chole$year)
+# [1] 2005 2007 2009 2011 2013 2015 2017 2021
+
+names(chole)
+# year: First year of survey
+# seqn: Participant ID
+# lbxtc: Total Cholesterol (mg/dL)
+```
+
+```{r}
+#| label: HDL data
+# Find tables for HDL data
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'HDL_')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#   Table                                            DocURL     Years
+# 1 HDL_L /Nchs/Data/Nhanes/Public/2021/DataFiles/HDL_L.htm 2021-2023
+# 2 HDL_J /Nchs/Data/Nhanes/Public/2017/DataFiles/HDL_J.htm 2017-2018
+# 3 HDL_I /Nchs/Data/Nhanes/Public/2015/DataFiles/HDL_I.htm 2015-2016
+# 4 HDL_H /Nchs/Data/Nhanes/Public/2013/DataFiles/HDL_H.htm 2013-2014
+# 5 HDL_G /Nchs/Data/Nhanes/Public/2011/DataFiles/HDL_G.htm 2011-2012
+# 6 HDL_F /Nchs/Data/Nhanes/Public/2009/DataFiles/HDL_F.htm 2009-2010
+# 7 HDL_E /Nchs/Data/Nhanes/Public/2007/DataFiles/HDL_E.htm 2007-2008
+# 8 HDL_D /Nchs/Data/Nhanes/Public/2005/DataFiles/HDL_D.htm 2005-2006
+
+hdl_vars <- c('SEQN', 'LBDHDD')
+hdl <- pull_nhanes('HDL', hdl_vars)
+unique(hdl$year)
+# [1] 2001 2003 2005 2007 2009 2011 2013 2015 2017 2021
+
+names(hdl)
+# year: First year of survey
+# seqn: Participant ID
+# lbdhdd: Direct HDL-Cholesterol (mg/dL)
+```
+
+```{r}
+#| label: glucose data
+# Find tables for glucose data
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'GLU_')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#   Table                                            DocURL     Years
+# 1 GLU_L /Nchs/Data/Nhanes/Public/2021/DataFiles/GLU_L.htm 2021-2023
+# 2 GLU_J /Nchs/Data/Nhanes/Public/2017/DataFiles/GLU_J.htm 2017-2018
+# 3 GLU_I /Nchs/Data/Nhanes/Public/2015/DataFiles/GLU_I.htm 2015-2016
+# 4 GLU_H /Nchs/Data/Nhanes/Public/2013/DataFiles/GLU_H.htm 2013-2014
+# 5 GLU_G /Nchs/Data/Nhanes/Public/2011/DataFiles/GLU_G.htm 2011-2012
+# 6 GLU_F /Nchs/Data/Nhanes/Public/2009/DataFiles/GLU_F.htm 2009-2010
+# 7 GLU_E /Nchs/Data/Nhanes/Public/2007/DataFiles/GLU_E.htm 2007-2008
+# 8 GLU_D /Nchs/Data/Nhanes/Public/2005/DataFiles/GLU_D.htm 2005-2006
+
+glucose_vars <- c('seqn', 'wtsaf2yr', 'lbxglu')
+glucose <- pull_nhanes('L10AM', glucose_vars)
+glucose2 <- pull_nhanes('GLU', glucose_vars)
+glucose <- bind_rows(glucose, glucose2)
+unique(glucose$year)
+# [1] 2001 2003 2005 2007 2009 2011 2013 2015 2017 2021
+
+names(glucose)
+# year: First year of survey
+# seqn: Participant ID
+# wtsaf2yr: Fasting subsample 2 year MEC weight
+# lbxglu: Fasting Glucose (mg/dL)
+```
+
+```{r}
+#| label: blood pressure data
+# Find tables for blood pressure data
+# nhanesManifest() |> 
+#   filter(str_detect(Table, 'BPX_')) |> 
+#   select(-DataURL, -`Date.Published`) |> 
+#   arrange(desc(Years))
+
+#   Table                                            DocURL     Years
+# 1 BPX_J /Nchs/Data/Nhanes/Public/2017/DataFiles/BPX_J.htm 2017-2018
+# 2 BPX_I /Nchs/Data/Nhanes/Public/2015/DataFiles/BPX_I.htm 2015-2016
+# 3 BPX_H /Nchs/Data/Nhanes/Public/2013/DataFiles/BPX_H.htm 2013-2014
+# 4 BPX_G /Nchs/Data/Nhanes/Public/2011/DataFiles/BPX_G.htm 2011-2012
+# 5 BPX_F /Nchs/Data/Nhanes/Public/2009/DataFiles/BPX_F.htm 2009-2010
+# 6 BPX_E /Nchs/Data/Nhanes/Public/2007/DataFiles/BPX_E.htm 2007-2008
+# 7 BPX_D /Nchs/Data/Nhanes/Public/2005/DataFiles/BPX_D.htm 2005-2006
+# 8 BPX_C /Nchs/Data/Nhanes/Public/2003/DataFiles/BPX_C.htm 2003-2004
+# 9 BPX_B /Nchs/Data/Nhanes/Public/2001/DataFiles/BPX_B.htm 2001-2002
+
+bp_vars <- c(
+  'SEQN', 'BPXSY1', 'BPXDI1', 'BPXSY2', 'BPXDI2', 
+  'BPXSY3', 'BPXDI3', 'BPXSY4', 'BPXDI4'
+)
+bp <- pull_nhanes('BPX', bp_vars)
+unique(bp$year)
+# [1] 1999 2001 2003 2005 2007 2009 2011 2013 2015 2017
+
+names(bp)
+# year: First year of survey
+# seqn: Participant ID
+# bpxsy*: systolic BP readings (4 total readings)
+# bxpdi*: diastolyic BP readings (4 total readings)
+```
+
+```{r}
+#| label: joining data
+# Merge the above datasets by SEQN & year
+joined_data <- demographics |> 
+  left_join(diabetes, by = c('seqn', 'year')) |> 
+  left_join(body, by = c('seqn', 'year')) |> 
+  left_join(bodyscan, by = c('seqn', 'year')) |> 
+  left_join(dexa, by = c('seqn', 'year')) |> 
+  left_join(glyco, by = c('seqn', 'year')) |> 
+  left_join(trigly, by = c('seqn', 'year')) |> 
+  left_join(chole, by = c('seqn', 'year')) |> 
+  left_join(hdl, by = c('seqn', 'year')) |> 
+  left_join(glucose, by = c('seqn', 'year')) |> 
+  left_join(bp, by = c('seqn', 'year'))
+
+# Uncomment ONLY to merge in new data!!!
+# save(joined_data, file = 'data/joined_data.rda')
+```
+
+Just creating new variables? Start here...
+
+```{r}
+#| label: creating new variables
+# Repeating these lines here so you do not have to run through the whole importing
+# before manipulating and creating new variables:
+source("R/_libraries.R")
+source('R/custom_functions.R')
+# -------
+load('data/joined_data.rda')
+the_data <- joined_data |> 
+  # Create new variables
+  mutate(
+    waist_height_ratio = bmxwaist / bmxht,  # waist (cm) / standing height (cm)
+    mean_dbp = rowMeans(pick(contains('bpxdi')), na.rm = TRUE),
+    mean_sbp = rowMeans(pick(contains('bpxsy')), na.rm = TRUE),
+
+    #----------------------------------------------------------------------------------
+    # Create a diagnostic age variable for diabetes. Age at survey - diagnosis age:
+    diab_duration = ridageyr - age_told_diabetes,
+
+    # Calculate the time from diagnosis to start taking insulin in years
+    # This may create negative numbers, but that is OK since some values for 
+    # some diab_duration will be 0 (diagnosed with diabetes the same year of the survey).
+    # However, some respondents report taking insulin BEFORE being diagnosed and those
+    # special cases will be handled after.
+    time_to_insulin = diab_duration - insulin_duration_yrs,
+
+    # Create insulin within one year variable using revised diab_duration above
+    insulin_within_1yr = case_when(
+      # Keep original NA value.
+      is.na(time_to_insulin) ~ NA,
+      # Biologically implausible: started insulin before dx. This logic properly converts
+      # to NA any participants reporting starting insulin longer than years of diabetes.
+      time_to_insulin < -1 ~ NA,
+      # Were diagnosed with diabetes the year of the survey but they have a VALID time
+      # to starting taking insulin. 
+      # This threshold is 0 because some respondents were diagnosed the same year as 
+      # the survey.
+      # For example, someone age 30 at survey and 30 at diagnosis AND started taking 
+      # insulin one month ago would have a value of -0.0833 and this would represent a 
+      # VALID time to insulin.
+      # This also offers a slight recall error gracefully. For example, if current age
+      # is 50, diagnosed at 48, and stated taking insulin for 3 years, their:
+      # diab_duration = 2
+      # insulin_duration_yrs = 3
+      # time_to_insulin = -1, which is at the boundary and INCLUDED (>= -1).
+      time_to_insulin <= 0 ~ TRUE,
+      # Started insulin within 1 year
+      time_to_insulin <= 1 ~ TRUE,
+      # Started insulin AFTER 1 year
+      time_to_insulin > 1 ~ FALSE
+    ),
+
+    # Fix education variable: dmdeduc2 has differing use of capitalization
+    dmdeduc2 = factor(
+      case_when(
+        dmdeduc2 == 'Don\'t know' ~ 'Don\'t Know',
+        dmdeduc2 == 'Less than 9th grade' ~ 'Less Than 9th Grade',
+        dmdeduc2 == '9-11th grade (Includes 12th grade with no diploma)' ~ 
+          '9-11th Grade (Includes 12th grade with no diploma)',
+        dmdeduc2 == 'High school graduate/GED or equivalent' ~ 
+          'High School Grad/GED or Equivalent',
+        dmdeduc2 == 'Some college or AA degree' ~ 'Some College or AA degree',
+        dmdeduc2 == 'College graduate or above' ~ 'College Graduate or above',
+        .default = dmdeduc2
+      ),
+      levels = c(
+        'Less Than 9th Grade',
+        '9-11th Grade (Includes 12th grade with no diploma)',
+        'High School Grad/GED or Equivalent',
+        'Some College or AA degree',
+        'College Graduate or above',
+        'Don\'t Know',
+        'Refused'
+      )
+    ),
+
+    # Create age groups for table presentations
+    age_group = factor(
+      case_when(
+        ridageyr < 20 ~ '0-19',
+        ridageyr < 40 ~ '20-39',
+        ridageyr < 60 ~ '40-59',
+        ridageyr >= 60 ~ '>=60',
+        .default = NA_character_
+      ),
+      levels = c('0-19','20-39','40-59','>=60')
+    ),
+
+    # Collapsed ethnicity
+    ethn_collapsed = factor(
+      case_when(
+        ridreth2 == 'Non-Hispanic White' ~ ridreth2,
+        ridreth2 == 'Non-Hispanic Black' ~ ridreth2,
+        is.na(ridreth2) ~ NA_character_,
+        .default = 'All Hispanic'
+      )
+    )
+  
+  ) |> 
+  select(-contains('BPXDI'), -contains('BPXSY')) |> 
+  # the fasting weights are identical, so removing one
+  select(-wtsaf2yr.y) |> 
+  rename(wtsaf2yr = wtsaf2yr.x)
+
+names(the_data)
+save(the_data, file = 'data/the_data.rda')
+```
+
+```{r}
+#| label: table setup
+#| include: true
+#| eval: false
+
+# This contains labels for the entire dataset. Remove as needed for individual tables.
+
+the_data |> 
+  mutate(
+    dxdtofat = dxdtofat/1000,
+    diabetes_cat = factor(case_when(
+      (is.na(diq010) & is.na(diq160)) ~ NA_character_,
+      diq010 == 'Yes' ~ 'DM',
+      diq160 == 'Yes' ~ 'PreDM',
+      (diq010 == 'No' & diq160 == 'No') ~ 'No DM',
+      (diq010 == 'No' & diq160 == "Don't know") ~ 'No DM',
+      (diq010 == 'No' & is.na(diq160)) ~ 'No DM',
+      diq010 == 'Borderline' ~ 'No DM',
+      .default = 'No DM'
+    ), levels = c('No DM', 'PreDM', 'DM'), ordered = TRUE)
+  ) |> 
+  select(
+    riagendr, ridageyr, diabetes_cat,
+    bmxbmi, dxdtopf, dxdtofat, 
+    bmxwaist, waist_height_ratio, 
+    lbxgh, lbxglu, mean_sbp, mean_dbp,
+    lbxtc, lbdhdd, lbdldl, lbxtr
+  ) |> 
+  tbl_summary(
+    by = diabetes_cat,
+    label = c(
+      riagendr ~ 'Gender',
+      ridageyr ~ 'Age in years at screening',
+      bmxbmi ~ 'Body Mass Index (kg/m^2)',
+      bmxwaist ~ 'Waist Circumference (cm)',
+      waist_height_ratio ~ 'Waist-to-Height Ratio (calculated)',
+      dxdtopf ~ 'Body Fat Percentage (%)',
+      dxdtofat ~ 'Total Fat (kg)',
+      lbxgh ~ 'HbA1c %',  # Glycohemoglobin %
+      lbxtr ~ 'Triglycerides (mg/dL)',
+      lbdldl ~ 'LDL Cholesterol (mg/dL)',
+      lbxtc ~ 'Total Cholesterol (mg/dL)',
+      lbdhdd ~ 'HDL Cholesterol (mg/dL)',
+      lbxglu ~ 'Fasting Glucose (mg/dL)',
+      mean_sbp ~ 'Systolic BP (mean)',
+      mean_dbp ~ 'Diastolyic BP (mean)'
+    ),
+    missing = 'no'
+  ) |> 
+  extras(pval = FALSE) |> 
+  modify_caption(
+    glue('<strong>Table 1</strong>: 
+      <i>NHANES survey data (2011-2023)
+      <br>by diabetes diagnosis</i>
+      <br><span style="font-size:12px">{subtitle}</span>'),
+    text_interpret = 'html'
+  )
+```
+

@@ -1,0 +1,44 @@
+untitled:Untitled-1 {"typeId":""}
+source('libraries.R')
+
+# run load.R through line 272 -- after creating latent_class & 
+#                                before inner_join(anlysis, latent_class)
+
+
+# rows 267-288 from load.R:
+almost_analysis <-
+  analysis |>
+  mutate(
+    x = case_when(
+      project == "27" ~ "CTN-0027",
+      project == "30" ~ "CTN-0030",
+      project == "51" ~ "CTN-0051"
+    )
+  ) |>
+  mutate(`CTN Trial Number` = factor(x)) |>
+  select(-x) |>
+  inner_join(latent_class, by = "who")
+
+
+nrow(analysis)         # 2492
+nrow(latent_class)     # 2637
+nrow(almost_analysis)  # 2478
+
+not_analyzed <- anti_join(analysis, almost_analysis, by = 'who')
+nrow(not_analyzed)     # 14
+not_analyzed_who <- unique(not_analyzed$who)
+
+analysis |> 
+  filter(who %in% not_analyzed_who) |> 
+  view()
+
+
+tlfb |> 
+  filter(who %in% not_analyzed) |> 
+  view()
+
+public.ctn0094data::uds |> 
+  filter(who %in% not_analyzed) |> 
+  view()
+
+

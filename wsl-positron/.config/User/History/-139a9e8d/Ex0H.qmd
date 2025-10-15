@@ -1,0 +1,594 @@
+---
+title: "NHANES Aging Study"
+date: last-modified
+---
+
+
+```{r}
+#| label: setup
+source('R/_libraries.R')
+source('R/custom_table_functions.R')
+source('R/custom_functions.R')
+
+# imported <- read_csv('data/comprehensive_nhanes_dataset_2009_2018.csv')
+
+# Save the data object for faster & less-verbose loading
+# save(imported, file = 'data/imported_nhanes_2009_2018.rda')
+load('data/imported_nhanes_2009_2018.rda')
+```
+
+```{r}
+#| label: variable selection
+reduced <- imported |> 
+  select(
+    year = RIDYEAR...2,
+    seqn = SAMPLEID,  # ID number
+
+    contains('DERIVED'),
+    contains('KDM'),
+
+  ) |> 
+  # Convert variable names from uppercase to lowercase
+  janitor::clean_names() |> 
+  mutate(seqn = as.integer(str_remove(seqn, '^\\d+_'), .after = 'seqn')) |> 
+  rename(
+    nonhdl = derived_nonhdl_cholesterol,
+    pp = derived_pulse_pressure_alt,
+    acr = derived_albumin_creatinine_ratio,
+    alt = derived_alt_proxy,
+    
+    meanbp = derived_mean_blood_pressure,
+    pulse = derived_pulse_pressure,
+    fev1_1000 = derived_fev1_1000,
+    albumin_gL = derived_albumin_g_l,
+    lnalp = derived_ln_alp,
+    lnbun = derived_ln_bun,
+    creat_umol = derived_creat_umol,
+    lncreat = derived_ln_creat,
+    lncreat_umol = derived_ln_creat_umol,
+    glucose_mmol = derived_glucose_mmol,
+    lnuap = derived_ln_uap,
+    crp_cat = derived_crp_category,
+    lncrp = derived_ln_crp,
+    lnhba1c = derived_ln_hba1c,
+    grip_scaled = derived_grip_scaled,
+    lnwalk = derived_ln_walk
+  )
+```
+
+
+```{r}
+#| label: gather data
+demo <- pull_nhanes('demo')       # demographics
+duq <- pull_nhanes('duq')         # substance use
+cbc <- pull_nhanes('cbc')         # blood counts
+hdl <- pull_nhanes('hdl')         # cholesterol
+tchol <- pull_nhanes('tchol')     # cholesterol 2
+trigly <- pull_nhanes('trigly')   # tryglyceride
+bmx <- pull_nhanes('bmx')         # body measures
+bpx <- pull_nhanes('bpx')         # blood pressure
+mcq <- pull_nhanes('mcq')         # cancer questions
+smq <- pull_nhanes('smq')         # smoking
+diq <- pull_nhanes('diq')         # diabetes
+ghb <- pull_nhanes('ghb')         # diabetes 2
+glu <- pull_nhanes('glu')         # glucose
+bio <- pull_nhanes('biopro')      # more glucose, etc.
+albcr <- pull_nhanes('alb_cr')    # albumin & creatinine
+hiv <- pull_nhanes('hiv')         # hiv
+paq <- pull_nhanes('paq')         # physical activity
+hiq <- pull_nhanes('hiq')         # health insurance
+alq <- pull_nhanes('alq')         # alcohol
+```
+
+```{r}
+#| label: merge data
+combined <- demo |> 
+  left_join(duq, by = c('year', 'seqn')) |> 
+  left_join(cbc, by = c('year', 'seqn')) |> 
+  left_join(hdl, by = c('year', 'seqn')) |> 
+  left_join(tchol, by = c('year', 'seqn')) |> 
+  left_join(trigly, by = c('year', 'seqn')) |> 
+  left_join(bmx, by = c('year', 'seqn')) |> 
+  left_join(bpx, by = c('year', 'seqn')) |> 
+  left_join(mcq, by = c('year', 'seqn')) |> 
+  left_join(smq, by = c('year', 'seqn')) |> 
+  left_join(diq, by = c('year', 'seqn')) |> 
+  left_join(glu, by = c('year', 'seqn')) |> 
+  left_join(ghb, by = c('year', 'seqn')) |> 
+  left_join(bio, by = c('year', 'seqn')) |> 
+  left_join(albcr, by = c('year', 'seqn')) |> 
+  left_join(hiv, by = c('year', 'seqn')) |> 
+  left_join(paq, by = c('year', 'seqn')) |> 
+  left_join(hiq, by = c('year', 'seqn')) |> 
+  left_join(alq, by = c('year', 'seqn')) |> 
+  # add calcualted variables from original imported csv
+  left_join(reduced, by = c('year', 'seqn'))
+
+save(combined, file = 'data/combined_nhanes_10132025.rda')
+```
+
+```{r}
+#| label: variable cleaning
+# the_data <- reduced |> 
+modified_nhanes <- combined |> 
+  mutate(
+    # year = as_factor(as.integer(year)),
+    riagendr = case_when(
+      riagendr == 1 ~ 'Male',
+      riagendr == 2 ~ 'Female',
+      .default = as.character(riagendr)
+    ),
+    ridageyr = as.integer(ridageyr),
+    ridreth1 = case_when(
+      ridreth1 == 1 ~ 'Mexican American',
+      ridreth1 == 2 ~ 'Other Hispanic',
+      ridreth1 == 3 ~ 'Non-Hispanic White',
+      ridreth1 == 4 ~ 'Non-Hispanic Black',
+      ridreth1 == 5 ~ 'Other Race, Including Multi-Racial',
+      .default = as.character(ridreth1)
+    ),
+    education = factor(
+      case_when(
+        dmdeduc2 %in% c(
+          'Less than 9th Grade', 
+          'Less than 9th grade'
+        ) ~ 'Less than 9th grade',
+        dmdeduc2 %in% c(
+          '9-11th Grade (Includes 12th grade with no diploma)',
+          '9-11th grade (Includes 12th grade with no diploma)'
+        ) ~ '9-11th grade (including 12th grade with no diploma)',
+        dmdeduc2 %in% c(
+          'High School Grad/GED or Equivalent',
+          'High school graduate/GED or equivalent'
+        ) ~ 'High school graduate (including GED)',
+        dmdeduc2 %in% c(
+          'Some College or AA degree',
+          'Some college or AA degree'
+        ) ~ 'Some college or associate\'s degree',
+        dmdeduc2 %in% c(
+          'College Graduate or above',
+          'College graduate or above'
+        ) ~ 'College graduate or above',
+        dmdeduc2 %in% c(
+          'Don\'t Know', 'Don\'t know', 
+          'Refused'
+        ) ~ 'Don\'t know or Refused',
+        .default = as.character(dmdeduc2)
+      ),
+      levels = c(
+        'Less than 9th grade',
+        '9-11th grade (including 12th grade with no diploma)',
+        'High school graduate (including GED)',
+        'Some college or associate\'s degree',
+        'College graduate or above',
+        'Don\'t know or Refused'
+      ),
+      ordered = TRUE),
+    indhhin2_original = factor(
+      case_when(
+        indhhin2 == 1 ~ '$0 to $4,999',
+        indhhin2 == 2 ~ '$5,000 to $9,999',
+        indhhin2 == 3 ~ '$10,000 to $14,999',
+        indhhin2 == 4 ~ '$15,000 to $19,999',
+        indhhin2 == 5 ~ '$20,000 to $24,999',
+        indhhin2 == 6 ~ '$25,000 to $34,999',
+        indhhin2 == 7 ~ '$35,000 to $44,999',
+        indhhin2 == 8 ~ '$45,000 to $54,999',
+        indhhin2 == 9 ~ '$55,000 to $64,999',
+        indhhin2 == 10 ~ '$65,000 to $74,999',
+        indhhin2 == 12 ~ 'Over $20,000',
+        indhhin2 == 13 ~ 'Under $20,000',
+        indhhin2 == 14 ~ '$75,000 to $99,999',
+        indhhin2 == 15 ~ '$100,000 and over',
+        # indhhin2 == 77 ~ 'Refused',
+        # Sept. 26: Changed from "refused" to "missing"
+        indhhin2 == 77 ~ 'Missing',
+        .default = as.character(indhhin2)
+      ),
+      levels = c(
+        '$0 to $4,999',
+        '$5,000 to $9,999',
+        '$10,000 to $14,999',
+        '$15,000 to $19,999',
+        '$20,000 to $24,999',
+        '$25,000 to $34,999',
+        '$35,000 to $44,999',
+        '$45,000 to $54,999',
+        '$55,000 to $64,999',
+        '$65,000 to $74,999',
+        'Over $20,000',
+        'Under $20,000',
+        '$75,000 to $99,999',
+        '$100,000 and over',
+        'Refused'
+      ),
+      ordered = TRUE
+    ),
+    income = factor(
+      case_when(
+        indhhin2 %in% c(1,2,3,4,13) ~ 'Under $20,000',
+        indhhin2 %in% c(5,6,7,8,9,10,12) ~ '$20,000 to $74,999',
+        indhhin2 == 14 ~ '$75,000 to $99,999',
+        indhhin2 == 15 ~ '$100,000 and over',
+        # indhhin2 == 77 ~ 'Refused',
+        # Sept. 26: Changed from "refused" to "missing"
+        indhhin2 %in% c(77, 99) ~ 'Missing',
+        .default = as.character(indhhin2)
+      ),
+      levels = c(
+        'Under $20,000',
+        '$20,000 to $74,999',
+        '$75,000 to $99,999',
+        '$100,000 and over',
+        'Missing'
+      ),
+      ordered = TRUE
+    ),
+
+    waist_height_ratio = bmxwaist / bmxht,  # waist (cm) / standing height (cm)
+    mean_dbp = rowMeans(pick(contains('bpxdi')), na.rm = TRUE),
+    mean_sbp = rowMeans(pick(contains('bpxsy')), na.rm = TRUE),
+
+    # Substance use variables ----
+
+    # Time since last used marijuana regularly
+    duq215 = case_when(
+      is.na(duq215u) ~ NA_integer_,
+      is.na(duq215q) ~ NA_integer_,
+      duq215q > 700 ~ NA_integer_,
+      # Convert all to years
+      duq215u == 1 ~ duq215q / 365,
+      duq215u == 2 ~ duq215q / 52,
+      duq215u == 3 ~ duq215q / 12,
+      duq215u == 4 ~ duq215q,
+      .default = 999
+    ),
+
+    # Time since last used marijuana / hashish
+    duq220 = case_when(
+      is.na(duq220u) ~ NA_integer_,
+      is.na(duq220q) ~ NA_integer_,
+      duq220q > 700 ~ NA_integer_,
+      # Convert all to years
+      duq220u == 1 ~ duq220q / 365,
+      duq220u == 2 ~ duq220q / 52,
+      duq220u == 3 ~ duq220q / 12,
+      duq220u == 4 ~ duq220q,
+      .default = 999
+    ),
+
+    # Time since last used cocaine
+    duq270 = case_when(
+      is.na(duq270u) ~ NA_integer_,
+      is.na(duq270q) ~ NA_integer_,
+      duq270q > 700 ~ NA_integer_,
+      # Convert all to years
+      duq270u == 1 ~ duq270q / 365,
+      duq270u == 2 ~ duq270q / 52,
+      duq270u == 3 ~ duq270q / 12,
+      duq270u == 4 ~ duq270q,
+      .default = 999
+    ),
+
+    # Time since last used heroin
+    duq310 = case_when(
+      is.na(duq310u) ~ NA_integer_,
+      is.na(duq310q) ~ NA_integer_,
+      duq310q > 700 ~ NA_integer_,
+      # Convert all to years
+      duq310u == 1 ~ duq310q / 365,
+      duq310u == 2 ~ duq310q / 52,
+      duq310u == 3 ~ duq310q / 12,
+      duq310u == 4 ~ duq310q,
+      .default = 999
+    ),
+
+    # Time since last used methamphetamine
+    duq350 = case_when(
+      is.na(duq350u) ~ NA_integer_,
+      is.na(duq350q) ~ NA_integer_,
+      duq350q > 700 ~ NA_integer_,
+      # Convert all to years
+      duq350u == 1 ~ duq350q / 365,
+      duq350u == 2 ~ duq350q / 52,
+      duq350u == 3 ~ duq350q / 12,
+      duq350u == 4 ~ duq350q,
+      .default = 999
+    ),
+
+    # Time since last used injectable drug
+    duq400 = case_when(
+      is.na(duq400u) ~ NA_integer_,
+      is.na(duq400q) ~ NA_integer_,
+      duq400q > 700 ~ NA_integer_,
+      # Convert all to years
+      duq400u == 1 ~ duq400q / 365,
+      duq400u == 2 ~ duq400q / 52,
+      duq400u == 3 ~ duq400q / 12,
+      duq400u == 4 ~ duq400q,
+      .default = 999
+    ),
+
+    # Cannabis variables ----
+
+    # Ever used marijuana or hashish
+    duq200 = case_when(
+      duq200 == 1 ~ 'Yes',
+      duq200 == 2 ~ 'No',
+      duq200 == 7 ~ 'Refused',
+      duq200 == 9 ~ 'Don\'t know',
+      .default = as.character(duq200)
+    ),
+
+    ever_use_marijuana = case_when(
+      duq200 == 'Yes' ~ 'Yes',
+      duq200 == 'No' ~ 'No',
+      .default = 'Unknown'
+    ),
+
+    # During the past 30 days, on how many days did you use marijuana or hashish?
+    # duq230
+
+    # Use classification
+    # 1.  Never users 
+    # 2.	Former users (at least once in lifetime but not in past 30 days)
+    # 3.	Current light user (at least once in the last 30 days but not on more than four different days)
+    # 4.	Current heavy user (at least five different days in the last 30 days).
+    use_category = factor(
+      case_when(
+        duq200 == 'Yes' & duq230 >= 5 ~ 'Current heavy user',
+        duq200 == 'Yes' & between(duq230, 1, 4) ~ 'Current light user',
+        duq200 == 'Yes' & duq230 < 1 ~ 'Former user',
+        duq200 == 'No' ~ 'Never used',
+
+        duq200 == 'Yes' & is.na(duq230) ~ 'Former user',
+        # These participants were either refused, don't know, or missing by system
+        .default = 'Missing'  
+      ),
+      levels = c(
+        'Current heavy user',
+        'Current light user',
+        'Former user',
+        'Never used',
+        'Missing'
+      ),
+      ordered = TRUE
+    ),
+
+    # Opeerationalized chronic kidney disease
+    # https://reference.medscape.com/calculator/251/egfr-using-ckd-epi-2021-update
+    # ...Revised the equation based on more data and removed the racial component from 
+    # the equation, which was found to overestimate GFR, especially in Black patients.
+    # Calculate the estimated GFR
+    egfr_2021 = case_when(
+
+      # handle cases where there is no reported Creatinine value
+      is.na(lbxscr) ~ NA_integer_,
+
+      riagendr == 'Female' ~
+        round(
+          142 * 
+            (pmin(lbxscr / 0.7, 1)^-0.241) * 
+            (pmax(lbxscr / 0.7, 1)^-1.200) * 
+            (0.9938^ridageyr) * 
+            1.012,
+          1 # rounding digits
+        ),
+
+      riagendr == 'Male' ~
+        round(
+          142 * 
+            (pmin(lbxscr / 0.9, 1)^-0.302) * 
+            (pmax(lbxscr / 0.9, 1)^-1.200) * 
+            (0.9938^ridageyr),
+          1 # rounding digits
+        ),
+
+      # Flag messed values
+      .default = 66666
+    ),
+
+    # Operationalized diabetes (yes/no):
+    # doctor told you have diabetes
+    diq010 = factor(
+      # case_when(
+      #   diq010 == 1 ~ 'Yes',
+      #   diq010 == 2 ~ 'No',
+      #   diq010 == 3 ~ 'Borderline',
+      #   diq010 == 7 ~ 'Refused',
+      #   diq010 == 9 ~ 'Don\'t know',
+      #   .default = NA_character_
+      # ),
+      diq010,
+      levels = c(
+        'Yes',
+        'No',
+        'Borderline',
+        'Refused',
+        'Don\'t know'
+      ),
+      ordered = TRUE
+    ),
+    # taking insuling now
+    diq050 = factor(
+      case_when(
+        diq050 == 1 ~ 'Yes',
+        diq050 == 2 ~ 'No',
+        diq050 == 7 ~ 'Refused',
+        diq050 == 9 ~ 'Don\'t know',
+        .default = NA_character_
+      ),
+      levels = c(
+        'Yes',
+        'No',
+        'Refused',
+        'Don\'t know'
+      ),
+      ordered = TRUE
+    ),
+    # taking diabetic pills to lower blood sugar
+    diq070 = factor(
+      case_when(
+        diq070 == 1 ~ 'Yes',
+        diq070 == 2 ~ 'No',
+        diq070 == 7 ~ 'Refused',
+        diq070 == 9 ~ 'Don\'t know',
+        .default = NA_character_
+      ),
+      levels = c(
+        'Yes',
+        'No',
+        'Refused',
+        'Don\'t know'
+      ),
+      ordered = TRUE
+    ),
+    # ever told you have prediabetes
+    diq160 = factor(
+      diq160,
+      levels = c(
+        'Yes',
+        'No',
+        'Refused',
+        'Don\'t know'
+      ),
+      ordered = TRUE
+    ),
+    # 'Diabetes was diagnosed if any of the following criteria were met: 
+    #   (1) HbA1c ≥ 6.5%; 
+    #   (2) FBG ≥ 7.0 mmol/L; 
+    #   (3) RBG ≥ 11.1 mmol/L or OGTT ≥ 11.1 mmol/L;  # not using RBG here!
+    #   (4) previously diagnosed with diabetes by a physician; 
+    #   (5) taking hypoglycemic drugs or insulin.'
+    diabetes_cat = factor(
+      case_when(
+        lbxgh >= 6.5 ~ 'Yes',
+        lbdglusi >= 7.0 ~ 'Yes',
+        diq010 == 'Yes' ~ 'Yes',
+        (diq050 == 'Yes' | diq070 == 'Yes') ~ 'Yes',
+        .default = 'No'
+      )
+    ),
+    #  >> the_data |> tabyl(diabetes_cat)
+    #  diabetes_cat     n percent
+    #            No 16836  0.7998
+    #           Yes  4215  0.2002
+    # CDC 2021 states the overall prevalence of diabetes is:
+    #   11.6% diagnosed, 8.9% undiagnosed
+
+    # HIV test
+    lbdhi = case_when(
+      lbdhi == 1 ~ 'Positive',
+      lbdhi == 2 ~ 'Negative',
+      lbdhi == 3 ~ 'Indeterminate',
+      .default = NA_character_
+    ),
+
+    # ever told you had cancer or malignancy
+    mcq220 = factor(
+      case_when(
+        mcq220 == 1 ~ 'Yes',
+        mcq220 == 2 ~ 'No',
+        mcq220 == 7 ~ 'Refused',
+        mcq220 == 9 ~ 'Don\'t know',
+        .default = NA_character_
+      ),
+      levels = c(
+        'Yes',
+        'No',
+        'Refused',
+        'Don\'t know'
+      ),
+      ordered = TRUE
+    ),
+    
+    # smoked at least 100 cigarettes in life
+    smq020 = factor(
+      case_when(
+        smq020 == 1 ~ 'Yes',
+        smq020 == 2 ~ 'No',
+        smq020 == 7 ~ 'Refused',
+        smq020 == 9 ~ 'Don\'t know',
+        .default = NA_character_
+      ),
+      levels = c(
+        'Yes',
+        'No',
+        'Refused',
+        'Don\'t know'
+      ),
+      ordered = TRUE
+    )
+  )
+  # Removing ridreth3 since using that variable resulted in no black
+  # participants in our sample. See these tables where ridreth1 == 4 is Black:
+  # >> tabyl(the_data, year, ridreth1)
+  # year    1    2    3   4
+  # 2009 2083  837 1352 240
+  # 2011 1403 1077  857 669
+  # 2013 1742  890  990 662
+  # 2015 1243  898 1356 661
+  # 2017 1291  987  958 855
+  # >> tabyl(the_data, year, ridreth3)
+  # year Mexican American Non-Hispanic White Other Hispanic
+  # 2009             2083               1592            837
+  # 2011             1403               1526           1077
+  # 2013             1742               1652            890
+  # 2015             1243               2017            898
+  # 2017             1291               1813            987
+  # select(-ridreth3) |> 
+```
+
+```{r}
+#| label: merge mortaility data
+
+# NOTE: Refer to data/mortality/R_ReadInProgramAllSurveys.R for more information. That
+# file was created by the CDC and the follow is based on that description of reading in
+# fixed width format data.
+
+# Define the column specifications
+col_specs <- fwf_cols(
+  seqn = c(1, 6),
+  eligstat = c(15, 15),
+  mortstat = c(16, 16),
+  ucod_leading = c(17, 19),
+  diabetes = c(20, 20),
+  hyperten = c(21, 21),
+  permth_int = c(43, 45),
+  permth_exm = c(46, 48)
+)
+
+# Read and combine all files
+mortality_data <- list.files("data/mortality", pattern = "\\.dat$", full.names = TRUE) |>
+  set_names(basename) |>
+  map(\(x) read_fwf(
+    file = x,
+    col_positions = col_specs,
+    col_types = "iiiiiiii",
+    na = c("", "."),
+    show_col_types = FALSE
+  )) |>
+  list_rbind(names_to = "source_file") |> 
+  mutate(
+    # Extract the year from the file name for merging
+    year = as.integer(str_extract(source_file, '[\\d]+')),
+    .before = seqn
+  ) |> 
+  select(-source_file)
+```
+
+```{r}
+#| label: final join
+# Complete the merge by adding mortality information to NHANES data:
+the_data <- left_join(
+  modified_nhanes,
+  mortality_data,
+  by = c('year', 'seqn')
+)
+
+save(the_data, file = 'data/study_data.rda')
+```
+
+```{r}
+# end of file
+```

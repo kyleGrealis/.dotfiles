@@ -1,0 +1,116 @@
+{
+    // add from GitHub Gist below...
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.fontSize": 12,
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "editor.bracketPairColorization.enabled": true,
+    "workbench.colorTheme": "Owlet (One)",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#6b7fa1",
+        "statusBar.foreground": "#fff",
+        "editor.foreground": "#aaa"
+    },
+    "quarto.cells.background.color": "default",
+    "quarto.cells.background.darkDefault": "#d1d1d110",
+    "editor.rulers": [90],
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 90,
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.wordBasedSuggestions": "off",
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "[r]": {
+        // Posit's Air Extension as default R formatter:
+        // "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Posit.air-vscode",
+
+        "editor.formatOnType": true,
+        "editor.tabSize": 2,
+        "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",<>/?",
+        "editor.smartSelect.selectLeadingAndTrailingWhitespace": false,
+        "editor.wordBasedSuggestions": "off"
+    },
+    "[markdown]": {
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.unicodeHighlight.invisibleCharacters": false,
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        }
+    },
+    "[quarto]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "other": "on",
+            "strings": "on"
+        },
+        "editor.quickSuggestionsDelay": 250,
+        "editor.snippetSuggestions": "bottom",
+        "editor.wordBasedSuggestions": "off",
+        "editor.suggestOnTriggerCharacters": true,
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.unicodeHighlight.invisibleCharacters": false
+    },
+    "interactiveWindow.executeWithShiftEnter": true,
+    "workbench.editorAssociations": {
+        "*.qmd": "default",
+        "*.docx": "default"
+    },
+    "quarto.visualEditor.markdownWrap": "column",
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "livePreview.showServerStatusNotifications": true,
+    "editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "workbench.startupEditor": "none",
+    "security.workspace.trust.untrustedFiles": "open",
+    "quarto.render.renderOnSave": true,
+    "terminal.integrated.tabs.location": "left",
+    "explorer.confirmDelete": false,
+    "git.openRepositoryInParentFolders": "always",
+    "terminal.integrated.fontFamily": "monospace",
+    "terminal.integrated.stickyScroll.enabled": false,
+    "files.associations": {
+        "*.qmd": "quarto",
+        "renv.lock": "json"
+    },
+    "editor.fontSize": 12,
+    "positron.r.kernel.logLevel": "error",
+    "positron.r.diagnostics.enable": false,
+    "editor.tabSize": 2,
+    "explorer.confirmDragAndDrop": false,
+    "git.confirmSync": false,
+    "diffEditor.codeLens": true,
+    "files.autoSaveDelay": 10000,
+    "files.dialog.defaultPath": "/home/kyle/dev/",
+    "positron.plots.darkFilter": "off",
+
+    // New (May 2025)
+    "window.menuBarVisibility": "compact",
+    "window.density.editorTabHeight": "compact",
+    "editor.scrollbar.verticalScrollbarSize": 5,
+    "workbench.keybindings.rstudioKeybindings": true,
+
+    // New (August 2025)
+    "editor.minimap.enabled": true,
+    "editor.minimap.side": "right",
+
+    "editor.stickyScroll.enabled": true,
+    "console.fontSize": 12,
+    "console.fontFamily": "'BlexMono Nerd Font', 'Fira Code', Consolas, 'Courier New', monospace",
+    "console.fontLigatures": true,
+    "files.eol": "\n",
+    "window.zoomLevel": 0.4,
+    "workbench.statusBar.visible": false,
+    "terminal.integrated.sendKeybindingsToShell": false,
+    "terminal.integrated.commandsToSkipShell": [
+        "workbench.view.explorer"
+    ]
+}

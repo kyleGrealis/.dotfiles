@@ -1,0 +1,801 @@
+---
+title: "Applying Machine Learning in Predicting Medication Treatment Outcomes for Opioid Use Disorder"
+keywords:
+  - machine learning
+  - opioid use disorder
+  - treatment outcomes
+  - medication treatment
+  - prediction modeling
+author:
+  - name: Raymond R. Balise
+    affiliation: University of Miami
+    corresponding: true
+    email: balise@miami.edu
+  - name: Kyle Grealis
+    affiliation: University of Miami
+  - name: Laura Brandt
+    affiliation: Florida International University
+  - name: Sean X. Luo
+    affiliation: Columbia University
+  - name: Gabriel Odom
+    affiliation: Florida International University
+  - name: Guertson Jean-Baptiste
+    affiliation: University of Miami
+  - name: Daniel J. Feaster
+    affiliation: University of Miami
+format:
+  elsevier-pdf:
+    include-in-header: 
+      text: |
+        \usepackage{lscape}
+        \usepackage{pdflscape}
+        \usepackage{rotating}
+    keep-tex: true
+    journal:
+      name: "Journal of Substance Use and Addiction Treatment"
+      formatting: preprint
+      model: 3p
+      layout: onecolumn
+      cite-style: number
+      table: true
+knitr:
+  opts_chunk:
+    collapse: true
+    echo: false
+    message: true
+    warning: true
+    error: true
+    comment: ""
+    R.options:
+      digits: 3
+editor: source
+bibliography:
+  - references.bib
+  - packages.bib
+---
+
+```{r load-packages}
+#| echo: false
+
+library(conflicted)
+conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("lag", "dplyr", quiet = TRUE)
+
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(tidymodels))
+options(dplyr.summarise.inform=F)
+
+library(scales)
+library(ggthemes)
+
+```
+
+```{r loading-data}
+#| echo: false
+
+library(public.ctn0094data)
+
+analysis <- readRDS("../ctn0094modeling/data/analysis.rds")
+#| echo: false
+load("../ctn0094modeling/data/default_recipe/best_ROC.RData")
+```
+
+# Abstract
+
+## Background
+
+While medication for opioid use disorder (MOUD) is effective for a significant proportion of patients, many return to using opioids during treatment. Understanding which factors lead to successful treatment is important for the development of implementation approaches that can improve outcomes. This manuscript and its accompanying website provide an applied introduction to interpretable machine learning for clinical investigators interested in predicting treatment response for people using MOUD.
+
+## Methods
+
+Machine learning algorithms (KNN, logistic regression with and without regularization, MARS, Support Vector Machines, CART, Random Forest, BART, Boosted Trees, Neural Network) were used to predict failure of treatment in a collection of `r nrow(analysis) |> scales::comma()` individuals who had participated in the three largest pragmatic, clinical trials of MOUD.
+
+## Results
+
+```{r abstract-details}
+min_ROC <- min(best_ROC$`Cross Validation`, na.rm = TRUE) |>  round(2)
+max_ROC <- max(best_ROC$`Cross Validation`, na.rm = TRUE)  |>  round(2)
+best_model <- best_ROC |> arrange(desc(`Cross Validation`)) |> slice_head(n = 1) |> pull(Model) |> tolower()
+best_model_test <- best_ROC |> arrange(desc(`Cross Validation`)) |> slice_head(n = 1) |> pull(`Testing Dataset`) |> round(2)
+```
+
+All models produced ROC AUC estimates in the range of `r min_ROC` to `r max_ROC` using cross-validation data and the optimal model, `r best_model`, achieved `r best_model_test` using testing data. Predictive features, such as age, IV drug use days, study medication, and study site, were nearly universally identified by the algorithms. Various aspects of smoking were also identified by most algorithms. Details from timeline follow back were identified only by algorithms that detect complex non-linear trends. One algorithm, BART, performed well while devaluing all treatment-specific details.
+
+## Conclusion
+
+After explaining how to apply, compare, and contrast various ML workflows, we show that while overall modeling performance is similar across the models built, the use of different algorithms identifies different sets of predictive features. Some features have not been previously identified as important for predicting treatment outcomes. To allow further exploration of these results, a companion website provides clinical investigators a gentle introduction to the concepts and implementations used here. That site also provides a detailed annotated blueprint to fully replicate our work. 
+
+# Introduction
+
+Opioid use disorder (OUD) is associated with significant morbidity and mortality [@hser2017; @products2024; @taylor2022]. Effective treatments are available but underutilized [@cantor2024]. Further, while medication for opioid use disorder (MOUD) is effective for a significant proportion of patients, many return to using opioids during treatment. Understanding which factors lead to successful treatment, defined here by abstinence from nonprescribed opioids during a treatment or observation period and beyond, is important for the development of implementation approaches that can improve outcomes [@hser1997; @gustin2015; @bell2020; @leshner_medications_2019; @wakeman2020]. A 2024 review by Mattos and colleagues describes the application of state of the art predictive, machine learning (ML), models to quantify factors associated with MOUD adherence and return to opioid use [@demattos2024a]. While many of the papers which they review suffer from methodological flaws or use devices that are not feasible during routine care (i.e., fMRI and EEG analyses) the remaining demonstrate impressive predictive performance [@burgess-hull2022; @baucum2023; @eddie2024]. More recently, investigators presented one ML algorithm, logistic LASSO, as a possible system for predicting treatment success for individuals initiating MOUD [@Luo2023]. ML models can not only predict who will respond better to MOUD, but also uncover important and interpretable reasons of treatment success/failure through the applications of a body of state-of-the-art techniques in explainable artificial intelligence [@molnar2022a; @biecek2021a]. While the recently published model by Luo et al. (2023) is conceptually simple and emphasizes ease of clinical application, there is a case to be made for describing more than a “best” possible predictive model. Computer scientists have shown that there is no best/optimal ML method. Furthermore, it may be that more complex models can clarify which predictors are the most important. Various ML algorithms highlight different patterns within patient behavior and treatment. Thus, examining multiple predictive models affords clinical insights beyond optimal prediction [@nofree2024; @biecek2021a]. That is, different modeling methods use different kinds of information (i.e., linear, nonlinear, nonparametric trends) so they can utilize different kinds of complexity (i.e., traditional statistical interactions vs. the importance of different variables in subgroups). Here, we expand on the ML method in @Luo2023 and explore the performance of nine algorithms useful to predict treatment success/failure for OUD with MOUD, and we assess data features for variable importance with the aim of detecting cross methodological consistencies.
+
+Traditional statistical modeling approaches to predicting treatment success or failure have focused on finding statistically significant variables that are associated with treatment outcomes. Researchers have built models that are optimized to give the best possible estimates of the influence of predictors on the full set of data collected in a study sample. Typically, these effects are reported as beta parameter estimates or as odds/risk ratios with confidence limits. While ML practitioners care about these estimates for the predictor variables, they typically optimize their results based on the ability to make predictions in a *new* sample. While traditional statistical workflows involve variable transformations, ML workflows expand and systematize this variable "feature engineering" process. Models are built and optimized on a subset of the data, called the *training* data, to give the best predictions on new data after the variables have been extensively processed and turned into "features." That new data, called the *testing* subset, is a random sample of the original data, which was set aside at the start of the modeling process. The final review of model performance on testing data is critical because ML methods can "overfit" the data. That is, if the predictions of a ML model are applied to the original training data, they will likely give overly optimistic estimates of performance because they will detect and use subtle patterns in the training data that will not replicate in a new sample. Optimal performance can be defined in many ways, but popular options include accuracy of prediction or a combination of the true positive and false positive rates (i.e., area under a Receiver Operating Characteristic (ROC) curve, which is a plot that shows the true positive rate against the false positive rate across all classification thresholds) in a new sample [@james2021a; @fawcett2006; @bradley1997]. To achieve optimal predictive performance, many different ML algorithms are tried and one is selected as the winner. Then that "winning" algorithm is applied to the "testing" results. We do that here, but also for illustration, we provide information showing how the models performed on the training data and to illustrate how the other models would have fared if they had been selected instead as the "winner".
+
+Beyond making predictions, many ML methods afford the opportunity to identify important variables that are missed using traditional statistical methods. Unlike traditional statistical methods that focus on model method-specific metrics to determine whether a variable is important (e.g., the size of odds/risk ratios and confidence intervals in logistic regression), in the ML framework, the importance of variables can be assessed differently. There are model-agnostic methods that can be used to determine if a variable is important. For example, permutation-based variable importance, which can be calculated for most ML methods, looks at the degradation in model performance if the values of a variable are shuffled and randomly assigned to new study participants. If the accuracy or ROC AUC (Receiver Operating Characteristic Area Under the Curve) does not change when the values of a variable are shuffled, then that variable was not important to the model. However, if the ROC AUC decreases after a variable is shuffled, then the amount of change in the ROC AUC is indicative of the variable's importance in the model. Here, we provide information on the relative importance of the variables selected by most of the different ML engines and comment on the insights that can be gained by looking at the similarities and differences across the various machines.
+
+The aim of this manuscript is to provide an illustration for clinical investigators of important tasks in ML applied to MOUD. Given that most clinical investigators were not trained in the application of ML methods, there is also an extensive companion website [@balise_supplement_nodate] which provides a gentle introduction to the methods used, as well as the model tuning details. This supplement allows clinical investigators to i) explore the relative value of different techniques when predicting return to use of opioids (and potentially any number of other treatment outcomes of interest), and ii) uncover predictors identified consistently by different algorithms, as well as important predictors that can only be found using specific algorithms. Further, there is a brief technical reference [@balise_technical_nodate] that provides modeling details for ML practitioners. These tools build a computational framework for addiction researchers to examine and explain future predictive models in substance use disorder research beyond MOUD.
+
+# Methods
+
+## Subjects
+
+A total of `r nrow(analysis) |> scales::comma()` individuals, all who participated in one of three studies supported by the National Drug Abuse Treatment Clinical Trials Network (CTN), who had any drug screening results during treatment, were included in the analyses [@saxon2013; @weiss2011; @lee2018; @R-public.ctn0094data]. These studies represent the three largest pragmatic, clinical trials to date of MOUD: Starting Treatment with Agonist Replacement Therapies (START, CTN-0027), Prescription Opioid Addiction Treatment Study (POATS, CTN-0030), and Extended-Release Naltrexone (XR-NTX) vs. Buprenorphine (BUP-NX) for Opioid Treatment (X:BOT, CTN-0051). These trials included treatments with methadone, buprenorphine, or extended-release injection naltrexone (XR-NTX). Details on the study samples and the harmonization process for the data are available in the technical appendix [@balise_technical_nodate], web supplement [@balise_supplement_nodate], and published elsewhere [@raymondbalise2024].
+
+## Predictors of Failure of Treatment
+
+Previous research has suggested that Social Determinants of Health (SDOH), criminal involvement, reliance on public assistance, limited education, unemployment and homelessness, as well as clinical characteristics including baseline pain, comorbid psychiatric issues and the use of alcohol and other drugs, influence the probability of treatment retention and---ultimately---success [@hser1997; @biondi2022; @pretreat1981; @comptoniii2003; @mclellan1983]. Many of these features, along with information on treatment, can be found in data sets from the CTN0094 data harmonization project used herein. This data is available within a software package for the R programming language, `public.ctn0094data` [@public.ctn0094data]. While most of the key features that have been identified to predict treatment outcomes are available in `public.ctn0094data`, a few important features are not available, such as criminal involvement, previous treatment attempts (number, type, duration and outcomes), and total years of drug use, as well as details about access to non-study services and needs, particularly transportation, child care, vocational services, and housing services.
+
+A total of `r analysis |> ncol()` variables, from domains including demographics, comorbid psychiatric/medical conditions, smoking history, lifetime drug use history, drug use as both yes/no indicators and amount in the month before treatment, and treatment details (inpatient vs. outpatient and treatment medication) were used as predictors (see web supplement [Table 1](https://ctn-0094.github.io/ml_paper_2025/supplement.html#table1) and [Table 2](https://ctn-0094.github.io/ml_paper_2025/supplement.html#table2))[@balise_supplement_nodate]. As is customary when using ML, several preprocessing recipes were evaluated [@kuhn2022]. Here, we built preprocessing recipes that covered all the necessary steps (e.g., normalization, dummy coding etc.), for all the ML methods we used [@silge]. We also experimented with other techniques to reduce the complexity of the predictors (i.e., including principal components analysis as a preprocessing step). Various combinations of these steps were applied before trying the various ML methods. As can be seen in the web supplement [@balise_supplement_nodate], the various recipes resulted in models being built using between 15 and 103 individual features. Ultimately, the recipe that resulted in the best ROC AUC on the training data was used. In order, those steps were: remove near zero variance variables, convert text strings to categorical factors, impute missing values using a K nearest neighbors algorithm, dummy-code categorical variables, collapse rare categories, remove highly correlated predictors and then normalize numeric variables.
+
+## Outcome
+
+Many methods have been proposed to evaluate the success or failure of treatment for OUD. A recent article by Brandt et al. showed that the model metrics cluster into three different groups based on how they handle missing data and the length of the time frame used to judge success [@brandt2024]. Here, we use one of the metrics from their so-called 'Goldilocks' cluster where the outcomes are not too lenient, like the metrics that ignore missing urine drug screening, and not too strict, like the metrics that look at only a single or a couple of UDS values. Specifically, we use the definition of failure of treatment reported by Lee et al., which looks for four consecutive weeks with a UDS positive for opioids starting 21 days post-randomization [@lee2018]. See the web supplement [@balise_supplement_nodate] for an example using this code.
+
+While our outcome here followed an abstinence-based definition, we recognize the growing emphasis on alternative endpoints — such as reductions in use, craving, anxiety, and quality of life — that are identified as meaningful by people with substance use disorders. To support these perspectives, we have developed open-source tools (e.g., public.ctn0094extra [@public.ctn0094extra] and CTNote [@CTNote]) that compute over 50 published endpoints, laying the groundwork for future analyses that move beyond abstinence to capture broader dimensions of treatment success.
+
+## Modeling
+
+Analyses were conducted with `r stringr::word(R.Version()$version.string, 1, 3)` with the `tidyverse`, `rUM`, `table1` and `flextable` packages used to preprocess and summarize data [@R-base; @R-tidyverse; @tidyverse2019; @R-rUM; @R-table1]. We used the tidymodels ecosystem for modeling and DALEX and DALEXtra packages for interpretable ML processing [@R-tidymodels; @DALEX; @DALEXtra]. Techniques include regression-based (i.e., LASSO, logistic, MARS), tree-based (i.e., BART, Boosted Trees, CART, Random Forest) and neural network methods. Tree-based and neural network methods are particularly adept at detecting complex treatment medication-specific effects that could be missed by traditional regression approaches. See the web supplement [@balise_supplement_nodate] for details.
+
+```{r}
+load("../ctn0094modeling/data/a_train.RData")
+the_training_count <- nrow(a_train) |> scales::comma()
+
+load("../ctn0094modeling/data/a_test.RData")
+the_testing_count <- nrow(a_test) |> scales::comma()
+```
+
+The full analysis dataset was split using a stratification algorithm that made sure that the training data (3/4 of the data, N = `r the_training_count`) and the testing data (1/4 the data, N = `r the_testing_count`) had the same percentage of people for whom treatment failed. For model tuning, five-fold cross validation was used. See the web supplement [@balise_supplement_nodate] for more details.
+
+```{r calculate-relapse}
+did_relapse_percents <- 
+  analysis$did_relapse |> 
+  table() |> 
+  prop.table() |> 
+  unclass() |> 
+  label_percent()()
+
+did_relapse_percent <- did_relapse_percents["1"]
+did_not_relapse_percent <- did_relapse_percents["0"]
+```
+
+Given the historical popularity of ROC AUC, its relatively easy interpretation, and the fact that there was not a major imbalance in the proportion of people for whom treatment was unsuccessful as per the metric introduced above (`r did_relapse_percent` with unsuccessful vs. `r did_not_relapse_percent` with successful treatment outcomes), all models were tuned to find the optimal ROC AUC [@weiss2013]. If you are not familiar with how to interpret a ROC AUC value, assume you have two people, for one of whom treatment will work and for one of whom it will not. The ROC AUC value gives the probability of correctly guessing for which one of whom the treatment will fail. While the definition of a clinically meaningful improvement in a model is largely arbitrary, _a priori_ we defined a meaningful difference as a 5% improvement, when comparing any two tuned models, in the probability of correctly guessing for whom treatment would fail. Results from all models were examined using permutation-based Variable Importance Plot (VIP) methods and confusion matrices (see @molnar2022b and the web supplement [@balise_supplement_nodate]). The details on model tuning, including a definition of the terms for those unfamiliar, can be found in the web supplement [@balise_supplement_nodate].
+
+## Evaluation Metrics
+
+Consider that there are many possible algorithms that can be used to make predictions and only a single test dataset that can be used to estimate a model's performance on new data. Evaluating the performance of every algorithm on the test data would likely result in an overly optimistic estimate of model performance. This would happen because with *many* different models, we would eventually get "lucky" and obtain particularly good performance simply by chance. Because of this, it is customary and appropriate to optimize the results for each algorithm and then select a "winner" based on a metric like accuracy or ROC AUC *using the training data alone.* The algorithm that performs the best on the preselected metric, say ROC AUC, is then applied to the test data and the ROC AUC from the "testing" data is reported as the estimate of future performance on unseen new data.
+
+# Results
+
+Here, because we are interested in explaining the ML workflow, we have taken a few extra steps. @tbl-one presents the model performance, as assessed by ROC AUC, for each algorithm. The "Cross Validation" results are typically used to pick the "winning" algorithm from the training data. It is an estimate based on repeatedly subsampling the training data. This process is explained in detail in the web supplement [@balise_supplement_nodate]. The top row of @tbl-one shows that the best performing algorithm was the random forest algorithm. The "Full Training Dataset" column shows the result when the model is applied to the full training dataset to estimate future performance. This is what has historically been done with logistic models. Unsurprisingly, because the model is predicting the data it was built on, the Full Training Dataset results are optimistic. When the random forest model or KNN is applied to the full training data, you see that the model performance is extremely good and overly optimistic because the model uses the idiosyncratic features in the data as well as the true signal.
+
+The random forest algorithm has the largest cross-validation ROC AUC (`r max_ROC`), so it could be called the “winner.” In typical real work applications, this would be the only model applied to the testing data. The results from such a ML model would be that: using the “winning” random forest model and the data gathered before treatment, from a pair of people, for one of whom treatment will succeed while it fails for the other, we have about a `r max_ROC |> scales::percent()` chance of correctly guessing for which one it will fail. While this is the best model, that value is not “good.” Many experts including Hosmer, Lemeshow, and Sturdivant @hosmer2013, who say “there is no ‘magic’ number, only general guidelines”, consider a value of 0.7 “acceptable discrimination”. This recapitulates what clinical investigators know: predicting failure of treatment, even when given all traditionally gathered variables, is extraordinarily difficult and the predictions should be treated with great caution.
+
+
+```{r}
+
+load("../ctn0094modeling/data/logistic_betas.RData")
+
+logistic_betas_sorted <- 
+  logistic_betas |> 
+  filter(term != "(Intercept)") |>
+  mutate(p.value = if_else(p.value == "<0.001", "0.0005", p.value)) |> 
+  mutate(
+    p.value_numeric = case_when(
+      is.na(p.value) ~ NA_real_,
+      .default = as.numeric(p.value)
+    )
+  ) |> 
+  arrange(p.value_numeric, desc(estimate))
+
+highly_signficant <- 
+  logistic_betas_sorted |> 
+  filter(p.value_numeric == 0.0005) |> 
+  nrow() |> 
+  xfun::n2w()
+
+signficant <- 
+  logistic_betas_sorted |> 
+  filter(p.value_numeric < 0.05) |> 
+  nrow() |> 
+  xfun::n2w()
+
+logistic_test <-
+  best_ROC |> filter(Model == "Logistic") |> pull(`Testing Dataset`) |> round(2)
+```
+
+The importance of using metrics such as ROC AUC to assess predictive performance is particularly notable when contrasted with the insights provided by a traditional, p-value-based interpretation of a logistic regression model. Here, the traditional logistic regression model identifies `r highly_signficant` features with p-value \< .001 and `r signficant` with p-values \< .05. Clearly, there are many important features that drive the odds of failure of treatment, but the overall impact of these features is not large because that model has a ROC AUC of "only" `r logistic_test` when applied to the testing data.
+
+While in real world applications the test data is only used once, here (again for illustrative purposes), we applied each of the methods, with their optimal tuning, to the testing data. We see that the cross validation estimates of future performance match nicely with the behavior on the testing data, in other words, the cross-validation methods used allowed us to pick up on the true signal without "overfitting" our models to pick up on random noise in the training data.
+
+@fig-one shows the true vs. predicted results for the people in the test data as a confusion matrix, and the predicted probability of failure for those who did and did not return to opioid use. Both the density and the confusion matrix show the relatively high chance of predicting return to use. Ideally, the probability plot would show a bathtub shape, where the people who experienced failure of treatments were all close to the right side of the plot and the successes were close to the left. Here, the model is rarely assigning a low probability of failure of treatment.
+
+<!-- {{< pagebreak >}} -->
+
+
+```{r features-used}
+# https://github.com/kyleGrealis/r-accessories/blob/main/colored_frequent-table-cells.R
+
+load("../ctn0094modeling/data/logistic_importance.RData")
+load("../ctn0094modeling/data/logistic_via_lasso_importance.RData")
+load("../ctn0094modeling/data/lasso_importance.RData")
+load("../ctn0094modeling/data/mars_importance.RData")
+load("../ctn0094modeling/data/cart_importance.RData")
+load("../ctn0094modeling/data/rf_importance.RData")
+load("../ctn0094modeling/data/xgb_importance.RData")
+load("../ctn0094modeling/data/svm_importance.RData")
+#load("../ctn0094modeling/data/nn_importance.RData")
+
+vips <- 
+  bind_rows(
+    logistic_importance |> mutate(thing = "Logistic", rank_importance = row_number()),
+    lasso_importance |> mutate(thing = "Lasso", rank_importance = row_number()),
+    mars_importance |> mutate(thing = "MARS", rank_importance = row_number()),
+    cart_importance |> mutate(thing = "CART", rank_importance = row_number()),
+    rf_importance |> mutate(thing = "Random Forest", rank_importance = row_number()),
+    xgb_importance |> mutate(thing = "Boosted Trees", rank_importance = row_number()) ,
+    svm_importance |> mutate(thing = "Support Vector", rank_importance = row_number())#,
+    #nn_importance |> mutate(thing = "Neural Net", rank_importance = row_number())
+  ) |>
+  select(thing, rank_importance, Variable,  Importance, Sign) |> 
+  #mutate(Sign = if_else(is.na(Sign) , "Complex", Sign)) |> 
+  filter(Importance > 0) |> 
+  mutate(
+    Variable =
+      case_when(
+        Variable == "age" ~ "Age",
+        Variable == "any_dep_Unknown" ~ "Depression Unknown",
+        Variable == "any_schiz_other" ~ "Schiz Other",
+        Variable == "days_cocaine" ~ "Day Cocaine",
+        Variable == "days_heroin" ~ "Days Heroin",
+        Variable == "days_iv_use" ~ "Days IV Drug Use",
+        Variable == "days_opioid" ~ "Days Opioid",
+        Variable == "days_speed" ~ "Days Speed",
+        Variable == "did_use_cocaine_Yes" ~ "Used Cocaine",
+        Variable == "did_use_heroin_Yes" ~ "Used Heroin",
+        Variable == "ftnd_X1" ~ "Fagerstrom 1",
+        Variable == "ftnd_X2" ~ "Fagerstrom 2",
+        Variable == "ftnd_X3" ~ "Fagerstrom 3",
+        Variable == "ftnd_X4" ~ "Fagerstrom 4",
+        Variable == "ftnd_X5" ~ "Fagerstrom 5",
+        Variable == "ftnd_X6" ~ "Fagerstrom 6",
+        Variable == "ftnd_X7" ~ "Fagerstrom 7",
+        Variable == "ftnd_X8" ~ "Fagerstrom 8",
+        Variable == "is_hispanic_Yes" ~ "Is Hispanic",
+        Variable == "job_Part.Time" ~ "Job (Part Time)",
+        Variable == "job_other" ~ "Job (Other)",
+        Variable == "race_White" ~ "Race is White",
+        Variable == "sex_partners" ~ "Sex Partners",
+        Variable == "tlfb_days_of_use_n" ~ "TLFB Days Of Any Use",
+        Variable == "tlfb_what_used_n" ~ "Total Drugs Used in TLFB",
+        Variable == "treatment_Methadone" ~ "Treated w/ Methadone",
+        Variable == "treatment_Outpatient.BUP" ~ "Treated w/ Methadone",
+        Variable == "treatment_Outpatient.BUP...EMM" ~ "Treated w/ Bup + Enhanced MM", 
+        Variable == "treatment_Outpatient.BUP...SMM" ~ "Treated w/ Bup + Enhanced MM",
+        Variable == "trial_CTN.0030" ~ "In CTN-0030",
+        Variable == "trial_CTN.0051"  ~ "In CTN-0051",
+        Variable == "withdrawal_X3" ~ "Severe Withdrawl",
+        Variable == "detox_days" ~ "Days in Detox",
+        Variable == "in_out_Outpatient" ~ "Inpatient/Outpatient",
+        Variable == "group_High.Heroin.Decrease" ~ "High Heroin (Decreasing) LCA",
+        Variable == "used_iv_Yes" ~ "Used IV Drugs",
+        Variable == "site_masked_other" ~ "Study Site",
+        Variable == "did_use_opioid_Yes" ~ "Used Opioids",
+        Variable == "site_masked_X8"  ~ "Site 8",
+        Variable == "site_masked_X10" ~ "Site 10",
+        Variable == "site_masked_X11" ~ "Site 11",
+        Variable == "site_masked_X12" ~ "Site 12",
+        Variable == "site_masked_X14" ~ "Site 14",
+        Variable == "site_masked_X15" ~ "Site 15",
+        Variable == "site_masked_X23" ~ "Site 23",
+        Variable == "site_masked_X25" ~ "Site 25",
+        Variable == "site_masked_X29" ~ "Site 29",
+        Variable == "site_masked_X31" ~ "Site 31",
+        Variable == "site_masked_X34" ~ "Site 34",
+        Variable == "per_day_X21.30" ~ "21-30 Cigarettes/Day",
+        Variable == "treatment_Inpatient.NR.NTX" ~ "Inpatient NR/NTX",
+        Variable == "education_Less.than.HS" ~ "Education (< High School)",
+        Variable == "site_masked" ~ "Study Sites",
+        Variable == "treatment" ~ "Medications",
+        Variable == "trial" ~ "Trail Number",
+        Variable == "in_out" ~ "Inpatient/Outpatient",
+        Variable == "per_day" ~ "Cigarettes/Day",
+        Variable == "is_smoker" ~ "Person Who Smokes",
+        Variable == "ftnd" ~ "Fagerstrom Score",
+        TRUE ~ Variable
+      )
+  )
+
+
+how_many <-
+  vips |> 
+  group_by(thing) |> 
+  count() |> 
+  arrange(n)
+
+all_things <-
+  vips |> 
+  group_by(Variable) |> 
+  count() |> 
+  arrange(Variable) 
+
+variables <-
+  all_things |> 
+  mutate(
+    Variable = str_remove(Variable, " [0-9]"),
+    Variable = str_remove(Variable, "_Yes"), 
+    Variable = str_remove(Variable, "_No"), 
+    Variable = str_remove(Variable, "_Unknown"), 
+    Variable = str_remove(Variable, "_Part.Time"),
+    Variable = str_remove(Variable, "_Unemployed"), 
+    Variable = str_remove(Variable, "_other"), 
+    Variable = str_remove(Variable, "_Never.married"),
+    Variable = str_remove(Variable, "_Separated.Divorced.Widowed"), 
+    Variable = str_remove(Variable, "_Severe.Pain"), 
+    Variable = str_remove(Variable, "_Very.mild.to.Moderate.Pain"),
+    Variable = str_remove(Variable, "_X10.OR.LESS"), 
+    Variable = str_remove(Variable, "_X11.20"),     
+    Variable = str_remove(Variable, "_X21.30"), 
+    Variable = str_remove(Variable, "_X2"),
+    Variable = str_squish(Variable),
+    .keep = "none"
+  ) |> 
+  distinct()
+
+vips <-
+  vips |> 
+  filter(rank_importance < 11)
+
+n_mars <- how_many |> filter(thing == "MARS") |> pull(n) 
+n_cart <- how_many |> filter(thing == "CART") |> pull(n) 
+n_xgb <- how_many |> filter(thing == "Boosted Trees") |> pull(n) 
+n_lasso <- how_many |> filter(thing == "Lasso") |> pull(n) 
+n_logistic <- how_many |> filter(thing == "Logistic") |> pull(n) 
+n_rf <- how_many |> filter(thing == "Random Forest") |> pull(n) 
+n_svm <- how_many |> filter(thing == "Support Vector") |> pull(n) 
+n_nn <- how_many |> filter(thing == "Neural Net") |> pull(n) 
+
+rf_features <- rf_importance |> 
+  mutate(
+    Variable = str_remove(Variable, " [0-9]"),
+    Variable = str_remove(Variable, "_Yes"), 
+    Variable = str_remove(Variable, "_No"), 
+    Variable = str_remove(Variable, "_Unknown"), 
+    Variable = str_remove(Variable, "_Part.Time"),
+    Variable = str_remove(Variable, "_Unemployed"), 
+    Variable = str_remove(Variable, "_other"), 
+    Variable = str_remove(Variable, "_Other"), 
+    Variable = str_remove(Variable, "_Never.married"),
+    Variable = str_remove(Variable, "_Separated.Divorced.Widowed"), 
+    Variable = str_remove(Variable, "_Severe.Pain"), 
+    Variable = str_remove(Variable, "_Very.mild.to.Moderate.Pain"),
+    Variable = str_remove(Variable, "_X10.OR.LESS"), 
+    Variable = str_remove(Variable, "_X11.20"),     
+    Variable = str_remove(Variable, "_X21.30"), 
+    Variable = str_remove(Variable, "_X2"),
+    Variable = str_remove(Variable, "_X\\d{1,2}$"),
+    Variable = str_remove(Variable, "\\d{1,2}$"),
+    Variable = str_remove(Variable, "_White"),
+    Variable = str_remove(Variable, "_Refused.missing"),
+    Variable = str_remove(Variable, "_More.than.HS"),
+    Variable = str_remove(Variable, ".Pain"),
+    Variable = str_remove(Variable, "_Student"),
+    Variable = str_remove(Variable, "_[0-9]"),
+    Variable = str_squish(Variable),
+    .keep = "none"
+  ) |> 
+  distinct() |> 
+  nrow()
+
+wide <-
+  vips |> 
+  select(thing, Variable, rank_importance, Sign) |> 
+  pivot_wider(
+    names_from = thing, values_from = c(Variable, Sign)
+  ) |> 
+  mutate(Logistic = Variable_Logistic,
+         LASSO = Variable_Lasso, 
+         CART = Variable_CART,
+         `Random Forest` = `Variable_Random Forest`,
+         `Boosted Trees` = `Variable_Boosted Trees`,
+         `MARS` = `Variable_MARS`,
+         `SVM` = `Variable_Support Vector`,
+         Sign_Logistic,
+         Sign_Lasso,
+         .keep = "none")
+```
+
+The ML methods described above selected different numbers of features as being important to predict failure of treatment. While the kNN algorithm uses, by design, every feature, and determining the number of features used by other algorithms like NN and SVM is extremely difficult for technical reasons, there are noteworthy differences in the number of features the different algorithms use (MARS N = `r n_mars`, CART N = `r n_cart`, boosted trees N = `r n_xgb`, LASSO N = `r n_lasso`, logistic regression N = `r n_logistic`, random forest N = `r n_rf`). At the extremes, the MARS model identified `r n_mars` distinct variables as important, and the random forest chose `r n_rf` different binary splits from `r rf_features` variables. For example, the random forest model made eight splits based on the scores of 1 through 8 on the Fagerstrom Test for Nicotine Dependence. Interestingly, across all the methods, a total of `r nrow(variables)` different features were identified as being important predictors at least once.
+
+```{r}
+#| label: tbl-one
+#| tbl-cap: !expr glue::glue("Overall model performance, measured using area under the ROC curve, when predicting failure of treatment in a training data set of {the_training_count} people seeking care for Opioid Use Disorder.")
+
+library(flextable)
+load("../ctn0094modeling/data/default_recipe/best_ROC.RData")
+library(kableExtra)
+library(knitr)
+best_ROC |>
+  kable(
+    # format = "latex", 
+    booktabs = TRUE,
+    align = c('l', 'r', 'r', 'r'),
+    # caption = glue::glue(
+    #   "Overall model performance, measured using area under the ROC curve, 
+    #    when predicting failure of treatment in a training data set of 
+    #    {the_training_count} people seeking care for Opioid Use Disorder."
+    # ),
+    escape = FALSE
+  )
+
+  # filter() |> # deal with Logistic vs LASSO logistic
+  # flextable() |>  
+  # align(
+  #   align = c("left", "center", "center", "center"),
+  #   part = "all"
+  # ) |>
+  # bg(i = NULL, j = 3, "gray") |>
+  # bg(i = 2:11, j = 4, "gray") |>
+  # autofit() |> 
+  # add_footer_lines(
+  #   glue::glue(
+  #     'Table 1: Overall model performance, measured using area under the ROC curve, when predicting failure of treatment in a training data set of {the_training_count} people seeking care for Opioid Use Disorder.  Performance was measured during model training, when the tuned/optimized model was applied to the full training data, and when the "best" model was applied to a test data set of {the_testing_count} people.'
+  #   )
+  # )
+```
+
+```{r}
+#| label: fig-one
+#| fig-cap: !expr glue::glue("Categorical predictions (using a threshold of 0.5) and predicted probabilities of failure of treatment for individuals in the testing data set (N = {the_testing_count}) when applying the random forest model.")
+#| fig-cap-location: top
+#| fig-width: 8
+#| warning: false
+
+library(patchwork)
+
+# load data ----
+load('../ctn0094modeling/data/a_test.RData')
+load('../ctn0094modeling/data/rf_final_fit.RData')
+load('../ctn0094modeling/data/rf_conf_mat_test.RData')
+
+# function to create prediction density plots----
+prediction_plots <- function(input_fit) {
+  # input: input_fit = final model fit to be used
+  augment(input_fit, new_data = a_test) |>
+    mutate(
+      did_relapse = if_else(did_relapse == 0, 'No', 'Yes')
+    ) |> 
+    ggplot() +
+    geom_density(
+      aes(x = .pred_1, fill = did_relapse),
+      alpha = 0.5
+    ) +
+    labs(
+      title = 'True Return to Opioid Use Versus\nPrediction Probability',
+      x = 'Probability of Return to Opioid Use',
+      y = 'Density',
+      legend = ''
+    ) +
+    ggthemes::theme_few() +
+    scale_fill_discrete(name = '')
+}
+
+# function to create confusion matrix heat map----
+conf_heat_map <- function(input_matrix) {
+  # input: input_matrix = saved confusion matrix object:
+  input_matrix |> 
+    tidy() |>
+    separate(name, into = c('cell', 'row', 'col'), sep = '_') |>
+    select(-cell) |>
+    mutate(
+      row = as.integer(row),
+      col = as.integer(col)
+    ) |> 
+    ggplot(aes(x = col, y = row, fill = value)) +
+    geom_tile() +
+    geom_text(aes(label = value), color = 'white', size = 5) +
+    scale_x_continuous(breaks = c(1, 2), labels = c('No', 'Yes')) +
+    scale_y_continuous(breaks = c(1, 2), labels = c('No', 'Yes')) +
+    labs(
+      title = 'Confusion Matrix Heatmap',
+      x = 'Predicted',
+      y = 'Actual',
+      fill = 'Count'
+    ) +
+    theme_minimal() +
+    guides(fill = 'none')
+}
+
+
+
+a <- prediction_plots(rf_final_fit)
+b <- conf_heat_map(rf_conf_mat_test)
+
+b + a
+
+```
+
+As discussed in the web supplement [@balise_supplement_nodate], permutation-based VIP measures show the relative importance of different predictors. @fig-two shows an estimate of how much our best performing model, a random forest, would be hurt by excluding different variables. For example, the overall ROC AUC score would decrease by somewhere between 0.75% and 1% if the *age* was not included.
+
+Table 2 shows that some predictors, like *Age*, *IV drug use days*, *Study Medication* and *Study Site* were nearly universally selected. Other recurring predictors include: *Detox Days* and *Fagerstom* were identified by 7 algorithms. While many of the most important predictors are categorical, the logistic regression, LASSO and MARS methods were able to better detect linear trends for continuous variables. That is, they captured trends in *age* and the *number of days using drugs in the 28 days before treatment* as well as *IV drug use days*. Nearly every method identified smoking (i.e., *person who smokes*, *number of packs smoked* or the *Fagerstrom score*) as being related to failure of treatment. Interestingly, BART, which used many different predictors compared to the other methods, achieved similar model performance using many different variables. The interpretation of the impact of each predictor requires finesse beyond a simple statement about overall increased or decreased risk of failure [@biecek_explanatory_2021].
+
+:::: landscape
+::: centering
+
+```{r}
+#| label: fig-two
+#| fig-cap: "Variable Importance Plot (VIP) for Random Forest Model."
+#| fig-cap-location: top
+#| fig-width: 8
+
+# load("../ctn0094modeling/data/vip_bart.RData")
+# load("../ctn0094modeling/data/vip_cart.RData")
+# load("../ctn0094modeling/data/vip_lasso.RData")
+# load("../ctn0094modeling/data/vip_logistic.RData")
+# load("../ctn0094modeling/data/vip_logistic_via_lasso.RData")
+# load("../ctn0094modeling/data/vip_mars.RData")
+# load("../ctn0094modeling/data/vip_nnet.RData")
+load("../ctn0094modeling/data/vip_rf.RData")
+# load("../ctn0094modeling/data/vip_svm.RData")
+# load("../ctn0094modeling/data/vip_xgb.RData")
+
+suppressPackageStartupMessages(library(DALEX))
+library(DALEXtra)
+
+# Something in these packages are needed for the model_parts object to find
+#   its methods. See: https://github.com/ModelOriented/DALEX/issues/569
+library(farver)
+library(ingredients)
+library(labeling)
+
+# based on https://www.tmwr.org/explain#global-explanations
+ggplot_imp <- function(...) {
+  obj <- list(...)
+  metric_name <- attr(obj[[1]], "loss_name")
+  metric_lab <- paste(
+    metric_name,
+    "ROC AUC loss after permutations\n(more negative indicates more important)"
+  )
+
+  full_vip <- bind_rows(obj) |>
+    filter(variable != "_baseline_")
+
+  perm_vals <- full_vip |>
+    filter(variable == "_full_model_") |>
+    group_by(label) |>
+    summarise(dropout_loss = mean(dropout_loss))
+
+  p <- full_vip |>
+    filter(variable != "_full_model_") |>
+    mutate(variable = fct_reorder(variable, dropout_loss, .desc = TRUE))
+
+  p <- p |>
+    filter(
+      variable %in%
+        # the 10 most extreme values
+        levels(p$variable)[-1:((length(levels(p$variable)) - 10) * -1)]
+    ) |>
+   # mutate(dropout_loss = dropout_loss * 100) |>
+    ggplot(aes(dropout_loss, variable))
+  if (length(obj) > 1) {
+    p <- p +
+      facet_wrap(vars(label)) +
+      geom_vline(
+        data = perm_vals, aes(xintercept = dropout_loss, color = label),
+        linewidth = 1.4, lty = 2, alpha = 0.7
+      ) +
+      geom_boxplot(aes(color = label, fill = label), alpha = 0.2)
+  } else {
+    p <- p +
+      geom_vline(
+        data = perm_vals, aes(xintercept = dropout_loss),
+        linewidth = 1.4, lty = 2, alpha = 0.7
+      ) +
+      geom_boxplot(fill = "#91CBD765", alpha = 0.4)
+  }
+  p +
+    ggthemes::theme_few() +
+    theme(legend.position = "none") +
+    labs(
+      x = metric_lab,
+      y = NULL, fill = NULL, color = NULL
+    ) +
+    scale_x_continuous(labels = scales::label_percent())
+}
+
+vip_plot <- 
+  vip_rf |> 
+  mutate(
+    variable = case_when(
+      variable == "site_masked" ~ "Study Site",  
+      variable == "trial" ~ "CTN Trail Number",
+      variable == "per_day" ~ "Amount of Smoking",
+      variable == "detox_days" ~ "Days in Detox before Treatment",
+      variable == "days_opioid" ~ "Days Using Opioid From TLFB",
+      variable == "days_iv_use" ~ "Amount of IV Drug Use",
+      variable == "age" ~ "Age",
+      variable == "medication" ~ "Study Medication",
+      variable == "any_dep" ~ "Depression",
+      variable == "did_use_cocaine" ~ "Coccaine Used",
+      variable == "tlfb_days_of_use_n" ~ "Number of Days Using Any Drug From TLFB",
+      variable == "tlfb_what_used_n" ~ "Distinct Drugs from TLFB",
+      variable == "days_cocaine" ~ "Days of Cocaine",
+      variable == "race" ~ "Race",
+      variable == "ftnd" ~ "Fagerstrom",
+      variable == "withdrawal" ~ "Withdrawal",
+      TRUE ~ variable
+    )
+  )
+
+ggplot_imp(vip_plot) +
+  ggtitle ("Random Forest Results")
+```
+
+:::
+::::
+
+```{r}
+#| echo: false
+
+load("../ctn0094modeling/data/vip_bart.RData")
+load("../ctn0094modeling/data/vip_cart.RData")
+load("../ctn0094modeling/data/vip_lasso.RData")
+load("../ctn0094modeling/data/vip_logistic.RData")
+load("../ctn0094modeling/data/vip_logistic_via_lasso.RData")
+load("../ctn0094modeling/data/vip_mars.RData")
+load("../ctn0094modeling/data/vip_nnet.RData")
+load("../ctn0094modeling/data/vip_rf.RData")
+load("../ctn0094modeling/data/vip_svm.RData")
+load("../ctn0094modeling/data/vip_xgb.RData")
+
+# Something in these packages are needed for the model_parts object to find 
+#   its methods. See: https://github.com/ModelOriented/DALEX/issues/569
+# library(farver)
+# library(ingredients)
+# library(labeling)
+
+mean_of_vip <- function(thingy, thingy_label) {
+  thingy |> 
+    filter(! variable %in% c("_full_model_", "_baseline_")) |> 
+    summarize(
+      the_mean = mean(dropout_loss, na.rm=TRUE), .by = c(label, variable)
+    ) |> 
+    arrange(the_mean) |> 
+    transmute(
+      thing = thingy_label, rank_importance = row_number(), variable, AUC = the_mean)  
+}
+
+stuff <- 
+  list(
+    "BART" = vip_bart, "Boosted Trees" = vip_xgb, "CART" = vip_cart, 
+    "LASSO" = vip_lasso, "Logistic" = vip_logistic, 
+    "Logistic via LASSO" = vip_logistic_via_lasso, "MARS" = vip_mars, 
+    "Neural Net" = vip_nnet, "Random Forest" =vip_rf, "SVM" = vip_svm
+  )
+
+results <- 
+  map2(stuff, names(stuff), mean_of_vip) |>  
+  bind_rows()
+
+top10 <-
+  results |> 
+  filter(rank_importance < 11) |> 
+  select(thing, variable, Importance = rank_importance) |> 
+  mutate(
+    variable = 
+      case_when(
+        variable == "age" ~ "Age",
+        variable == "any_dep" ~ "Depression",
+        variable == "any_schiz" ~ "Schizophrenia",
+        variable == "days_cocaine" ~ "Cocaine Days",
+        variable == "days_heroin" ~ "Heroin Days",
+        variable == "days_iv_use" ~ "IV Drug Days",
+        variable == "days_opioid" ~ "Opioids Days",
+        variable == "days_speed" ~ "Stimulant Days",
+        variable == "days_speedball" ~ "Speedball Days",
+        variable == "detox_days" ~ "Detox Days",
+        variable == "did_use_cocaine" ~ "Used Cocaine",
+        variable == "did_use_speed" ~ "Used Stimulants",
+        variable == "did_use_speedball" ~ "Used Speedball",
+        variable == "ftnd" ~ "Fagerstrom",
+        variable == "has_alcol_dx" ~ "Alcohol DX",
+        variable == "has_amphetamines_dx" ~ "Amphetamine DX",
+        variable == "has_brain_damage" ~ "Brain Damage DX",
+        variable == "in_out" ~ "In/Outpatient",
+        variable == "is_homeless" ~ "Homeless",
+        variable == "is_smoker" ~ "Person Who Smokes",
+        variable == "job" ~ "Job",
+        variable == "medication" ~ "Study Medication",
+        variable == "per_day" ~ "Smoking Packs",
+        variable == "race" ~ "Race",
+        variable == "shared" ~ "Shared Needles",
+        variable == "site_masked" ~ "Study Site",
+        variable == "tlfb_days_of_use_n" ~ "TLFB Days of Use",
+        variable == "tlfb_what_used_n" ~ "TLFB Number of Drugs",
+        variable == "trial" ~ "Study Number",
+        variable == "withdrawal" ~ "Withdrawl",
+        variable == "did_use_heroin" ~ "Used Heroin",
+        variable == "is_living_stable" ~ "Stable Housing",
+        variable == "has_cannabis_dx" ~ "Cannabis DX",
+        variable == "has_epilepsy" ~ "Epilepsy DX",
+        variable == "education" ~ "Education",
+        variable == "has_bipolar" ~ "Bipolar DX",
+        variable == "any_anx" ~ "Anxiety",
+        variable == "did_use_opioid" ~ "Used Opioids",
+        variable == "marital" ~ "Marital Status",
+        variable == "used_iv" ~ "Used IV Drugs",
+        variable == "is_male" ~ "Sex Assigned at Birth"
+      )
+  )   
+
+popular <-
+  top10 |> count(variable, sort = TRUE)
+
+  
+wide <-
+  top10 |> 
+  pivot_wider(
+    names_from = thing, values_from = c(variable)
+  )  
+
+people_count <- analysis |> nrow() |> scales::comma()
+```
+
+::: landscape
+```{r tbl-two}
+#| tbl-cap: !expr |
+#|   glue::glue("Top 10 variables identified by permutation testing for 
+#|   predicting failure of treatment for {people_count} people seeking care for 
+#|   Opioid Use Disorder.")
+library(gt)
+
+wide[, 1:5]  |> 
+  gt() |> 
+  tab_style(
+    style = list(cell_text(color = "white")),
+    locations = list(cells_footnotes(), cells_source_notes())
+  ) |> 
+  tab_footnote("x")   
+
+wide[, c(1, 6:10)] |> 
+  gt()
+```
+:::
+
+# Discussion
+
+The goal of this manuscript with its web supplement [@balise_supplement_nodate] was to provide a self-contained tutorial on modern ML methods and to provide an example of how these methods can be used to predict treatment response in people with OUD. Despite using these state-of-the-art methods, our results show that our predictions for treatment success or failure are far from ideal. Using these models and the data gathered before treatment, for a pair of people, for one of whom treatment will succeed while it will fail for the other, we have about a `r best_ROC |> filter(Model == "Random Forest") |> pull(2) |> scales::percent()` chance of guessing for which one it will fail. While the models afford similar overall performance, we can learn by exploring/contrasting their findings.
+
+Different modeling methods detected some common threads. It is unsurprising to see that IV drug use, a risk factor that has been tied to return to opioid use, was selected as an important predictor by all but one method [@chalana2016]. Polysubstance drug use, in particular the use of cigarettes, was nearly universally identified as a predictor of failure. Several tree-based methods, which are ideal for picking up non-linear patterns, stressed the importance of length-of-stay in a detoxification unit before study drug administration. To better understand this impact, consider that our models also included details on the amount of illicit drug use before the intervention. The relatively complex and best performing models (i.e., random forests and boosted trees) identified days of drug use before care, as well as days in detox. These findings compliment other analyses that use latent class methods (a technique that does not integrate well with a ML framework), which have identified drug use trajectories in the month before treatment [@pan2022]. Perhaps, drug use patterns before the start of the trial and time in detox are reflecting people's ability to reduce drug use before MOUD initiation.
+
+It is interesting that one of the models, BART, uniquely identified many variables as predictors. This is an example of the ML "Rashomon Effect" and it suggests the need for further work to explore whether several equally viable explanations of treatment outcomes can be stacked using ensemble ML methods [@breiman1996; @wolpert1992; @paes2023; @rudin]. While it will come at a cost of interpretability, we strongly suspect that we will be able to improve our predictive power by using ML techniques that combine algorithms.
+
+Furthermore, the fact that study site was nearly universally identified is noteworthy. As discussed elsewhere, the sites were aggregated to ensure anonymity [@raymondbalise2024]. Thus, it is possible that the site effects are more important than we document here. While all subjects were participating in highly structured clinical trials, the study site was an extremely important prognosticator indicating that the local context is important in predicting individual outcomes. However, it is unknown if this feature is capturing details within the clinic, such as the similarity in age, sex, race, and lived experience between the patients and care providers or general positive or negative attitudes/interactions or issues related to ease of access or the broader social milieu. In theory, details on care providers could be added to future models. While it is technically simple to integrate data from the census to describe the neighborhoods where care was provided, there are thorny privacy and ethical issues. Sensitive details could be used to easily reverse engineer the individual clinics which, in turn, could lead to an increased risk of identifying individuals. Methods for dealing with these site-specific effects (which would be considered random effects in traditional statistical models) are only now becoming more relevant as interpretable ML methods like the VIP values become more popular. As ML methods move beyond their infancy, we expect new techniques will be developed to assess or remove the impact of clinic sites on predictions. However, rather than controlling for or removing those effects, we should learn what drives them.
+
+While all methods were evaluated using ROC AUC, it is important to remember that there are many metrics that could be used to evaluate a model [@sokolova2009; @opitz2024]. The choice of metrics is an active area of research. Different metrics emphasize different aspects of model performance: Matthews Correlation Coefficient balances true/false positive and negative rates while accounting for class sizes, Log Loss penalizes incorrect predictions more heavily, Precision-Recall AUC focuses on the positive class, and Cohen's Kappa emphasizes performance on difficult cases where chance guessing performs well. Several such metrics are described and calculated in the web supplement [@balise_supplement_nodate].
+
+Depending on research and clinical goals, optimizing for sensitivity, specificity, or other metrics may be more valuable than ROC AUC. Beyond classification accuracy, it is important to examine the underlying probabilities that drive predictions. Rather than focusing solely on whether the model correctly predicted treatment failure, researchers should examine the predicted probabilities for individuals, as shown in Figure 1B. These probabilities reveal whether a model is highly confident or uncertain in its estimates for specific individuals.
+
+In this example, the model was highly confident in predicting treatment failure for many people who actually succeeded in treatment (i.e., did not return to opioid use during treatment).
+
+The number of sexual partners was measured, to assess HIV risk, in CTN-0027 and CTN-0030, but the days in detox was measured only in CTN-0051. Consequently, these variables pose particular challenges for modelling. Unfortunately, the sexual partners variable caused the permutation-based VIP methods to fail, so we could not assess its relative importance here. We feared that having a value on a variable could act as a simple proxy for being in a particular trial. Because of this concern, we conducted numerous sensitivity analyses using different subsets and imputation/simulation methods. These techniques did diminish the relative importance of the predictors, but they remained influential.
+
+Our models would certainly benefit from information that has been identified as relevant to the prediction of treatment success or failure in other studies [@hser1997; @biondi2022; @pretreat1981; @mclellan_increased_1983; @comptoniii2003; @mclellan1983]. We used all data available on tobacco and alcohol use but because the data were not uniformly assessed across the trials, we could not include as much detail on consumption as we wanted. Similarly, detailed information on the route of drug use (e.g., oral vs. nasal use of opioid pills) could not be used. We believe that contextual factors such as transportation barriers, access to childcare, etc. impact the probability of attending and ultimately succeeding in care. Further, information on previous treatment attempts would be valuable, and genetic, genomic, and other -omic data will likely ultimately prove valuable in predicting treatment response and matching people to the best possible medications.
+
+In conclusion, ML methods are useful for making predictions of how individual patients will respond to treatment; however, current data provide only modest veracity in these predictions. The utility of current ML models is limited by the quality, breadth, and depth of the data collected in MOUD clinical trials. We hope that future studies will systematically and richly assess features related to the provider-patient relationship, provider beliefs about MOUD, patient attitudes towards MOUD, prior treatment attempts, socioeconomic and demographic characteristics, polysubstance use, risky sexual behaviors, and the many other potentially important features highlighted in the discussion and limitations section. To this end, the code provided with the web supplement [@balise_supplement_nodate] allows anyone who is familiar with the R programming language to extend our work and explore other theories and predictive features. Such work will likely allow us to improve the quality of our predictions and identify missing key features for predicting treatment success.
+
+# References {.unnumbered}
+
+```{r bibliography}
+#| include: false
+
+# automatically create a bib database for loaded R packages & rUM
+knitr::write_bib(
+  c(
+    .packages(),
+    "rUM",
+    "table1"
+  ),
+  "packages.bib"
+)
+```

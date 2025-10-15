@@ -1,0 +1,140 @@
+{
+    "telemetry.sqmId": "",
+    "telemetry.machineId": "0e35ab69687a3baee5158b8be770d90b7eed99589eee52e6bef07d02d9c9f5fb",
+    "telemetry.devDeviceId": "3833918d-9177-4d50-9827-5e821fd380c7",
+    "backupWorkspaces": {
+        "workspaces": [],
+        "folders": [
+            {
+                "folderUri": "file:///home/kyle/dev/ctn0094/ctn0094modeling"
+            },
+            {
+                "folderUri": "file:///home/kyle/dev/nephro"
+            }
+        ],
+        "emptyWindows": []
+    },
+    "windowControlHeight": 30,
+    "profileAssociations": {
+        "workspaces": {
+            "file:///home/kyle/dev/ctn0094/ml_paper_2022": "__default__profile__",
+            "file:///home/kyle/dev": "__default__profile__",
+            "file:///home/kyle/dev/dot-files": "__default__profile__",
+            "file:///home/kyle/dev/ctn0094/ml_paper_2025": "__default__profile__",
+            "file:///home/kyle/dev/ctn0094/web_supplement": "__default__profile__",
+            "file:///home/kyle/dev/ctn0094/ctn0094modeling": "__default__profile__",
+            "file:///home/kyle/dev/nephro": "__default__profile__",
+            "file:///home/kyle/dev/kyle-projects/nhanes_amrit": "__default__profile__",
+            "file:///home/kyle/dev/kyle-projects/nhanes_amrit/nhanes_amrit": "__default__profile__",
+            "file:///home/kyle/dev/kyle-projects/nhanes_aging": "__default__profile__",
+            "file:///home/kyle/dev/Open.Visualization.Academy": "__default__profile__",
+            "file:///home/kyle/dev/nhanes_aging": "__default__profile__"
+        },
+        "emptyWindows": {}
+    },
+    "theme": "vs-dark",
+    "themeBackground": "#282c34",
+    "windowSplash": {
+        "zoomLevel": 0.4,
+        "baseTheme": "vs-dark",
+        "colorInfo": {
+            "foreground": "#d6deeb",
+            "background": "#282c34",
+            "editorBackground": "#282c34",
+            "titleBarBackground": "#282c34",
+            "titleBarBorder": "rgba(255, 255, 255, 0.02)",
+            "activityBarBackground": "#282c34",
+            "activityBarBorder": "rgba(255, 255, 255, 0.07)",
+            "sideBarBackground": "#282c34",
+            "sideBarBorder": "rgba(255, 255, 255, 0.07)",
+            "statusBarBackground": "#6b7fa1",
+            "statusBarBorder": "rgba(255, 255, 255, 0.02)",
+            "statusBarNoFolderBackground": "#282c34"
+        },
+        "layoutInfo": {
+            "sideBarSide": "left",
+            "editorPartMinWidth": 220,
+            "titleBarHeight": 30,
+            "activityBarWidth": 48,
+            "sideBarWidth": 0,
+            "auxiliaryBarWidth": 807,
+            "statusBarHeight": 0,
+            "windowBorder": false
+        }
+    },
+    "windowsState": {
+        "lastActiveWindow": {
+            "folder": "file:///home/kyle/dev/nephro",
+            "backupPath": "/home/kyle/.config/Positron/Backups/44429a872154e3c5d5ab7795ebe35eb2",
+            "uiState": {
+                "mode": 1,
+                "x": 1930,
+                "y": 9,
+                "width": 1905,
+                "height": 1019,
+                "zoomLevel": 0
+            }
+        },
+        "openedWindows": []
+    },
+    "windowSplashWorkspaceOverride": {
+        "layoutInfo": {
+            "sideBarWidth": 387,
+            "auxiliaryBarWidth": 807,
+            "workspaces": {
+                "9d8561905b6eecfdc3289df7d463a24c": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "11b574a83bc8f68203e92d65f7a31c68": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "74a318db1d25dcca85a605a2a0900fcd": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "3d187e4f3ae3fa8ffe024449b3ff9f0f": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "4e9cc97f4142a07a4b8804b7f4d32bd3": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "2b939eb05845358dfff5f07080034167": {
+                    "sideBarVisible": false,
+                    "auxiliaryBarVisible": true
+                },
+                "7349d9fece5f2d2ad9f8643cd41aacef": {
+                    "sideBarVisible": false,
+                    "auxiliaryBarVisible": true
+                },
+                "1788435cebf08d3e7a4dfdd810833686": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "5d8370218885bab7e061512c975a0915": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "89f681200d4153aeef93af5ae8c37bb3": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "b872beb770f3bd7fc0b8333529ecebd2": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "818c06f628c165bf5da76343ae676918": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "406d8f1f589bc8a61da71e2f6743c926": {
+                    "sideBarVisible": false,
+                    "auxiliaryBarVisible": true
+                }
+            }
+        }
+    }
+}

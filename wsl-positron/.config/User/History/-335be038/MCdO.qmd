@@ -1,0 +1,50 @@
+---
+title: "Consort Comparison"
+author: 
+  - name: "Kyle Grealis"
+    affiliation:
+      - "Department of Public Health Sciences, <br>Division of Biostatistics and Bioinformatics"
+date: last-modified
+date-format: "MMMM D, YYYY"
+format: 
+  revealjs:
+    theme: [default, slides.scss]
+    slideNumber: true
+    fontsize: 2em
+    html-math-method: mathjax
+    slide-number: c/t
+    show-slide-number: all
+    highlight-style: rstudio_default-light.theme
+    title-slide-attributes:
+      data-background: "linear-gradient(to right, white 25%, #F47321 25%)"
+    pdf-max-pages-per-slide: 1
+    pdf-separate-fragments: true
+embed-resources: true   # true = a single file, false = multiple files
+knitr:
+  opts_chunk:      ########## set global options ############
+    collapse: true # keep code from blocks together (if shown)
+    echo: true     # don't show code
+    message: true  # show messages
+    warning: true  # show warnings
+    error: true    # show error messages
+    comment: ""    # don't show ## with printed output
+    R.options:   
+      digits: 3    # round to three digits
+editor_options:
+  chunk_output_type: console
+editor: source
+---
+
+
+
+:::: {.columns}
+
+::: {.column width='38%'}
+![Figure 1: Original consort](../misc/img/mosslemi_original_consort.png)
+:::
+
+::: {.column width='62%'}
+![Figure 2: Replicated consort](../misc/img/mosslemi_consort_replicated.png){.fig-2}
+:::
+
+::::

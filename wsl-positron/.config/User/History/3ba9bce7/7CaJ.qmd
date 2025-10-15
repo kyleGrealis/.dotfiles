@@ -1,0 +1,503 @@
+---
+title: "NHANES Aging Study Tables"
+date: last-modified
+warning: false
+---
+
+{{< brand logo large >}}
+
+```{r}
+#| label: setup
+source('R/_libraries.R')
+source('R/custom_functions.R')
+source('R/data_dictionary.R')
+source('create_design_fxn.R')
+load('data/study_data.rda')
+
+cohort <- the_data |> 
+  filter(between(year, 2009, 2018)) |> 
+  # September 26: Restrict the sample to 30-59 yrs
+  filter(between(ridageyr, 30, 59)) |> 
+  # October 13: create age groups
+  mutate(
+    age_groups = case_when(
+      between(ridageyr, 30, 39) ~ '30-39',
+      between(ridageyr, 40, 49) ~ '40-49',
+      between(ridageyr, 50, 59) ~ '50-59',
+      .default = 'check'
+    )
+  )
+
+years <- '2009-2018'
+```
+
+```{r}
+### SUBSET DATA TO ONLY NEEDED VARIABLES, THEN CREATE DESIGN
+```
+
+```{r}
+#| label: create design object
+design_mec <- create_design(cohort, 2009, 2018, 'mec')
+design_int <- create_design(cohort, 2009, 2018, 'int')
+```
+
+```{r}
+### REMOVE MISSING OR OTHER FILTERING HERE...
+```
+
+```{r}
+#| label: mean KDM ages
+
+# Calculated biological age using KDM
+design_mec |> 
+  summarize(
+    mean_kdm_age = survey_mean(kdm_bioage, na.rm = TRUE),
+    .by = use_category
+  )
+#  use_category       mean_kdm_age mean_kdm_age_se
+#   <ord>                     <dbl>           <dbl>
+# 1 Current heavy user         43.5           0.431
+# 2 Current light user         43.5           0.510
+# 3 Former user                45.1           0.218
+# 4 Never used                 44.3           0.183
+# 5 Missing                    42.6           0.403
+
+# Biological Age Advancement
+design_mec |> 
+  summarize(
+    mean_kdm_age = survey_mean(kdm_advance, na.rm = TRUE),
+    .by = use_category
+  )
+#   use_category       mean_kdm_age mean_kdm_age_se
+#   <ord>                     <dbl>           <dbl>
+# 1 Current heavy user        0.275           0.253
+# 2 Current light user       -0.266           0.295
+# 3 Former user              -0.419           0.113
+# 4 Never used               -0.360           0.100
+# 5 Missing                  -0.939           0.185
+```
+
+
+## Tables
+
+```{r}
+#| label: table - demographics by sex
+cohort |> 
+  tbl_summary(
+    by = riagendr,
+    include = c(
+      ridageyr, ridreth1, education, income,
+    ),
+    type = c(ridageyr ~ 'continuous2'),
+    statistic = list(
+      all_continuous2() ~ c('{mean} ({sd})', '{min}--{max}')
+    ),
+    missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras() |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Demographics by sex</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - demographics by cannabis use
+cohort |> 
+  filter(use_category != 'Missing') |> 
+  mutate(use_category = fct_drop(use_category)) |> 
+  tbl_summary(
+    by = use_category,
+    include = c(
+      ridageyr, ridreth1, education, income,
+    ),
+    type = c(ridageyr ~ 'continuous2'),
+    statistic = list(
+      all_continuous2() ~ c('{mean} ({sd})', '{min}--{max}')
+    ),
+    missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras() |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Demographics by cannabis use</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - cannabis usage by sex
+cohort |> 
+  tbl_summary(
+    by = riagendr,
+    include = c(
+      use_category
+    ),
+    missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras(overall = FALSE) |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Historical cannabis usage by sex</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - biomarkers by sex
+cohort |> 
+  tbl_summary(
+    by = riagendr,
+    include = c(
+      nonhdl, pp, acr, alt, meanbp, pulse, fev1_1000, albumin_gL, lnalp,
+      lnbun, creat_umol, lncreat, lncreat_umol, glucose_mmol, lnuap,
+      crp_cat, lncrp, lnhba1c, grip_scaled, lnwalk
+    ),
+    statistic = list(all_continuous() ~ '{mean} ({sd})'),
+    type = c(crp_cat ~ 'categorical'),
+    missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras(overall = FALSE) |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Clinical biomarkers by sex</strong>
+        \nKDM Implementation
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - biomarkers by use
+cohort |> 
+  filter(use_category != 'Missing') |> 
+  mutate(use_category = fct_drop(use_category)) |> 
+  tbl_summary(
+    by = use_category,
+    include = c(
+      nonhdl, pp, acr, alt, meanbp, pulse, fev1_1000, albumin_gL, lnalp,
+      lnbun, creat_umol, lncreat, lncreat_umol, glucose_mmol, lnuap,
+      crp_cat, lncrp, lnhba1c, grip_scaled, lnwalk
+    ),
+    statistic = list(all_continuous() ~ '{mean} ({sd})'),
+    type = c(crp_cat ~ 'categorical'),
+    missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras(overall = FALSE) |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Clinical biomarkers by historical marijuana usage</strong>
+        \nKDM Implementation
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - biomarkers 2 by sex
+cohort |> 
+  tbl_summary(
+    by = riagendr,
+    include = c(
+      lbxwbcsi, lbdldl, lbdhdd, lbxtc, bmxbmi, bmxwaist, mean_sbp, 
+      mean_dbp, waist_height_ratio, lbxglu, lbdglusi, lbdhi
+    ),
+    statistic = list(all_continuous() ~ '{mean} ({sd})'),
+    missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras(overall = FALSE) |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Clinical biomarkers by sex</strong>
+        \nExtended List
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - biomarkers 2 by use
+cohort |> 
+  filter(use_category != 'Missing') |> 
+  mutate(use_category = fct_drop(use_category)) |> 
+  tbl_summary(
+    by = use_category,
+    include = c(
+      lbxwbcsi, lbdldl, lbdhdd, lbxtc, bmxbmi, bmxwaist, mean_sbp, 
+      mean_dbp, waist_height_ratio, lbxglu, lbdglusi, lbdhi
+    ),
+    statistic = list(all_continuous() ~ '{mean} ({sd})'),
+    missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras() |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Clinical biomarkers by historical marijuana usage</strong>
+        \nExtended List
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - real & calculated age by sex
+cohort |> 
+  tbl_summary(
+    by = riagendr, 
+    include = c(ridageyr, contains('kdm')),
+    statistic = list(all_continuous() ~ '{mean} ({sd})')
+    # missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras(overall = FALSE) |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Calculated study age by sex</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - real & calculated age by historical use
+cohort |> 
+  filter(use_category != 'Missing') |> 
+  mutate(use_category = fct_drop(use_category)) |> 
+  tbl_summary(
+    by = use_category, 
+    include = c(ridageyr, contains('kdm')),
+    statistic = list(all_continuous() ~ '{mean} ({sd})')
+    # missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras(overall = FALSE) |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Calculated study age by historical marijuana usage</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - misc medical factors by sex
+cohort |> 
+  tbl_summary(
+    by = riagendr, 
+    include = c(
+      diq010, did040, diq160, diq050, did060, diq070, lbxgh,
+      mcq220, smq020, urdact, lbxscr, egfr_2021
+    ),
+    statistic = list(all_continuous() ~ '{mean} ({sd})')
+    # missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras() |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Miscellaneous medical factors by sex</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - misc medical factors by historical use
+cohort |> 
+  filter(use_category != 'Missing') |> 
+  mutate(use_category = fct_drop(use_category)) |> 
+  tbl_summary(
+    by = use_category, 
+    include = c(
+      diq010, did040, diq160, diq050, did060, diq070, lbxgh,
+      mcq220, smq020, urdact, lbxscr, egfr_2021
+    ),
+    statistic = list(all_continuous() ~ '{mean} ({sd})')
+    # missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras() |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Miscellaneous medical factors by historical marijuana usage</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table - substance use by sex
+cohort |> 
+  tbl_summary(
+    by = riagendr, 
+    include = c(
+      duq200, ever_use_marijuana,  duq240, duq290, duq330, duq370,
+      duq380a, duq380b, duq380c, duq380d, duq380e
+    ),
+    statistic = list(all_continuous() ~ '{mean} ({sd})')
+    # missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras() |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Self-reported substance use by sex</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+```{r}
+#| label: table -substance use by historical use
+cohort |> 
+  filter(use_category != 'Missing') |> 
+  mutate(use_category = fct_drop(use_category)) |> 
+  tbl_summary(
+    by = use_category, 
+    include = c(
+      duq200, duq240, duq290, duq330, duq370,
+      duq380a, duq380b, duq380c, duq380d, duq380e
+    ),
+    statistic = list(all_continuous() ~ '{mean} ({sd})')
+    # missing = 'no'
+  ) |> 
+  add_auto_labels() |> 
+  extras() |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Self-reported substance use by historical marijuana usage</strong>
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+
+
+## Main Study Tables
+
+### Table 1
+
+```{r}
+#| label: table 1
+
+# Stack tables based on use
+# 1. Age raw
+age <- cohort |> 
+  filter(use_category != 'Missing') |> 
+  mutate(use_category = fct_drop(use_category)) |> 
+  tbl_summary(
+    by = use_category,
+    include = c(ridageyr),
+    statistic = list(all_continuous() ~ '{mean} ({sd})')
+  ) |> 
+  add_auto_labels() |> 
+  extras(overall = FALSE)
+
+# 2. Weighted: age groups, sex, ethnicity
+other <- design_int |> 
+  filter(use_category != 'Missing') |> 
+  mutate(use_category = fct_drop(use_category)) |> 
+  tbl_svysummary(
+    by = use_category,
+    include = c(age_groups, riagendr, ridreth1),
+    statistic = list(all_continuous() ~ '{mean} ({sd})')
+  ) |> 
+  add_overall() |> 
+  add_auto_labels() |> 
+  add_p()
+
+# Create stack
+tbl_stack(
+  tbls = list(age, other)
+) |> 
+  modify_caption(
+    text_interpret = 'md',
+    caption = glue(
+      '<strong>Table 1:</strong> Socio-demographic characteristics by cannabis use status
+        \n<i>NHANES {years}</i>'
+    )
+  )
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+these will get more work
+
+```{r}
+cohort2 <- 
+  cohort |>
+  filter(use_category != 'Missing') |> 
+  mutate(
+    use_category = factor(
+      use_category, 
+      levels = c('Never used', 'Former user', 'Current light user', 'Current heavy user'),
+      ordered = TRUE
+    )
+  )
+design_mec <- create_design(cohort2, 2009, 2018, 'mec')
+
+svyglm(kdm_bioage ~ factor(use_category, ordered = FALSE) + riagendr, design = design_mec) |> 
+  tidy()
+
+cohort |> 
+  mutate(use_category = factor(use_category, ordered = FALSE)) |> 
+  lm(kdm_bioage ~ use_category + riagendr, data = _) |> 
+  tidy()
+
+
+
+svyglm(kdm_advance ~ factor(use_category, ordered = FALSE) + riagendr + factor(education, ordered = FALSE), design = design_mec) |> 
+  tidy()
+svyglm(kdm_bioage ~ fev1_1000, design = design_mec) |> tidy()
+
+# cohort |> 
+#   mutate(use_category = factor(use_category, ordered = FALSE)) |> 
+#   lm(kdm_advance ~ use_category + riagendr, data = _) |> 
+#   tidy()
+```

@@ -1,0 +1,402 @@
+---
+title: "Five-Step Classification Algorithm for Type 1 Diabetes with Adiposity Measures (NHANES 2011-2022)"
+subtitle: "Modified version using Galindo method"
+date: last-modified
+---
+
+{{< brand logo large >}}
+
+
+## Purpose & Methods
+
+Apply a _modified_ five-step diabetes classification to our working NHANES cohort 
+(1999-2021) [@mosslemi_2020]. The [methods](https://pmc.ncbi.nlm.nih.gov/articles/PMC7041875/) 
+have been modified by reordering step 5 to step 2 evaluating the NHANES responses as 
+they relate to five questions:  
+1. Is there valid diabetes-related information?  
+2. Has the participant started taking insulin within a year of diagnosis?  
+3. Is the participant currently taking medication for diabetes?  
+4. Is the participant currently taking insulin?  
+5. Is the participant currently taking _only_ insulin?  
+
+<!-- ![Mosslemi et al. five-step diagnostic process](misc/img/five-step.jpg) -->
+
+![Figure 1: Results of modified Mosslemi et al. five-step diagnostic classification](misc/img/consort_09252025.png)
+
+
+## Analysis & Application
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+source("R/_libraries.R")
+source("R/data_dictionary.R")
+source('R/custom_functions.R')
+
+# Misc table tweaks
+date <- Sys.Date() |> format("%B %d, %Y")
+subtitle <- glue('NHANES: ({min(the_data$year)}-{max(the_data$year)})\nProcessed: {date}')
+
+load('data/the_data.rda')
+```
+
+```{r}
+#| label: create-cohort
+#| message: false
+#| warning: false
+
+# Use a modified 5-step approach as described by Dr. Galindo
+# This will reorder so the original Step 5 enters at Step 2 (diagnosing Type 1):
+
+the_cohort <- the_data |> 
+  # Convert is.na(diq010) to a character value to be included in revised analysis
+  mutate(diq010 = if_else(is.na(diq010), 'N/A', diq010)) |>
+  # Initial exclusions & inclusions
+  mutate(
+    is_initially_excluded = case_when(
+      # Those less than 16 years of age
+      ridageyr < 16 ~ 'exclude',
+      # Those without complete education information
+      dmdeduc2 %in% c('Don\'t Know', 'Refused') ~ 'exclude',
+      # Those without prior diagnosis of diabetes
+      diq010 != 'Yes' ~ 'exclude',
+      # Those without prior age at diabetes diagnosis
+      # is.na(did040) ~ 'exclude',
+      is.na(age_told_diabetes) ~ 'exclude',
+      # Those without duration of diabetes
+      is.na(diab_duration) ~ 'exclude',
+      .default = 'include'
+    )
+  ) |> 
+  mutate(
+    diabetes_class = factor(
+      case_when(
+        # Step 1:
+        # Did not report yes or no for taking insulin now
+        (is_initially_excluded == 'include' & !diq050 %in% c('Yes', 'No')) ~ 
+          'Excluded',
+        # Did not report yes or no for taking diabetic pills
+        # (is_initially_excluded == 'include' & !diq070 %in% c('Yes', 'No')) ~ 
+        (is_initially_excluded == 'include' & !take_diabetic_pills %in% c('Yes', 'No')) ~ 
+          'Excluded',
+        # # diq060: Numeric duration of years using insulin
+        # (is_initially_excluded == 'include' & did060 > diab_duration) ~ 
+        #   # 'Excluded for duration (step 1)',
+        #   'Excluded',
+        # Biologically implausible insulin duration (started >1 year before diagnosis)
+        # Using the new time_to_insulin variable which properly handles unit conversions
+        (is_initially_excluded == 'include' & 
+          !is.na(time_to_insulin) & 
+          time_to_insulin < -1) ~ 
+          'Excluded',
+
+        # Step 2: find Type I diabetes
+        (is_initially_excluded == 'include' & insulin_within_1yr == TRUE) ~ 'Type 1 DM',
+        # Step 3: currently taking medication for diabetes
+        # (is_initially_excluded == 'include' & diq070 == 'No') ~ 'Type 2 DM',
+        (is_initially_excluded == 'include' & take_diabetic_pills == 'No') ~ 'Type 2 DM',
+        # Step 4: currently takes insulin
+        (is_initially_excluded == 'include' & diq050 != 'Yes') ~ 'Type 2 DM',
+        # Step 5: currently takes *only* insulin
+        (is_initially_excluded == 'include' & diq050 == 'Yes') ~ 'Type 2 DM',
+
+        # Those undiagnosed from initial exclusion criteria
+        (is_initially_excluded != 'include' & lbxglu >= 126 | lbxgh >= 6.5) ~ 'Undx Type 2 DM',
+        # (is_initially_excluded != 'include' & lbxglu >= 126) ~ 'Undiagnosed Type 2 (FPG)',
+        # (is_initially_excluded != 'include' & lbxgh >= 6.5) ~ 'Undiagnosed Type 2 (HbA1c)',
+
+
+        .default = 'Controls'
+      ),
+      levels = c(
+        'Excluded',
+        'Controls',
+        'Type 1 DM',
+        'Type 2 DM',
+        'Undx Type 2 DM'
+      )
+    )
+  )
+
+# min(the_cohort$year) 1999
+# max(the_cohort$year) 2021
+
+# save(the_cohort, file = 'data/classified_cohort_1999_2021.rda')
+
+## It is important to run the script "galindo_revision_ggconsort2.R" to replicate these counts before continuing!
+# Or check with
+# load('data/consort_diagram_09252025.RData')
+# then inspect
+# consort_diagram
+```
+
+
+---
+
+
+## Results
+
+### Table 1: Classification with modified Five-step method
+
+```{r}
+#| label: table one classification results
+#| message: false
+#| warning: false
+
+the_cohort |> 
+  mutate(
+    diabetes_class = case_when(
+      diabetes_class == 'Excluded' ~ 'Excluded (during step 1)',
+      diabetes_class == 'Undx Type 2 DM' ~ 'Undiagnosed Type 2 DM',
+      .default = diabetes_class
+    )
+  ) |> 
+  tabyl(diabetes_class) |> 
+  adorn_pct_formatting() |> 
+#           diabetes_class      n percent
+#                  Controls 130922   93.0%
+#  Excluded (during step 1)   2696    1.9% ** had a diabetes diagnosis but removed at Step 1
+#                 Type 1 DM    385    0.3%
+#                 Type 2 DM   4435    3.1%
+#     Undiagnosed Type 2 DM   2383    1.7%
+  gt() |> 
+  cols_label(
+    diabetes_class = 'Diabetes classification',
+    n = 'Count', percent = 'Percent'
+  ) |> 
+  tab_header(
+    title = md('**Table 1**: Classification of diabetes using\n modified 5-step approach'),
+    subtitle = subtitle
+  ) |> 
+  theme_gt_compact()
+```
+
+
+```{r}
+#| label: table one A classification results
+#| message: false
+#| warning: false
+# Remove Controls & Excluded during Step 1 to obtain prevalence
+the_cohort |> 
+  filter(!diabetes_class %in% c('Excluded', 'Controls')) |> 
+  mutate(diabetes_class = fct_drop(diabetes_class)) |> 
+  tabyl(diabetes_class) |> 
+  adorn_pct_formatting() |> 
+#  diabetes_class    n percent
+#       Type 1 DM  385    5.3%
+#       Type 2 DM 4435   61.6%
+#  Undx Type 2 DM 2383   33.1%
+  gt() |> 
+  cols_label(
+    diabetes_class = 'Diabetes classification',
+    n = 'Count', percent = 'Percent'
+  ) |> 
+  tab_header(
+    title = md('**Table 1**: Classification of diabetes using\n modified 5-step approach'),
+    subtitle = subtitle
+  ) |> 
+  theme_gt_compact()
+```
+
+
+### Table 2: Demographics by diabetes classification
+
+```{r}
+#| label: table two demographics
+#| message: false
+#| warning: false
+the_cohort |>
+  filter(diabetes_class != 'Excluded') |> 
+  mutate(diabetes_class = fct_drop(diabetes_class)) |> 
+  tbl_summary(
+    by = diabetes_class,
+    include = c(
+      riagendr,
+      ridageyr,
+      ridreth1,
+      dmdeduc2,
+      did040,
+      diab_duration,
+      diq050,
+      did060,
+      diq070
+    ),
+    missing = 'no'
+  ) |>
+  add_auto_labels() |>
+  extras(overall = FALSE) |>
+  modify_caption(
+    caption = '<strong>Table 2</strong>: Participant demographics by diabetes classification <br>
+      using the modified 5-step process<br>
+      <span style="font-size:10px">NHANES (2011-2022)</span><br>
+      <i>{subtitle}</i>',
+    text_interpret = 'html'
+  )
+```
+
+
+
+### Table 3: Diabetes classification with adiposity measures
+
+```{r}
+#| label: table-2
+#| warning: false
+the_cohort |>
+  filter(diabetes_class != 'Excluded') |> 
+  mutate(diabetes_class = fct_drop(diabetes_class)) |>
+  mutate(dxdtofat = dxdtofat / 1000) |>
+  tbl_summary(
+    by = diabetes_class,
+    include = c(
+      dxdlapf,
+      dxdrapf,
+      dxdllpf,
+      dxdrlpf,
+      starts_with('dx'), # includes dxd* & dxx*
+      bmxbmi,
+      lbxgh:waist_height_ratio,
+      mean_sbp,
+      mean_dbp
+    ),
+    label = c(
+      dxdtofat ~ 'Total Fat (kg)'
+    ),
+    missing = 'no'
+  ) |>
+  add_auto_labels() |>
+  extras(overall = FALSE) |>
+  add_variable_group_header(
+    header = 'Limb measures:',
+    variables = c(dxdlapf, dxdrapf, dxdllpf, dxdrlpf)
+  ) |>
+  add_variable_group_header(
+    header = 'Body mass measures:',
+    variables = dxxanfm:dxxvfatm
+  ) |>
+  add_variable_group_header(
+    header = 'Lab blood measures:',
+    variables = lbxgh:lbxglu
+  ) |>
+  group_styling() |>
+  modify_caption(
+    caption = '<strong>Table 3</strong>: Dual Energy X-ray Absorptiometry (DEXA)<br>
+      results by modified five-step diabetes classification<br>
+      <span style="font-size:10px">NHANES (2011-2022)</span><br>
+      <i>{subtitle}</i>',
+    text_interpret = 'html'
+  ) |>
+  as_gt() |>
+  tab_style(
+    style = cell_fill(color = "#E8E8E8"),  # Gray background
+    locations = cells_body(rows = c(1, 10, 20))
+  )
+```
+
+### Figure 1: BMI by classification
+
+```{r}
+#| label: figure-1
+#| message: false
+#| warning: false
+the_cohort |>
+  filter(diabetes_class != 'Excluded') |> 
+  mutate(diabetes_class = fct_drop(diabetes_class)) |> 
+  summarize(
+    mean_bmi = mean(bmxbmi, na.rm = TRUE),
+    n = n(),
+    se_bmi = sd(bmxbmi, na.rm = TRUE) / sqrt(n),
+    ci_lower = mean_bmi - 1.96 * se_bmi,
+    ci_upper = mean_bmi + 1.96 * se_bmi,
+    .by = c('year', 'diabetes_class')
+  ) |> 
+  ggplot(aes(x = year, y = mean_bmi, color = diabetes_class)) +
+  geom_point(size = 3) +
+  geom_line(alpha = 0.5, linewidth = 2) +
+  geom_ribbon(
+    aes(ymin = ci_lower, ymax = ci_upper, fill = diabetes_class), 
+    alpha = 0.1, color = NA
+  ) +
+  scale_x_continuous(breaks = seq(1999, 2021, by = 2)) +
+  labs(
+    x = 'Year', y = 'Mean BMI',
+    color = 'Diabetes Class',
+    title = 'Mean Body Mass Index by Diabetes class',
+    subtitle = 'NHANES (1999-2021)'
+  ) +
+  guides(fill = 'none') +
+  theme_bw() +
+  theme(
+    legend.position = 'bottom',
+    plot.title = element_text(
+      face = 'bold', size = rel(1.7)
+    ),
+    plot.subtitle = element_text(
+      face = 'italic', size = rel(1.1)
+    ),
+    axis.title.x = element_text(face = 'bold', size = rel(1.25)),
+    axis.title.y = element_text(face = 'bold', size = rel(1.25))
+  )
+```
+
+### Figure 2: Trunk adiposity by classification
+
+```{r}
+#| label: figure-2
+#| message: false
+#| warning: false
+the_cohort |>
+  filter(diabetes_class != 'Excluded') |> 
+  mutate(diabetes_class = fct_drop(diabetes_class)) |> 
+  summarize(
+    mean_trunk = mean(dxdtrpf, na.rm = TRUE),
+    n = n(),
+    se_bmi = sd(dxdtrpf, na.rm = TRUE) / sqrt(n),
+    ci_lower = mean_trunk - 1.96 * se_bmi,
+    ci_upper = mean_trunk + 1.96 * se_bmi,
+    .by = c('year', 'diabetes_class')
+  ) |> 
+  ggplot(aes(x = year, y = mean_trunk, color = diabetes_class)) +
+  geom_point(size = 3) +
+  geom_line(alpha = 0.5, linewidth = 2) +
+  geom_ribbon(
+    aes(ymin = ci_lower, ymax = ci_upper, fill = diabetes_class), 
+    alpha = 0.1, color = NA
+  ) +
+  scale_x_continuous(breaks = seq(1999, 2021, by = 2)) +
+  labs(
+    x = 'Year', y = 'Mean Truck Adiposity',
+    color = 'Diabetes Class',
+    title = 'Mean Trunk Adiposity by Diabetes class',
+    subtitle = 'NHANES (1999-2021)'
+  ) +
+  guides(fill = 'none') +
+  theme_bw() +
+  theme(
+    legend.position = 'bottom',
+    plot.title = element_text(
+      face = 'bold', size = rel(1.7)
+    ),
+    plot.subtitle = element_text(
+      face = 'italic', size = rel(1.1)
+    ),
+    axis.title.x = element_text(face = 'bold', size = rel(1.25)),
+    axis.title.y = element_text(face = 'bold', size = rel(1.25))
+  )
+```
+
+
+### T-test of Left Arm Fat % by Type 1 vs Type 2
+
+```{r}
+library(infer)
+library(broom)
+the_cohort |> 
+  filter(diabetes_class %in% c('Type 1 DM', 'Type 2 DM')) |> 
+  mutate(diabetes_class = fct_drop(diabetes_class)) |> 
+  filter(!is.na(dxdlapf)) |>
+  t_test(
+    formula = dxdlapf ~ diabetes_class,
+    order = c('Type 1 DM', 'Type 2 DM')
+  )
+```

@@ -1,0 +1,107 @@
+---
+title: "Applying Machine Learning in Predicting Medication Treatment Outcomes for Opioid Use Disorder"
+keywords:
+  - machine learning
+  - opioid use disorder
+  - treatment outcomes
+  - medication treatment
+  - prediction modeling
+author:
+  - name: Raymond R. Balise
+    affiliation: University of Miami
+    corresponding: true
+    email: balise@miami.edu
+  - name: Kyle Grealis
+    affiliation: University of Miami
+  - name: Laura Brandt
+    affiliation: Florida International University
+  - name: Sean Luo
+    affiliation: Columbia University
+  - name: Gabriel Odom
+    affiliation: Florida International University
+  - name: Guertson Jean-Baptiste
+    affiliation: University of Miami
+  - name: Daniel J. Feaster
+    affiliation: University of Miami
+format:
+  elsevier-pdf:
+    include-in-header: 
+      text: |
+        \usepackage{lscape}
+        \usepackage{pdflscape}
+        \usepackage{rotating}
+    keep-tex: true
+    journal:
+      name: "Journal of Substance Use and Addiction Treatment"
+      formatting: preprint
+      model: 3p
+      layout: onecolumn
+      cite-style: number
+      table: true
+knitr:
+  opts_chunk:
+    collapse: true
+    echo: false
+    message: true
+    warning: true
+    error: true
+    comment: ""
+    R.options:
+      digits: 3
+editor: source
+# bibliography:
+#   - references.bib
+#   - packages.bib
+---
+
+
+```{r load-packages}
+#| echo: false
+
+library(conflicted)
+conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("lag", "dplyr", quiet = TRUE)
+
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(tidymodels))
+options(dplyr.summarise.inform=F)
+
+library(scales)
+library(ggthemes)
+
+```
+
+```{r loading-data}
+#| echo: false
+
+library(public.ctn0094data)
+
+analysis <- readRDS("../ctn0094modeling/data/analysis.rds")
+#| echo: false
+load("../ctn0094modeling/data/default_recipe/best_ROC.RData")
+```
+
+# Abstract
+
+## Background
+
+While medication for opioid use disorder (MOUD) is effective for a significant proportion of patients, many return to using opioids during treatment. Understanding which factors lead to successful treatment is important for the development of implementation approaches that can improve outcomes. This manuscript and its accompanying website provide an applied introduction to interpretable machine learning for clinical investigators interested in predicting treatment response for people using MOUD.
+
+## Methods
+
+Machine learning algorithms (KNN, logistic regression with and without regularization, MARS, Support Vector Machines, CART, Random Forest, BART, Boosted Trees, Neural Network) were used to predict failure of treatment in a collection of `r nrow(analysis) |> scales::comma()` individuals who had participated in the three largest pragmatic, clinical trials of MOUD.
+
+## Results
+
+```{r abstract-details}
+min_ROC <- min(best_ROC$`Cross Validation`, na.rm = TRUE) |>  round(2)
+max_ROC <- max(best_ROC$`Cross Validation`, na.rm = TRUE)  |>  round(2)
+best_model <- best_ROC |> arrange(desc(`Cross Validation`)) |> slice_head(n = 1) |> pull(Model) |> tolower()
+best_model_test <- best_ROC |> arrange(desc(`Cross Validation`)) |> slice_head(n = 1) |> pull(`Testing Dataset`) |> round(2)
+```
+
+All models produced ROC AUC estimates in the range of `r min_ROC` to `r max_ROC` using cross-validation data and the optimal model, `r best_model`, achieved `r best_model_test` using testing data. Predictive features, such as age, IV drug use days, study medication, and study site, were nearly universally identified by the algorithms. Various aspects of smoking were also identified by most algorithms. Details from timeline follow back were identified only by algorithms that detect complex non-linear trends. One algorithm, BART, performed well while devaluing all treatment-specific details.
+
+## Conclusion
+
+After explaining how to apply, compare, and contrast various ML workflows, we show that while overall modeling performance is similar across the models built, the use of different algorithms identifies different sets of predictive features. Some features have not been previously identified as important for predicting treatment outcomes. To allow further exploration of these results, a companion website provides clinical investigators a gentle introduction to the concepts and implementations used here. That site also provides a detailed annotated blueprint to fully replicate our work. 

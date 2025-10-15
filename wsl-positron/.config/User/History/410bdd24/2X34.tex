@@ -1,0 +1,951 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  number,
+  preprint,
+  3p,
+  onecolumn]{elsarticle}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+\usepackage[]{natbib}
+\bibliographystyle{elsarticle-num}
+
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{anyfontsize}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\usepackage{pdflscape}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\journal{Journal of Substance Use and Addiction Treatment}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Applying Machine Learning in Predicting Medication Treatment Outcomes for Opioid Use Disorder},
+  pdfauthor={Raymond R. Balise; Kyle Grealis; Laura Brandt; Sean X. Luo; Gabriel Odom; Guertson Jean-Baptiste; Daniel J. Feaster},
+  pdfkeywords={machine learning, opioid use disorder, treatment
+outcomes, medication treatment, prediction modeling},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\setlength{\parindent}{6pt}
+\begin{document}
+
+\begin{frontmatter}
+\title{Applying Machine Learning in Predicting Medication Treatment
+Outcomes for Opioid Use Disorder}
+\author[1]{Raymond R. Balise%
+\corref{cor1}%
+}
+ \ead{balise@miami.edu} 
+\author[1]{Kyle Grealis%
+%
+}
+
+\author[2]{Laura Brandt%
+%
+}
+
+\author[3]{Sean X. Luo%
+%
+}
+
+\author[2]{Gabriel Odom%
+%
+}
+
+\author[1]{Guertson Jean-Baptiste%
+%
+}
+
+\author[1]{Daniel J. Feaster%
+%
+}
+
+
+\affiliation[1]{organization={University of Miami},,postcodesep={}}
+\affiliation[2]{organization={Florida International
+University},,postcodesep={}}
+\affiliation[3]{organization={Columbia University},,postcodesep={}}
+
+\cortext[cor1]{Corresponding author}
+
+
+
+
+
+
+
+        
+
+
+
+
+
+\begin{keyword}
+    machine learning \sep opioid use disorder \sep treatment
+outcomes \sep medication treatment \sep 
+    prediction modeling
+\end{keyword}
+\end{frontmatter}
+    
+
+\section{Abstract}\label{abstract}
+
+\subsection{Background}\label{background}
+
+While medication for opioid use disorder (MOUD) is effective for a
+significant proportion of patients, many return to using opioids during
+treatment. Understanding which factors lead to successful treatment is
+important for the development of implementation approaches that can
+improve outcomes. This manuscript and its accompanying website provide
+an applied introduction to interpretable machine learning for clinical
+investigators interested in predicting treatment response for people
+using MOUD.
+
+\subsection{Methods}\label{methods}
+
+Machine learning algorithms (KNN, logistic regression with and without
+regularization, MARS, Support Vector Machines, CART, Random Forest,
+BART, Boosted Trees, Neural Network) were used to predict failure of
+treatment in a collection of 2,478 individuals who had participated in
+the three largest pragmatic, clinical trials of MOUD.
+
+\subsection{Results}\label{results}
+
+All models produced ROC AUC estimates in the range of 0.62 to 0.67 using
+cross-validation data and the optimal model, random forest, achieved
+0.65 using testing data. Predictive features, such as age, IV drug use
+days, study medication, and study site, were nearly universally
+identified by the algorithms. Various aspects of smoking were also
+identified by most algorithms. Details from timeline follow back were
+identified only by algorithms that detect complex non-linear trends. One
+algorithm, BART, performed well while devaluing all treatment-specific
+details.
+
+\subsection{Conclusion}\label{conclusion}
+
+After explaining how to apply, compare, and contrast various ML
+workflows, we show that while overall modeling performance is similar
+across the models built, the use of different algorithms identifies
+different sets of predictive features. Some features have not been
+previously identified as important for predicting treatment outcomes. To
+allow further exploration of these results, a companion website provides
+clinical investigators a gentle introduction to the concepts and
+implementations used here. That site also provides a detailed annotated
+blueprint to fully replicate our work.
+
+\section{Introduction}\label{introduction}
+
+Opioid use disorder (OUD) is associated with significant morbidity and
+mortality \citep{hser2017, products2024, taylor2022}. Effective
+treatments are available but underutilized \citep{cantor2024}. Further,
+while medication for opioid use disorder (MOUD) is effective for a
+significant proportion of patients, many return to using opioids during
+treatment. Understanding which factors lead to successful treatment,
+defined here by abstinence from nonprescribed opioids during a treatment
+or observation period and beyond, is important for the development of
+implementation approaches that can improve outcomes
+\citep{hser1997, gustin2015, bell2020, leshner_medications_2019, wakeman2020}.
+A 2024 review by Mattos and colleagues describes the application of
+state of the art predictive, machine learning (ML), models to quantify
+factors associated with MOUD adherence and return to opioid use
+\citep{demattos2024a}. While many of the papers which they review suffer
+from methodological flaws or use devices that are not feasible during
+routine care (i.e., fMRI and EEG analyses) the remaining demonstrate
+impressive predictive performance
+\citep{burgess-hull2022, baucum2023, eddie2024}. More recently,
+investigators presented one ML algorithm, logistic LASSO, as a possible
+system for predicting treatment success for individuals initiating MOUD
+\citep{Luo2023}. ML models can not only predict who will respond better
+to MOUD, but also uncover important and interpretable reasons of
+treatment success/failure through the applications of a body of
+state-of-the-art techniques in explainable artificial intelligence
+\citep{molnar2022a, biecek2021a}. While the recently published model by
+Luo et al.~(2023) is conceptually simple and emphasizes ease of clinical
+application, there is a case to be made for describing more than a
+``best'' possible predictive model. Computer scientists have shown that
+there is no best/optimal ML method. Furthermore, it may be that more
+complex models can clarify which predictors are the most important.
+Various ML algorithms highlight different patterns within patient
+behavior and treatment. Thus, examining multiple predictive models
+affords clinical insights beyond optimal prediction
+\citep{nofree2024, biecek2021a}. That is, different modeling methods use
+different kinds of information (i.e., linear, nonlinear, nonparametric
+trends) so they can utilize different kinds of complexity (i.e.,
+traditional statistical interactions vs.~the importance of different
+variables in subgroups). Here, we expand on the ML method in
+\citep{Luo2023} and explore the performance of nine algorithms useful to
+predict treatment success/failure for OUD with MOUD, and we assess data
+features for variable importance with the aim of detecting cross
+methodological consistencies.
+
+Traditional statistical modeling approaches to predicting treatment
+success or failure have focused on finding statistically significant
+variables that are associated with treatment outcomes. Researchers have
+built models that are optimized to give the best possible estimates of
+the influence of predictors on the full set of data collected in a study
+sample. Typically, these effects are reported as beta parameter
+estimates or as odds/risk ratios with confidence limits. While ML
+practitioners care about these estimates for the predictor variables,
+they typically optimize their results based on the ability to make
+predictions in a \emph{new} sample. While traditional statistical
+workflows involve variable transformations, ML workflows expand and
+systematize this variable ``feature engineering'' process. Models are
+built and optimized on a subset of the data, called the \emph{training}
+data, to give the best predictions on new data after the variables have
+been extensively processed and turned into ``features.'' That new data,
+called the \emph{testing} subset, is a random sample of the original
+data, which was set aside at the start of the modeling process. The
+final review of model performance on testing data is critical because ML
+methods can ``overfit'' the data. That is, if the predictions of a ML
+model are applied to the original training data, they will likely give
+overly optimistic estimates of performance because they will detect and
+use subtle patterns in the training data that will not replicate in a
+new sample. Optimal performance can be defined in many ways, but popular
+options include accuracy of prediction or a combination of the true
+positive and false positive rates (i.e., area under a Receiver Operating
+Characteristic (ROC) curve, which is a plot that shows the true positive
+rate against the false positive rate across all classification
+thresholds) in a new sample
+\citep{james2021a, fawcett2006, bradley1997}. To achieve optimal
+predictive performance, many different ML algorithms are tried and one
+is selected as the winner. Then that ``winning'' algorithm is applied to
+the ``testing'' results. We do that here, but also for illustration, we
+provide information showing how the models performed on the training
+data and to illustrate how the other models would have fared if they had
+been selected instead as the ``winner''.
+
+Beyond making predictions, many ML methods afford the opportunity to
+identify important variables that are missed using traditional
+statistical methods. Unlike traditional statistical methods that focus
+on model method-specific metrics to determine whether a variable is
+important (e.g., the size of odds/risk ratios and confidence intervals
+in logistic regression), in the ML framework, the importance of
+variables can be assessed differently. There are model-agnostic methods
+that can be used to determine if a variable is important. For example,
+permutation-based variable importance, which can be calculated for most
+ML methods, looks at the degradation in model performance if the values
+of a variable are shuffled and randomly assigned to new study
+participants. If the accuracy or ROC AUC (Receiver Operating
+Characteristic Area Under the Curve) does not change when the values of
+a variable are shuffled, then that variable was not important to the
+model. However, if the ROC AUC decreases after a variable is shuffled,
+then the amount of change in the ROC AUC is indicative of the variable's
+importance in the model. Here, we provide information on the relative
+importance of the variables selected by most of the different ML engines
+and comment on the insights that can be gained by looking at the
+similarities and differences across the various machines.
+
+The aim of this manuscript is to provide an illustration for clinical
+investigators of important tasks in ML applied to MOUD. Given that most
+clinical investigators were not trained in the application of ML
+methods, there is also an extensive companion website
+\citep{balise_supplement_2025} which provides a gentle introduction to
+the methods used, as well as the model tuning details. This supplement
+allows clinical investigators to i) explore the relative value of
+different techniques when predicting return to use of opioids (and
+potentially any number of other treatment outcomes of interest), and ii)
+uncover predictors identified consistently by different algorithms, as
+well as important predictors that can only be found using specific
+algorithms. Further, there is a brief technical reference
+\citep{balise_technical_2025} that provides modeling details for ML
+practitioners. These tools build a computational framework for addiction
+researchers to examine and explain future predictive models in substance
+use disorder research beyond MOUD.
+
+\section{Methods}\label{methods-1}
+
+\subsection{Subjects}\label{subjects}
+
+A total of 2,478 individuals, all who participated in one of three
+studies supported by the National Drug Abuse Treatment Clinical Trials
+Network (CTN), who had any drug screening results during treatment, were
+included in the analyses
+\citep{saxon2013, weiss2011, lee2018, R-public.ctn0094data}. These
+studies represent the three largest pragmatic, clinical trials to date
+of MOUD: Starting Treatment with Agonist Replacement Therapies (START,
+CTN-0027), Prescription Opioid Addiction Treatment Study (POATS,
+CTN-0030), and Extended-Release Naltrexone (XR-NTX) vs.~Buprenorphine
+(BUP-NX) for Opioid Treatment (X:BOT, CTN-0051). These trials included
+treatments with methadone, buprenorphine, or extended-release injection
+naltrexone (XR-NTX). Details on the study samples and the harmonization
+process for the data are available in the technical reference
+\citep{balise_technical_2025}, web supplement
+\citep{balise_supplement_2025}, and published elsewhere
+\citep{raymondbalise2024}.
+
+\subsection{Predictors of Failure of
+Treatment}\label{predictors-of-failure-of-treatment}
+
+Previous research has suggested that Social Determinants of Health
+(SDOH), criminal involvement, reliance on public assistance, limited
+education, unemployment and homelessness, as well as clinical
+characteristics including baseline pain, comorbid psychiatric issues and
+the use of alcohol and other drugs, influence the probability of
+treatment retention and---ultimately---success
+\citep{hser1997, biondi2022, pretreat1981, comptoniii2003, mclellan1983}.
+Many of these features, along with information on treatment, can be
+found in data sets from the CTN0094 data harmonization project used
+herein. This data is available within a software package for the R
+programming language, \texttt{public.ctn0094data}
+\citep{public.ctn0094data}. While most of the key features that have
+been identified to predict treatment outcomes are available in
+\texttt{public.ctn0094data}, a few important features are not available,
+such as criminal involvement, previous treatment attempts (number, type,
+duration and outcomes), and total years of drug use, as well as details
+about access to non-study services and needs, particularly
+transportation, child care, vocational services, and housing services.
+
+A total of 46 variables, from domains including demographics, comorbid
+psychiatric/medical conditions, smoking history, lifetime drug use
+history, drug use as both yes/no indicators and amount in the month
+before treatment, and treatment details (inpatient vs.~outpatient and
+treatment medication) were used as predictors (see technical reference
+\href{https://github.com/CTN-0094/ml_paper_2025/technical_reference.pdf}{Tables
+1 and 2} and the web supplement
+\href{https://ctn-0094.github.io/ml_paper_2025/supplement.html\#table1}{Table
+1} and
+\href{https://ctn-0094.github.io/ml_paper_2025/supplement.html\#table2}{Table
+2}) \citep{balise_technical_2025, balise_supplement_2025}. As is
+customary when using ML, several preprocessing recipes were evaluated
+\citep{kuhn2022}. Here, we built preprocessing recipes that covered all
+the necessary steps (e.g., normalization, dummy coding etc.), for all
+the ML methods we used \citep{silge}. We also experimented with other
+techniques to reduce the complexity of the predictors (i.e., including
+principal components analysis as a preprocessing step). Various
+combinations of these steps were applied before trying the various ML
+methods. As can be seen in the web supplement
+\citep{balise_supplement_2025}, the various recipes resulted in models
+being built using between 15 and 103 individual features. Ultimately,
+the recipe that resulted in the best ROC AUC on the training data was
+used. In order, those steps were: remove near zero variance variables,
+convert text strings to categorical factors, impute missing values using
+a K nearest neighbors algorithm, dummy-code categorical variables,
+collapse rare categories, remove highly correlated predictors and then
+normalize numeric variables.
+
+\subsection{Outcome}\label{outcome}
+
+Many methods have been proposed to evaluate the success or failure of
+treatment for OUD. A recent article by Brandt et al.~showed that the
+model metrics cluster into three different groups based on how they
+handle missing data and the length of the time frame used to judge
+success \citep{brandt2024}. Here, we use one of the metrics from their
+so-called `Goldilocks' cluster where the outcomes are not too lenient,
+like the metrics that ignore missing urine drug screening, and not too
+strict, like the metrics that look at only a single or a couple of UDS
+values. Specifically, we use the definition of failure of treatment
+reported by Lee et al., which looks for four consecutive weeks with a
+UDS positive for opioids starting 21 days post-randomization
+\citep{lee2018}. See the web supplement \citep{balise_supplement_2025}
+for an example using this code.
+
+While our outcome here followed an abstinence-based definition, we
+recognize the growing emphasis on alternative endpoints --- such as
+reductions in use, craving, anxiety, and quality of life --- that are
+identified as meaningful by people with substance use disorders. To
+support these perspectives, we have developed open-source tools (e.g.,
+public.ctn0094extra \citep{public.ctn0094extra} and CTNote
+\citep{CTNote}) that compute over 50 published endpoints, laying the
+groundwork for future analyses that move beyond abstinence to capture
+broader dimensions of treatment success.
+
+\subsection{Modeling}\label{modeling}
+
+Analyses were conducted with R version 4.5.0 with the
+\texttt{tidyverse}, \texttt{rUM}, \texttt{table1} and \texttt{flextable}
+packages used to preprocess and summarize data
+\citep{R-base, R-tidyverse, tidyverse2019, R-rUM, R-table1}. We used the
+tidymodels ecosystem for modeling and DALEX and DALEXtra packages for
+interpretable ML processing \citep{R-tidymodels, DALEX, DALEXtra}.
+Techniques include regression-based (i.e., LASSO, logistic, MARS),
+tree-based (i.e., BART, Boosted Trees, CART, Random Forest) and neural
+network methods. Tree-based and neural network methods are particularly
+adept at detecting complex treatment medication-specific effects that
+could be missed by traditional regression approaches. See the web
+supplement \citep{balise_supplement_2025} for details.
+
+The full analysis dataset was split using a stratification algorithm
+that made sure that the training data (3/4 of the data, N = 1,858) and
+the testing data (1/4 the data, N = 620) had the same percentage of
+people for whom treatment failed. For model tuning, five-fold cross
+validation was used. See the web supplement
+\citep{balise_supplement_2025} for more details.
+
+Given the historical popularity of ROC AUC, its relatively easy
+interpretation, and the fact that there was not a major imbalance in the
+proportion of people for whom treatment was unsuccessful as per the
+metric introduced above (72\% with unsuccessful vs.~28\% with successful
+treatment outcomes), all models were tuned to find the optimal ROC AUC
+\citep{weiss2013}. If you are not familiar with how to interpret a ROC
+AUC value, assume you have two people, for one of whom treatment will
+work and for one of whom it will not. The ROC AUC value gives the
+probability of correctly guessing for which one of whom the treatment
+will fail. While the definition of a clinically meaningful improvement
+in a model is largely arbitrary, \emph{a priori} we defined a meaningful
+difference as a 5\% improvement, when comparing any two tuned models, in
+the probability of correctly guessing for whom treatment would fail.
+Results from all models were examined using permutation-based Variable
+Importance Plot (VIP) methods and confusion matrices (see
+\citep{molnar2022b} and the web supplement
+\citep{balise_supplement_2025}). The details on model tuning, including
+a definition of the terms for those unfamiliar, can be found in the web
+supplement \citep{balise_supplement_2025}.
+
+\subsection{Evaluation Metrics}\label{evaluation-metrics}
+
+Consider that there are many possible algorithms that can be used to
+make predictions and only a single test dataset that can be used to
+estimate a model's performance on new data. Evaluating the performance
+of every algorithm on the test data would likely result in an overly
+optimistic estimate of model performance. This would happen because with
+\emph{many} different models, we would eventually get ``lucky'' and
+obtain particularly good performance simply by chance. Because of this,
+it is customary and appropriate to optimize the results for each
+algorithm and then select a ``winner'' based on a metric like accuracy
+or ROC AUC \emph{using the training data alone.} The algorithm that
+performs the best on the preselected metric, say ROC AUC, is then
+applied to the test data and the ROC AUC from the ``testing'' data is
+reported as the estimate of future performance on unseen new data.
+
+\section{Results}\label{results-1}
+
+Here, because we are interested in explaining the ML workflow, we have
+taken a few extra steps. Table~\ref{tbl-one} presents the model
+performance, as assessed by ROC AUC, for each algorithm. The ``Cross
+Validation'' results are typically used to pick the ``winning''
+algorithm from the training data. It is an estimate based on repeatedly
+subsampling the training data. This process is explained in detail in
+the web supplement \citep{balise_supplement_2025}. The top row of
+Table~\ref{tbl-one} shows that the best performing algorithm was the
+random forest algorithm. The ``Full Training Dataset'' column shows the
+result when the model is applied to the full training dataset to
+estimate future performance. This is what has historically been done
+with logistic models. Unsurprisingly, because the model is predicting
+the data it was built on, the Full Training Dataset results are
+optimistic. When the random forest model or KNN is applied to the full
+training data, you see that the model performance is extremely good and
+overly optimistic because the model uses the idiosyncratic features in
+the data as well as the true signal.
+
+The random forest algorithm has the largest cross-validation ROC AUC
+(0.67), so it could be called the ``winner.'' In typical real work
+applications, this would be the only model applied to the testing data.
+The results from such a ML model would be that: using the ``winning''
+random forest model and the data gathered before treatment, from a pair
+of people, for one of whom treatment will succeed while it fails for the
+other, we have about a 67\% chance of correctly guessing for which one
+it will fail. While this is the best model, that value is not ``good.''
+Many experts including Hosmer, Lemeshow, and Sturdivant
+\citep{hosmer2013}, who say ``there is no `magic' number, only general
+guidelines'', consider a value of 0.7 ``acceptable discrimination''.
+This recapitulates what clinical investigators know: predicting failure
+of treatment, even when given all traditionally gathered variables, is
+extraordinarily difficult and the predictions should be treated with
+great caution.
+
+The importance of using metrics such as ROC AUC to assess predictive
+performance is particularly notable when contrasted with the insights
+provided by a traditional, p-value-based interpretation of a logistic
+regression model. Here, the traditional logistic regression model
+identifies five features with p-value \textless{} .001 and twenty-two
+with p-values \textless{} .05. Clearly, there are many important
+features that drive the odds of failure of treatment, but the overall
+impact of these features is not large because that model has a ROC AUC
+of ``only'' 0.63 when applied to the testing data.
+
+While in real world applications the test data is only used once, here
+(again for illustrative purposes), we applied each of the methods, with
+their optimal tuning, to the testing data. We see that the cross
+validation estimates of future performance match nicely with the
+behavior on the testing data, in other words, the cross-validation
+methods used allowed us to pick up on the true signal without
+``overfitting'' our models to pick up on random noise in the training
+data.
+
+Figure~\ref{fig-one} shows the true vs.~predicted results for the people
+in the test data as a confusion matrix, and the predicted probability of
+failure for those who did and did not return to opioid use. Both the
+density and the confusion matrix show the relatively high chance of
+predicting return to use. Ideally, the probability plot would show a
+bathtub shape, where the people who experienced failure of treatments
+were all close to the right side of the plot and the successes were
+close to the left. Here, the model is rarely assigning a low probability
+of failure of treatment.
+
+The ML methods described above selected different numbers of features as
+being important to predict failure of treatment. While the kNN algorithm
+uses, by design, every feature, and determining the number of features
+used by other algorithms like NN and SVM is extremely difficult for
+technical reasons, there are noteworthy differences in the number of
+features the different algorithms use (MARS N = 15, CART N = 28, boosted
+trees N = 99, LASSO N = 96, logistic regression N = 99, random forest N
+= 102). At the extremes, the MARS model identified 15 distinct variables
+as important, and the random forest chose 102 different binary splits
+from 46 variables. For example, the random forest model made eight
+splits based on the scores of 1 through 8 on the Fagerstrom Test for
+Nicotine Dependence. Interestingly, across all the methods, a total of
+105 different features were identified as being important predictors at
+least once.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2143}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2429}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3143}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2286}}@{}}
+
+\caption{\label{tbl-one}Overall model performance, measured using area
+under the ROC curve, when predicting failure of treatment in a training
+data set of 1,858 people seeking care for Opioid Use Disorder.}
+
+\tabularnewline
+
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Cross Validation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Full Training Dataset
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Testing Dataset
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Random Forest & 0.674 & 0.889 & 0.647 \\
+Boosted Trees & 0.672 & 0.839 & 0.645 \\
+BART & 0.667 & 0.748 & 0.623 \\
+LASSO & 0.666 & 0.720 & 0.617 \\
+Neural Net & 0.658 & 0.712 & 0.636 \\
+KNN & 0.648 & 0.931 & 0.630 \\
+Logistic LASSO & 0.648 & 0.742 & 0.618 \\
+Support Vector & 0.647 & 0.710 & 0.597 \\
+MARS & 0.641 & 0.715 & 0.615 \\
+CART & 0.623 & 0.670 & 0.574 \\
+Logistic & NA & 0.744 & 0.626 \\
+
+\end{longtable}
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{paper_files/figure-pdf/fig-one-1.pdf}}
+
+}
+
+\caption{\label{fig-one}Categorical predictions (using a threshold of
+0.5) and predicted probabilities of failure of treatment for individuals
+in the testing data set (N = 620) when applying the random forest
+model.}
+
+\end{figure}%
+
+As discussed in the web supplement \citep{balise_supplement_2025},
+permutation-based VIP measures show the relative importance of different
+predictors. Figure~\ref{fig-two} shows an estimate of how much our best
+performing model, a random forest, would be hurt by excluding different
+variables. For example, the overall ROC AUC score would decrease by
+somewhere between 0.75\% and 1\% if the \emph{age} was not included.
+
+Table 2 shows that some predictors, like \emph{Age}, \emph{IV drug use
+days}, \emph{Study Medication} and \emph{Study Site} were nearly
+universally selected. Other recurring predictors include: \emph{Detox
+Days} and \emph{Fagerstom} were identified by 7 algorithms. While many
+of the most important predictors are categorical, the logistic
+regression, LASSO and MARS methods were able to better detect linear
+trends for continuous variables. That is, they captured trends in
+\emph{age} and the \emph{number of days using drugs in the 28 days
+before treatment} as well as \emph{IV drug use days}. Nearly every
+method identified smoking (i.e., \emph{person who smokes}, \emph{number
+of packs smoked} or the \emph{Fagerstrom score}) as being related to
+failure of treatment. Interestingly, BART, which used many different
+predictors compared to the other methods, achieved similar model
+performance using many different variables. The interpretation of the
+impact of each predictor requires finesse beyond a simple statement
+about overall increased or decreased risk of failure
+\citep{biecek_explanatory_2021}.
+
+\begin{landscape}
+\vspace*{\fill}
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{paper_files/figure-pdf/fig-two-1.pdf}}
+
+}
+
+\caption{\label{fig-two}Variable Importance Plot (VIP) for Random Forest
+Model.}
+
+\end{figure}%
+
+\vspace*{\fill}
+\end{landscape}
+
+\begin{landscape}
+
+\begin{table}
+
+\caption{\label{tbl-two}Top 10 variables identified by permutation
+testing for predicting failure of treatment for 2,478 people seeking
+care for Opioid Use Disorder.}
+
+\centering{
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rllll}
+\toprule
+Importance & BART & Boosted Trees & CART & LASSO \\ 
+\midrule\addlinespace[2.5pt]
+1 & Brain Damage DX & Age & Detox Days & Study Site \\ 
+2 & Marital Status & Study Medication & Study Medication & Age \\ 
+3 & Used Stimulants & IV Drug Days & Age & Study Medication \\ 
+4 & In/Outpatient & Study Site & IV Drug Days & IV Drug Days \\ 
+5 & Cocaine Days & Smoking Packs & Job & Study Number \\ 
+6 & Homeless & Detox Days & Study Site & Detox Days \\ 
+7 & Depression & Opioids Days & Cocaine Days & Fagerstrom \\ 
+8 & Schizophrenia & TLFB Days of Use & Smoking Packs & Alcohol DX \\ 
+9 & Used Cocaine & Fagerstrom & Alcohol DX & Used Opioids \\ 
+10 & Alcohol DX & TLFB Number of Drugs & Person Who Smokes & Job \\ 
+\bottomrule
+\end{tabular*}
+\begin{minipage}{\linewidth}
+{\textcolor[HTML]{FFFFFF}{x}}\\
+\end{minipage}
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rlllll}
+\toprule
+Importance & Logistic & Logistic via LASSO & MARS & Neural Net & Random Forest \\ 
+\midrule\addlinespace[2.5pt]
+1 & Study Site & Study Site & Detox Days & Study Site & Age \\ 
+2 & In/Outpatient & Age & Study Number & Fagerstrom & Smoking Packs \\ 
+3 & Age & In/Outpatient & Study Site & Study Medication & Study Site \\ 
+4 & Smoking Packs & Study Medication & Age & Age & Study Medication \\ 
+5 & Study Medication & IV Drug Days & Opioids Days & Used Heroin & Detox Days \\ 
+6 & Study Number & Fagerstrom & Study Medication & Job & Fagerstrom \\ 
+7 & Person Who Smokes & Job & IV Drug Days & Smoking Packs & IV Drug Days \\ 
+8 & IV Drug Days & Detox Days & Fagerstrom & IV Drug Days & TLFB Days of Use \\ 
+9 & Fagerstrom & Stimulant Days & Alcohol DX & Anxiety & TLFB Number of Drugs \\ 
+10 & Detox Days & Alcohol DX & Race & Withdrawl & Withdrawl \\ 
+\bottomrule
+\end{tabular*}
+
+}
+
+\end{table}%
+
+\end{landscape}
+
+\section{Discussion}\label{discussion}
+
+The goal of this manuscript with its web supplement
+\citep{balise_supplement_2025} was to provide a self-contained tutorial
+on modern ML methods and to provide an example of how these methods can
+be used to predict treatment response in people with OUD. Despite using
+these state-of-the-art methods, our results show that our predictions
+for treatment success or failure are far from ideal. Using these models
+and the data gathered before treatment, for a pair of people, for one of
+whom treatment will succeed while it will fail for the other, we have
+about a 65\% chance of guessing for which one it will fail. While the
+models afford similar overall performance, we can learn by
+exploring/contrasting their findings.
+
+Different modeling methods detected some common threads. It is
+unsurprising to see that IV drug use, a risk factor that has been tied
+to return to opioid use, was selected as an important predictor by all
+but one method \citep{chalana2016}. Polysubstance drug use, in
+particular the use of cigarettes, was nearly universally identified as a
+predictor of failure. Several tree-based methods, which are ideal for
+picking up non-linear patterns, stressed the importance of
+length-of-stay in a detoxification unit before study drug
+administration. To better understand this impact, consider that our
+models also included details on the amount of illicit drug use before
+the intervention. The relatively complex and best performing models
+(i.e., random forests and boosted trees) identified days of drug use
+before care, as well as days in detox. These findings compliment other
+analyses that use latent class methods (a technique that does not
+integrate well with a ML framework), which have identified drug use
+trajectories in the month before treatment \citep{pan2022}. Perhaps,
+drug use patterns before the start of the trial and time in detox are
+reflecting people's ability to reduce drug use before MOUD initiation.
+
+It is interesting that one of the models, BART, uniquely identified many
+variables as predictors. This is an example of the ML ``Rashomon
+Effect'' and it suggests the need for further work to explore whether
+several equally viable explanations of treatment outcomes can be stacked
+using ensemble ML methods
+\citep{breiman1996, wolpert1992, paes2023, rudin}. While it will come at
+a cost of interpretability, we strongly suspect that we will be able to
+improve our predictive power by using ML techniques that combine
+algorithms.
+
+Furthermore, the fact that study site was nearly universally identified
+is noteworthy. As discussed elsewhere, the sites were aggregated to
+ensure anonymity \citep{raymondbalise2024}. Thus, it is possible that
+the site effects are more important than we document here. While all
+subjects were participating in highly structured clinical trials, the
+study site was an extremely important prognosticator indicating that the
+local context is important in predicting individual outcomes. However,
+it is unknown if this feature is capturing details within the clinic,
+such as the similarity in age, sex, race, and lived experience between
+the patients and care providers or general positive or negative
+attitudes/interactions or issues related to ease of access or the
+broader social milieu. In theory, details on care providers could be
+added to future models. While it is technically simple to integrate data
+from the census to describe the neighborhoods where care was provided,
+there are thorny privacy and ethical issues. Sensitive details could be
+used to easily reverse engineer the individual clinics which, in turn,
+could lead to an increased risk of identifying individuals. Methods for
+dealing with these site-specific effects (which would be considered
+random effects in traditional statistical models) are only now becoming
+more relevant as interpretable ML methods like the VIP values become
+more popular. As ML methods move beyond their infancy, we expect new
+techniques will be developed to assess or remove the impact of clinic
+sites on predictions. However, rather than controlling for or removing
+those effects, we should learn what drives them.
+
+While all methods were evaluated using ROC AUC, it is important to
+remember that there are many metrics that could be used to evaluate a
+model \citep{sokolova2009, opitz2024}. The choice of metrics is an
+active area of research. Different metrics emphasize different aspects
+of model performance: Matthews Correlation Coefficient balances
+true/false positive and negative rates while accounting for class sizes,
+Log Loss penalizes incorrect predictions more heavily, Precision-Recall
+AUC focuses on the positive class, and Cohen's Kappa emphasizes
+performance on difficult cases where chance guessing performs well.
+Several such metrics are described and calculated in the web supplement
+\citep{balise_supplement_2025}.
+
+Depending on research and clinical goals, optimizing for sensitivity,
+specificity, or other metrics may be more valuable than ROC AUC. Beyond
+classification accuracy, it is important to examine the underlying
+probabilities that drive predictions. Rather than focusing solely on
+whether the model correctly predicted treatment failure, researchers
+should examine the predicted probabilities for individuals, as shown in
+Figure 1B. These probabilities reveal whether a model is highly
+confident or uncertain in its estimates for specific individuals.
+
+In this example, the model was highly confident in predicting treatment
+failure for many people who actually succeeded in treatment (i.e., did
+not return to opioid use during treatment).
+
+The number of sexual partners was measured, to assess HIV risk, in
+CTN-0027 and CTN-0030, but the days in detox was measured only in
+CTN-0051. Consequently, these variables pose particular challenges for
+modelling. Unfortunately, the sexual partners variable caused the
+permutation-based VIP methods to fail, so we could not assess its
+relative importance here. We feared that having a value on a variable
+could act as a simple proxy for being in a particular trial. Because of
+this concern, we conducted numerous sensitivity analyses using different
+subsets and imputation/simulation methods. These techniques did diminish
+the relative importance of the predictors, but they remained
+influential.
+
+Our models would certainly benefit from information that has been
+identified as relevant to the prediction of treatment success or failure
+in other studies
+\citep{hser1997, biondi2022, pretreat1981, mclellan_increased_1983, comptoniii2003, mclellan1983}.
+We used all data available on tobacco and alcohol use but because the
+data were not uniformly assessed across the trials, we could not include
+as much detail on consumption as we wanted. Similarly, detailed
+information on the route of drug use (e.g., oral vs.~nasal use of opioid
+pills) could not be used. We believe that contextual factors such as
+transportation barriers, access to childcare, etc. impact the
+probability of attending and ultimately succeeding in care. Further,
+information on previous treatment attempts would be valuable, and
+genetic, genomic, and other -omic data will likely ultimately prove
+valuable in predicting treatment response and matching people to the
+best possible medications.
+
+In conclusion, ML methods are useful for making predictions of how
+individual patients will respond to treatment; however, current data
+provide only modest veracity in these predictions. The utility of
+current ML models is limited by the quality, breadth, and depth of the
+data collected in MOUD clinical trials. We hope that future studies will
+systematically and richly assess features related to the
+provider-patient relationship, provider beliefs about MOUD, patient
+attitudes towards MOUD, prior treatment attempts, socioeconomic and
+demographic characteristics, polysubstance use, risky sexual behaviors,
+and the many other potentially important features highlighted in the
+discussion and limitations section. To this end, the code provided with
+the web supplement \citep{balise_supplement_2025} allows anyone who is
+familiar with the R programming language to extend our work and explore
+other theories and predictive features. Such work will likely allow us
+to improve the quality of our predictions and identify missing key
+features for predicting treatment success.
+
+
+\renewcommand\refname{References}
+\bibliography{references.bib,packages.bib}
+
+
+
+\end{document}

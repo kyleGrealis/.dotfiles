@@ -1,0 +1,41 @@
+meta:
+  name: University of Miami
+  link: 
+    home: https://miami.edu
+
+
+logo: 
+  large: logos/um-msom.png
+  medium: logos/um-plain.png
+  small: logos/um-logo.png
+
+color:
+  palette:
+    green: "#005030"
+    orange: "#f47321"
+    gray: "#f9f9f9"
+  primary: green
+
+typography: 
+  fonts: 
+    - family: Century Schoolbook
+      source: bunny
+    - family: Frutiger
+      source: bunny
+    - family: Fira Code
+      source: bunny
+    - family: Stag
+      source: bunny
+    - family: Stag Sans
+      source: bunny
+
+  base: Century Schoolbook
+  headings:
+    color: green
+  monospace: Fira Code
+  monospace-inline: 
+    color: green
+    background-color: gray
+  link:
+    color: green
+
