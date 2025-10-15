@@ -1,5 +1,3 @@
-[init "default"]
-	branch = main
 [user]
 	name = Kyle Grealis
 	email = kyle@kyleGrealis.com
@@ -9,11 +7,6 @@
 	excludesFile = ~/.gitignore
 	autocrlf = false
 [init]
-	defaultBranch = master
-[alias]
-	co = checkout
-	br = branch
-	ci = commit
-	st = status
+	defaultBranch = main
 [pull]
 	rebase = true
