@@ -39,3 +39,6 @@ alias weather='curl wttr.in/Dallas?0'
 # WSL2 Positron alias
 alias code='DONT_PROMPT_WSL_INSTALL=1 GDK_SCALE=2 positron'
 alias rst='DONT_PROMPT_WSL_INSTALL=1 GDK_SCALE=2 rstudio'
+
+# Update system
+alias update='sudo apt update && sudo apt upgrade -y'
