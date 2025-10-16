@@ -4,6 +4,7 @@ Some(([
     "io.github.cosmic_utils.cosmic-ext-applet-external-monitor-brightness",
 ], [
     "io.github.cosmic_utils.cosmic-ext-applet-clipboard-manager",
+    "dev.dominiccgeh.CosmicAppletEmojiSelector",
     "com.system76.CosmicAppletStatusArea",
     "com.system76.CosmicAppletAudio",
     "com.system76.CosmicAppletBluetooth",
