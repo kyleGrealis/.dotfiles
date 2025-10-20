@@ -3,6 +3,7 @@ base
 base-devel
 bluez
 bluez-utils
+bolt
 brave-bin
 btop
 chaotic-keyring
@@ -28,6 +29,7 @@ intel-media-driver
 intel-ucode
 iw
 iwd
+just
 less
 libpulse
 libreoffice-still
@@ -41,6 +43,7 @@ network-manager-applet
 networkmanager
 nextcloud-client
 nmap
+noto-fonts-emoji
 nvidia-open-dkms
 nvidia-utils
 obs-studio
@@ -66,6 +69,7 @@ thunderbird
 tree
 ttf-firacode
 udunits
+usbutils
 v8-r
 vim
 vulkan-intel
