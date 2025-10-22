@@ -1,6 +1,7 @@
 alacritty
 base
 base-devel
+blesh
 bluez
 bluez-utils
 bolt
@@ -55,6 +56,7 @@ pipewire-jack
 pipewire-pulse
 power-profiles-daemon
 r
+rpi-imager
 rpmextract
 rsync
 slack-desktop
