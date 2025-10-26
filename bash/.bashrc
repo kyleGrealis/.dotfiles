@@ -21,4 +21,4 @@ PS1='\n\[\033[1;34m\]\W\[\033[0;35m\]$(parse_git_branch) \[\033[0m\]\n\[\033[0;3
 . "$HOME/.cargo/env"
 
 # add ble.sh: https://github.com/akinomyoga/ble.sh for instructions
-[[ $- == *i* ]] && source /usr/share/blesh/ble.sh
+# [[ $- == *i* ]] && source /usr/share/blesh/ble.sh
