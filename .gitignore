@@ -14,3 +14,7 @@ Positron/.config/Positron/User/*
 !Positron/.config/Positron/User/keybindings.json
 !Positron/.config/Positron/User/settings.json
 !Positron/.config/Positron/User/snippets/
+libreoffice/.config/libreoffice/4/cache/
+libreoffice/.config/libreoffice/4/user/pack/registrymodifications.pack
+libreoffice/.config/libreoffice/4/user/registrymodifications.xcu
+cosmic/.config/cosmic/com.system76.CosmicFiles/v1/tab
