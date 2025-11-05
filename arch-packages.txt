@@ -1,6 +1,7 @@
 alacritty
 base
 base-devel
+bat
 blesh
 bluez
 bluez-utils
@@ -13,6 +14,7 @@ cifs-utils
 cmatrix
 cosmic-session
 cosmic-store
+cuda
 discord
 efibootmgr
 eza
@@ -51,7 +53,6 @@ nvidia-open-dkms
 nvidia-utils
 obs-studio
 obsidian
-ollama
 pacman-contrib
 pipewire
 pipewire-alsa
