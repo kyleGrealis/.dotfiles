@@ -66,3 +66,4 @@ alias rsync='rsync -azH --info=progress2'
 alias code='/usr/share/positron/bin/positron --disable-gpu'
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias copy='tee >(wl-copy)'
+alias update-arch='sudo pacman -Syu'
