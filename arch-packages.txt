@@ -45,7 +45,6 @@ micro
 nano
 network-manager-applet
 networkmanager
-nextcloud-client
 nmap
 noto-fonts-emoji
 npm
