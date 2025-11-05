@@ -6,18 +6,16 @@ alias lta='lt -a'
 alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 
 # Smart cd with zoxide integration
-alias cd="zd"
 zd() {
-  if [ $# -eq 0 ]; then
-    builtin cd ~ && return
-  elif [ "$1" = "-" ]; then
-    builtin cd - && return
-  elif [ -d "$1" ]; then
-    builtin cd "$1"
-  else
-    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
-  fi
+  # The 'z' command from zoxide is smart enough to handle these cases:
+  # - No arguments -> home directory
+  # - `-` -> previous directory
+  # - A valid path -> that directory
+  # - A query -> fuzzy find and jump
+  z "$@"
 }
+alias cd="zd"
+
 
 # Enhanced cdl function using smart navigation (yours + his)
 cdl() {
@@ -29,13 +27,25 @@ open() {
   xdg-open "$@" >/dev/null 2>&1 &
 }
 
-# Directories
-alias ..='cdl ..'
-alias ...='cdl ../..'
-alias ....='cdl ../../..'
+# Directory navigation
+up() {
+    # Go up N levels, but not above home directory. Defaults to 1.
+    local count=${1:-1}
+    local target="."
+    for i in $(seq 1 $count); do
+        target+="/.."
+    done
 
-# Tools
-n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
+    local final_dest
+    final_dest=$(realpath "$target")
+
+    if [[ "$final_dest" != "$HOME"* && "$final_dest" != "$HOME" ]]; then
+        cdl "$HOME"
+    else
+        cdl "$target"
+    fi
+}
+
 
 # Git (enhanced with your additions)
 alias g='git'
