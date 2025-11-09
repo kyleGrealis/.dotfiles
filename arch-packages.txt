@@ -19,6 +19,7 @@ discord
 efibootmgr
 eza
 fastfetch
+fnm
 gcc-fortran
 gdal
 git
@@ -47,7 +48,6 @@ network-manager-applet
 networkmanager
 nmap
 noto-fonts-emoji
-npm
 nvidia-open-dkms
 nvidia-utils
 obs-studio

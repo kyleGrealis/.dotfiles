@@ -1,4 +1,7 @@
 http-parser-debug
+qt5-remoteobjects
+qt5-webchannel
+qt5-webengine
 ttf-firacode
 udunits
 udunits-debug
