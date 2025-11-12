@@ -3,7 +3,8 @@
         modifiers: [
             Super,
         ],
-    ): Disable,
+        key: "j",
+    ): ToggleOrientation,
     (
         modifiers: [
             Super,
@@ -15,44 +16,14 @@
         modifiers: [
             Super,
         ],
-        key: "e",
-        description: Some("Thunderbird"),
-    ): Spawn("thunderbird"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "t",
-        description: Some("btop"),
-    ): Spawn("alacritty -e btop"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "o",
-        description: Some("Obsidian"),
-    ): Spawn("obsidian"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "d",
-        description: Some("Discord"),
-    ): Spawn("discord"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "slash",
     ): Disable,
     (
         modifiers: [
             Super,
-            Shift,
         ],
-        key: "b",
-        description: Some("Brave (incognito)"),
-    ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
+        key: "e",
+        description: Some("Thunderbird"),
+    ): Spawn("thunderbird"),
     (
         modifiers: [
             Super,
@@ -63,8 +34,42 @@
         modifiers: [
             Super,
         ],
-        key: "Return",
-    ): System(Terminal),
+        key: "l",
+    ): System(LockScreen),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "s",
+        description: Some("Slack"),
+    ): Spawn("slack"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "t",
+    ): Spawn("ghostty -e btop"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "o",
+        description: Some("Obsidian"),
+    ): Spawn("obsidian"),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "p",
+    ): System(AppLibrary),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "m",
+        description: Some("Spotify"),
+    ): Spawn("spotify"),
     (
         modifiers: [
             Super,
@@ -82,35 +87,8 @@
         modifiers: [
             Super,
         ],
-        key: "l",
-    ): System(LockScreen),
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "a",
-    ): System(AppLibrary),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "m",
-        description: Some("Spotify"),
-    ): Spawn("spotify"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "j",
-    ): ToggleOrientation,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "s",
-        description: Some("Slack"),
-    ): Spawn("slack"),
+        key: "Return",
+    ): System(Terminal),
     (
         modifiers: [
             Super,
@@ -118,6 +96,27 @@
         ],
         key: "s",
     ): System(Screenshot),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "slash",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "d",
+        description: Some("Discord"),
+    ): Spawn("discord"),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "b",
+        description: Some("Brave (incognito)"),
+    ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
     (
         modifiers: [
             Super,
