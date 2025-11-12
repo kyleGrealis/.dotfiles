@@ -18,5 +18,5 @@ libreoffice/.config/libreoffice/4/cache/
 libreoffice/.config/libreoffice/4/user/pack/registrymodifications.pack
 libreoffice/.config/libreoffice/4/user/registrymodifications.xcu
 cosmic/.config/cosmic/com.system76.CosmicFiles/v1/tab
-!local-bin/.local/bin/claude
-!cosmic/.config/cosmic/com.system76.CosmicPortal/v1/screenshot
+local-bin/.local/bin/claude
+cosmic/.config/cosmic/com.system76.CosmicPortal/v1/screenshot
