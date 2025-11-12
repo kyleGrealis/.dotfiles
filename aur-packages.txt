@@ -1,3 +1,4 @@
+globalprotect-openconnect-git
 http-parser-debug
 qt5-remoteobjects
 qt5-webchannel

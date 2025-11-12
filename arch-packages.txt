@@ -24,6 +24,7 @@ gcc-fortran
 gdal
 git
 git-lfs
+globalprotect-openconnect-git
 gnome-keyring
 grub
 gst-plugin-pipewire
@@ -58,6 +59,7 @@ pipewire-alsa
 pipewire-jack
 pipewire-pulse
 power-profiles-daemon
+qpdf
 quarto-cli-bin
 r
 rpi-imager
