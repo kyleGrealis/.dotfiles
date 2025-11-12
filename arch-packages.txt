@@ -22,6 +22,9 @@ fastfetch
 fnm
 gcc-fortran
 gdal
+ghostty
+ghostty-shell-integration
+ghostty-terminfo
 git
 git-lfs
 globalprotect-openconnect-git
