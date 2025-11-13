@@ -61,6 +61,7 @@ pipewire
 pipewire-alsa
 pipewire-jack
 pipewire-pulse
+positron-ide-devel-bin
 power-profiles-daemon
 qpdf
 quarto-cli-bin
