@@ -3,43 +3,6 @@
         modifiers: [
             Super,
         ],
-        key: "j",
-    ): ToggleOrientation,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "p",
-        description: Some("Positron"),
-    ): Spawn("/usr/share/positron/bin/positron --disable-gpu"),
-    (
-        modifiers: [
-            Super,
-        ],
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "e",
-        description: Some("Thunderbird"),
-    ): Spawn("thunderbird"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "space",
-    ): System(Launcher),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "l",
-    ): System(LockScreen),
-    (
-        modifiers: [
-            Super,
-        ],
         key: "s",
         description: Some("Slack"),
     ): Spawn("slack"),
@@ -47,22 +10,15 @@
         modifiers: [
             Super,
         ],
-        key: "t",
-    ): Spawn("ghostty -e btop"),
+        key: "Return",
+    ): System(Terminal),
     (
         modifiers: [
             Super,
-        ],
-        key: "o",
-        description: Some("Obsidian"),
-    ): Spawn("obsidian"),
-    (
-        modifiers: [
-            Super,
-            Shift,
         ],
         key: "p",
-    ): System(AppLibrary),
+        description: Some("Positron"),
+    ): Spawn("/usr/share/positron/bin/positron"),
     (
         modifiers: [
             Super,
@@ -74,9 +30,16 @@
         modifiers: [
             Super,
         ],
-        key: "a",
-        description: Some("Claude AI (projects)"),
-    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai/projects"),
+        key: "c",
+        description: Some("Thunderbird Calendar"),
+    ): Spawn("thunderbird -calendar"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "e",
+        description: Some("Thunderbird"),
+    ): Spawn("thunderbird"),
     (
         modifiers: [
             Super,
@@ -87,8 +50,52 @@
         modifiers: [
             Super,
         ],
-        key: "Return",
-    ): System(Terminal),
+        key: "l",
+    ): System(LockScreen),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "o",
+        description: Some("Obsidian"),
+    ): Spawn("obsidian"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "space",
+    ): System(Launcher),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "a",
+        description: Some("Claude AI (projects)"),
+    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai/projects"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "j",
+    ): ToggleOrientation,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "p",
+    ): System(AppLibrary),
+    (
+        modifiers: [
+            Super,
+        ],
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "slash",
+    ): Disable,
     (
         modifiers: [
             Super,
@@ -100,15 +107,15 @@
         modifiers: [
             Super,
         ],
-        key: "slash",
-    ): Disable,
+        key: "d",
+        description: Some("Discord"),
+    ): Spawn("discord"),
     (
         modifiers: [
             Super,
         ],
-        key: "d",
-        description: Some("Discord"),
-    ): Spawn("discord"),
+        key: "t",
+    ): Spawn("ghostty -e btop"),
     (
         modifiers: [
             Super,
@@ -117,11 +124,4 @@
         key: "b",
         description: Some("Brave (incognito)"),
     ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "c",
-        description: Some("Thunderbird Calendar"),
-    ): Spawn("thunderbird -calendar"),
 }
