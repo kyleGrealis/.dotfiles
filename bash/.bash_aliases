@@ -73,7 +73,7 @@ restart() {
 alias now='date +%F\ %T'
 alias weather='curl wttr.in/Dallas?0'
 alias rsync='rsync -azH --info=progress2'
-alias code='/usr/share/positron/bin/positron --disable-gpu'
+alias code='/usr/share/positron/bin/positron'
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias copy='tee >(wl-copy)'
 alias update-arch='sudo pacman -Syu'
