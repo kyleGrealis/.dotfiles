@@ -114,5 +114,6 @@
     "terminal.integrated.sendKeybindingsToShell": false,
     "terminal.integrated.commandsToSkipShell": [
         "workbench.view.explorer"
-    ]
+    ],
+    "positron.assistant.enable": true
 }
