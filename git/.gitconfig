@@ -6,6 +6,7 @@
 [core]
 	excludesFile = ~/.gitignore
 	autocrlf = false
+	editor = micro
 [init]
 	defaultBranch = main
 [pull]
