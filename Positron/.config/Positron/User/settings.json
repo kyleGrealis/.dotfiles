@@ -115,5 +115,7 @@
     "terminal.integrated.commandsToSkipShell": [
         "workbench.view.explorer"
     ],
-    "positron.assistant.enable": true
+    "positron.assistant.enable": true,
+    "positron.assistant.followups.enable": false,
+    "positron.assistant.streamingEdits.enable": false
 }
