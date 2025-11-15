@@ -28,6 +28,7 @@ ghostty-terminfo
 git
 git-lfs
 globalprotect-openconnect-git
+gnome-color-manager
 gnome-keyring
 grub
 gst-plugin-pipewire
@@ -63,6 +64,7 @@ pipewire-jack
 pipewire-pulse
 positron-ide-devel-bin
 power-profiles-daemon
+proton-mail-bin
 qpdf
 quarto-cli-bin
 r

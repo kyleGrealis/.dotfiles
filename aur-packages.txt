@@ -1,6 +1,7 @@
 globalprotect-openconnect-git
 http-parser-debug
 positron-ide-devel-bin
+proton-mail-bin
 qt5-remoteobjects
 qt5-webchannel
 qt5-webengine
