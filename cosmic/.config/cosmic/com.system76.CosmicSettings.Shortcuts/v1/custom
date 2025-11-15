@@ -3,15 +3,14 @@
         modifiers: [
             Super,
         ],
-        key: "s",
-        description: Some("Slack"),
-    ): Spawn("slack"),
+        key: "Return",
+    ): System(Terminal),
     (
         modifiers: [
             Super,
         ],
-        key: "Return",
-    ): System(Terminal),
+        key: "l",
+    ): System(LockScreen),
     (
         modifiers: [
             Super,
@@ -23,61 +22,24 @@
         modifiers: [
             Super,
         ],
-        key: "m",
-        description: Some("Spotify"),
-    ): Spawn("spotify"),
-    (
-        modifiers: [
-            Super,
-        ],
         key: "c",
         description: Some("Thunderbird Calendar"),
     ): Spawn("thunderbird -calendar"),
     (
         modifiers: [
             Super,
+            Shift,
+        ],
+        key: "b",
+        description: Some("Brave (incognito)"),
+    ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
+    (
+        modifiers: [
+            Super,
         ],
         key: "e",
-        description: Some("Thunderbird"),
-    ): Spawn("thunderbird"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "0",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "l",
-    ): System(LockScreen),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "o",
-        description: Some("Obsidian"),
-    ): Spawn("obsidian"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "space",
-    ): System(Launcher),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "a",
-        description: Some("Claude AI (projects)"),
-    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai/projects"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "j",
-    ): ToggleOrientation,
+        description: Some("Proton Mail"),
+    ): Spawn("proton-mail"),
     (
         modifiers: [
             Super,
@@ -89,20 +51,8 @@
         modifiers: [
             Super,
         ],
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
         key: "slash",
     ): Disable,
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "s",
-    ): System(Screenshot),
     (
         modifiers: [
             Super,
@@ -114,14 +64,64 @@
         modifiers: [
             Super,
         ],
-        key: "t",
-    ): Spawn("ghostty -e btop"),
+        key: "j",
+    ): ToggleOrientation,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "0",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "space",
+    ): System(Launcher),
     (
         modifiers: [
             Super,
             Shift,
         ],
-        key: "b",
-        description: Some("Brave (incognito)"),
-    ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
+        key: "s",
+    ): System(Screenshot),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "o",
+        description: Some("Obsidian"),
+    ): Spawn("obsidian"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "s",
+        description: Some("Slack"),
+    ): Spawn("slack"),
+    (
+        modifiers: [
+            Super,
+        ],
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "a",
+        description: Some("Claude AI (projects)"),
+    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai/projects"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "t",
+    ): Spawn("ghostty -e btop"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "m",
+        description: Some("Spotify"),
+    ): Spawn("spotify"),
 }
