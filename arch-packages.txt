@@ -25,6 +25,7 @@ gdal
 ghostty
 ghostty-shell-integration
 ghostty-terminfo
+gimp
 git
 git-lfs
 globalprotect-openconnect-git
@@ -79,7 +80,6 @@ stow
 tailscale
 tcpdump
 tealdeer
-thunderbird
 tree
 ttf-firacode
 udunits
