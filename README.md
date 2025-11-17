@@ -38,3 +38,21 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ## SSH keys & configurations
 
 ... are stored in a private repo for security.
+
+---
+
+## Custom desktop applications
+
+### Getting desktop app icons
+
+Search `https://dashboardicons.com/` and download the *.png* version.
+
+### Proton Mail
+
+Need to fix the `yay -S proton-mail-bin` file to use the icon in `./my-desktop-apps`:
+
+```bash
+sudo micro /usr/share/applications/proton-mail.desktop
+```
+Change the `Icon` line to be:  `Icon=/home/kyle/.local/share/icons/proton-mail.png`.
+
