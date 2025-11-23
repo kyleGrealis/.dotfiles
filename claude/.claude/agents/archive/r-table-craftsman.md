@@ -1,5 +1,6 @@
 ---
 name: r-table-craftsman
+color: '#FFA07A'
 description: Use this agent when you need to create, optimize, or review R code, particularly for statistical tables and data presentation. Examples include: (1) User requests 'Create a demographic table with baseline characteristics' → Assistant uses r-table-craftsman agent to generate efficient gtsummary/gt code; (2) User shares R code for review → Assistant proactively launches r-table-craftsman to evaluate efficiency, check for feature creep, and suggest improvements; (3) User asks 'How can I make this table look better?' → Assistant delegates to r-table-craftsman for focused table enhancement recommendations; (4) After writing any R function involving data presentation or table generation → Assistant automatically invokes r-table-craftsman to review code quality and alignment with best practices.
 model: haiku
 ---

@@ -1,5 +1,6 @@
 ---
 name: r-doc-writer
+color: '#95E1D3'
 description: Use this agent to generate or update roxygen2 documentation for R functions.
 | Invoke when user creates new functions, modifies existing ones, or explicitly requests
 | documentation updates. This agent ensures all roxygen2 blocks are complete with @param,

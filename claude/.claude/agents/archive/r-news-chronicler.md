@@ -1,5 +1,6 @@
 ---
 name: r-news-chronicler
+color: '#FFE66D'
 description: Use this agent to maintain NEWS.md changelog for R packages. Invoke 
 | when preparing releases, adding features, fixing bugs, or user explicitly requests 
 | NEWS updates. This agent ensures changes are properly documented following R package 

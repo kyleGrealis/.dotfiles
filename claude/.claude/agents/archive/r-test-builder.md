@@ -1,5 +1,6 @@
 ---
 name: r-test-builder
+color: '#98D8C8'
 description: Use this agent to create comprehensive testthat unit tests for R functions. 
 | Invoke when user writes new functions, modifies existing ones, or explicitly requests
 | test coverage improvements. This agent creates tests that cover normal cases, edge

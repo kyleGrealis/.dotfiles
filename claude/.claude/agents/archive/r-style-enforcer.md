@@ -1,5 +1,6 @@
 ---
 name: r-style-enforcer
+color: '#B4A7D6'
 description: Use this agent to enforce tidyverse style guide compliance across R code. 
 | Invoke when user requests style checking, before CRAN submission, or when reviewing 
 | code quality. This agent identifies style violations and can auto-fix many of them,

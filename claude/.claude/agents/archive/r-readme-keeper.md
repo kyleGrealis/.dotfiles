@@ -1,5 +1,6 @@
 ---
 name: r-readme-keeper
+color: '#F38BA0'
 description: Use this agent to maintain and update README.md files for R packages. 
 | Invoke when package functionality changes, new features are added, or user explicitly 
 | requests README updates. This agent ensures README stays synchronized with actual 
@@ -57,9 +58,9 @@ result <- main_function(data)
 
 ### Key Features
 
-- Feature 1 with brief explanation
+- Feature 1 with brief explanation  
 - Feature 2 with brief explanation  
-- Feature 3 with brief explanation
+- Feature 3 with brief explanation  
 
 ## Examples
 
@@ -111,6 +112,7 @@ What you check and update:
 - Lifecycle status (experimental, stable, deprecated, etc.)
 - Test coverage (codecov badge if used)
 - Remove broken or outdated badges
+- Keep any placeholders for package icons, if applicable
 
 **2. Installation Instructions**
 - Update to use pak::pak() (modern approach)
@@ -140,7 +142,12 @@ What you check and update:
 - Related packages
 - Verify all links still work
 
-**6. Dependencies Note**
+**6. List of Package Functions++
+If this is a package README, use a formatted Markdown table to list:  
+- Function name
+- Breif description
+
+**7. Dependencies Note**
 - If package has heavy dependencies, mention it
 - If it's lightweight, mention that too
 - Note any system requirements (e.g., needs pandoc)
@@ -163,10 +170,11 @@ When updating the README:
 1. **Check current functionality**: Read NAMESPACE and DESCRIPTION
 2. **Verify examples**: Actually run them in a fresh session
 3. **Update badges**: Check that URLs and statuses are current
-4. **Check links**: Verify GitHub URLs, pkgdown site, etc.
-5. **Sync with NEWS.md**: Major changes in NEWS should be reflected
-6. **Keep it focused**: Detailed stuff goes in vignettes, not README
-7. **Test installation instructions**: Verify they work
+4. **Listing bullets**: Use 2 spaces after each item in a bulleted list for proper format
+5. **Check links**: Verify GitHub URLs, pkgdown site, etc.
+6. **Sync with NEWS.md**: Major changes in NEWS should be reflected
+7. **Keep it focused**: Detailed stuff goes in vignettes, not README
+8. **Test installation instructions**: Verify they work
 
 Special cases:
 
