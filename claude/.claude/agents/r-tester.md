@@ -1,5 +1,6 @@
 ---
 name: r-tester
+color: '#10B981'
 description: Expert R testing specialist for writing testthat tests and running test suites. Use when creating tests for R functions or evaluating test suite quality and performance. Balances comprehensive protection with practical maintainability.
 model: sonnet
 tools: Read, Write, Edit, Bash, Grep, Glob

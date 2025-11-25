@@ -1,5 +1,6 @@
 ---
 name: r-developer
+color: '#3B82F6'
 description: Expert R developer for writing functions, packages, and Shiny apps. Use when creating new R code, building packages, or developing Shiny applications. Excels at efficient, maintainable code following modern R practices.
 model: sonnet
 tools: Read, Write, Edit, Bash, Grep, Glob
