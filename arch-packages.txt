@@ -8,6 +8,7 @@ bluez-utils
 bolt
 brave-bin
 btop
+calf
 chaotic-keyring
 chaotic-mirrorlist
 cifs-utils
@@ -16,6 +17,7 @@ cosmic-session
 cosmic-store
 cuda
 discord
+easyeffects-git
 efibootmgr
 eza
 fastfetch
@@ -59,6 +61,7 @@ nvidia-utils
 obs-studio
 obsidian
 pacman-contrib
+pandoc-cli
 pipewire
 pipewire-alsa
 pipewire-jack
@@ -80,6 +83,7 @@ stow
 tailscale
 tcpdump
 tealdeer
+texlive-latexextra
 tree
 ttf-firacode
 udunits
