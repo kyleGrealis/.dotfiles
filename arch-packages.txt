@@ -30,7 +30,6 @@ ghostty-terminfo
 gimp
 git
 git-lfs
-globalprotect-openconnect-git
 gnome-color-manager
 gnome-keyring
 grub
@@ -85,7 +84,7 @@ tcpdump
 tealdeer
 texlive-latexextra
 tree
-ttf-firacode
+ttf-fira-code
 udunits
 usbutils
 v8-r
