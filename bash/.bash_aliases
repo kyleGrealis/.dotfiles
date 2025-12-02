@@ -76,5 +76,4 @@ alias rsync='rsync -azH --info=progress2'
 alias code='/usr/share/positron/bin/positron'
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias copy='tee >(wl-copy)'
-alias update-arch='yay -Syu'
 alias watch-gpu='watch -n 0.5 nvidia-smi'
