@@ -68,6 +68,7 @@ pipewire-pulse
 positron-ide-devel-bin
 power-profiles-daemon
 proton-mail-bin
+proton-pass-bin
 qpdf
 quarto-cli-bin
 r
