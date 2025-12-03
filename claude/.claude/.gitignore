@@ -1,0 +1,43 @@
+# Claude Code Runtime & Cache Files
+# Keep agents, skills, and settings.json in version control
+# Ignore everything else
+
+# Debug and logs
+debug/
+
+# Downloads
+downloads/
+
+# File history cache
+file-history/
+
+# IDE state
+ide/
+
+# Session plans
+plans/
+
+# Project-specific data
+projects/
+
+# Session environment
+session-env/
+
+# Shell snapshots
+shell-snapshots/
+
+# Analytics
+statsig/
+
+# Todo lists
+todos/
+
+# Command history
+history.jsonl
+
+# Credentials - NEVER COMMIT!
+.credentials.json
+*.credentials.json
+
+# Settings that should remain local (if needed later)
+# settings.local.json

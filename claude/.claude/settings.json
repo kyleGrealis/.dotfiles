@@ -1,0 +1,12 @@
+{
+  "env": {
+    "DISABLE_AUTOUPDATER": "1"
+  },
+  "alwaysThinkingEnabled": true,
+  "autoAcceptEdits": false,
+  "editor": "positron",
+  "confirmBeforeExecution": true,
+  "extraKnownMarketplaces": [
+    "jeremylongshore/claude-code-plugins-plus"
+  ]
+}

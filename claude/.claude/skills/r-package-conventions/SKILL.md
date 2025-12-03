@@ -76,21 +76,16 @@ Type: Package
 Title: Brief Description of What the Package Does (Title Case)
 Version: 0.1.0
 Authors@R: 
-    person(
-    	"Kyle", 
-    	"Grealis", 
-        email = "kylegrealis@proton.me", 
-        role = c("aut", "cre"),
-        comment = c(ORCID = "0000-0002-9223-8854")
-    )
+    person("First", "Last", 
+           email = "first.last@example.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0000-0000-0000"))
 Description: More detailed description of what the package does. 
     This should be one paragraph and can span multiple lines.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Depends:
-    R (>= 4.1.0)
 Imports:
     dplyr (>= 1.1.0),
     rlang (>= 1.1.0)
@@ -382,7 +377,15 @@ devtools::submit_cran()
 
 ## Version Numbers
 
-Use semantic versioning. Dev versions: 0.0.0.9000
+Follow semantic versioning:
+- `1.0.0`: Major.Minor.Patch
+- Increment Major: Breaking changes
+- Increment Minor: New features (backward compatible)
+- Increment Patch: Bug fixes
+
+Development versions:
+- `0.0.0.9000` during development
+- `1.0.0.9000` after releasing 1.0.0
 
 ## Lifecycle Badges
 

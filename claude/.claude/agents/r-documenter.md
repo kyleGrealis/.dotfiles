@@ -1,6 +1,6 @@
 ---
 name: r-documenter
-color: '#9D4EDD'
+color: '#A0D468'
 description: Expert R documentation specialist for all package documentation tasks - roxygen2 function docs, README files, NEWS.md changelogs, and vignettes. Use when creating or updating any package documentation.
 model: sonnet
 tools: Read, Write, Edit, Bash
