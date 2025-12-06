@@ -42,6 +42,7 @@ intel-ucode
 iw
 iwd
 just
+kdenlive
 less
 libpulse
 libreoffice-still
