@@ -90,6 +90,7 @@ udunits
 usbutils
 v8-r
 vim
+vpl-gpu-rt
 vulkan-intel
 wget
 wireplumber
