@@ -1,11 +1,7 @@
-http-parser-debug
 positron-ide-devel-bin
 proton-mail-bin
 proton-pass-bin
-proton-pass-bin-debug
 qt5-remoteobjects
 qt5-webchannel
 qt5-webengine
 udunits
-udunits-debug
-yay-debug

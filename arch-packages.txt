@@ -1,8 +1,6 @@
-alacritty
 base
 base-devel
 bat
-blesh
 bluez
 bluez-utils
 bolt
@@ -17,7 +15,6 @@ cosmic-session
 cosmic-store
 cuda
 discord
-easyeffects-git
 efibootmgr
 eza
 fastfetch
@@ -101,7 +98,6 @@ wl-clipboard
 xdg-user-dirs-gtk
 xdg-utils
 yay
-yay-debug
 zoom
 zoxide
 zram-generator
