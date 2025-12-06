@@ -46,10 +46,12 @@ less
 libpulse
 libreoffice-still
 libva-intel-driver
+libva-utils
 linux
 linux-firmware
 linux-headers
 micro
+mpv
 nano
 network-manager-applet
 networkmanager
