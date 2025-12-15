@@ -15,6 +15,7 @@ cosmic-session
 cosmic-store
 cuda
 discord
+dosfstools
 efibootmgr
 eza
 fastfetch
