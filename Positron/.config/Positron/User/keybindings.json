@@ -27,6 +27,16 @@
       },
       "when": "editorTextFocus"
     },
+
+    {
+      "key": "shift+enter",
+      "command": "workbench.action.terminal.sendSequence",
+      // this does a new line in AI tools (Gemini & Claude), but not in terminal unless within a quoted section (i.e., a git commit)
+      "args": { "text": "\u001b\n" },
+      // this sends a new line in both listed above. don't use but save for now
+      // "args": { "text": "\u001b[200~\r\n\u001b[201~" },
+      "when": "terminalFocus && !terminalFindWidgetVisible"
+    },
   
   
     // overwritten defaults
