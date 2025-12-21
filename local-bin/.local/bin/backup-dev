@@ -8,7 +8,7 @@
 #=================================================================
 
 SOURCE_DIR="$HOME/dev/"
-BACKUP_DIR="$HOME/piCloud/dev/"
+BACKUP_DIR="$HOME/piCloud/kyle-backup/dev/"
 
 echo "🔄 Syncing dev folder to piCloud backup..."
 echo "Source: $SOURCE_DIR"
