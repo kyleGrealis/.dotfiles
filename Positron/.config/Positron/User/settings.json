@@ -121,5 +121,6 @@
     "positron.assistant.gitIntegration.enable": false,
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.suggest.enabled": false,
-    "terminal.integrated.suggest.inlineSuggestion": "off"
+    "terminal.integrated.suggest.inlineSuggestion": "off",
+    "terminal.integrated.tabs.enabled": false
 }
