@@ -1,0 +1,10 @@
+# Positron extensions (can be reinstalled)
+.positron/extensions/
+
+# Config - ignore everything except User settings/keybindings/snippets
+.config/Positron/*
+!.config/Positron/User/
+.config/Positron/User/*
+!.config/Positron/User/keybindings.json
+!.config/Positron/User/settings.json
+!.config/Positron/User/snippets/
