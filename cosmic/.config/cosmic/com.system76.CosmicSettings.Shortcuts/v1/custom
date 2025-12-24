@@ -2,44 +2,11 @@
     (
         modifiers: [
             Super,
-        ],
-        key: "Return",
-    ): System(Terminal),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "l",
-    ): System(LockScreen),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "p",
-        description: Some("Positron"),
-    ): Spawn("/usr/share/positron/bin/positron"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "c",
-        description: Some("Thunderbird Calendar"),
-    ): Spawn("thunderbird -calendar"),
-    (
-        modifiers: [
-            Super,
             Shift,
         ],
         key: "b",
         description: Some("Brave (incognito)"),
     ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "e",
-        description: Some("Proton Mail"),
-    ): Spawn("proton-mail"),
     (
         modifiers: [
             Super,
@@ -51,21 +18,51 @@
         modifiers: [
             Super,
         ],
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "m",
+        description: Some("Spotify"),
+    ): Spawn("spotify"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "space",
+    ): System(Launcher),
+    (
+        modifiers: [
+            Alt,
+        ],
+        key: "F4",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "l",
+    ): System(LockScreen),
+    (
+        modifiers: [
+            Super,
+        ],
         key: "slash",
     ): Disable,
     (
         modifiers: [
             Super,
         ],
-        key: "d",
-        description: Some("Discord"),
-    ): Spawn("discord"),
+        key: "e",
+        description: Some("Proton Mail"),
+    ): Spawn("proton-mail"),
     (
         modifiers: [
-            Super,
+            Alt,
         ],
-        key: "j",
-    ): ToggleOrientation,
+        key: "e",
+    ): Close,
     (
         modifiers: [
             Super,
@@ -76,22 +73,33 @@
         modifiers: [
             Super,
         ],
-        key: "space",
-    ): System(Launcher),
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "s",
-    ): System(Screenshot),
+        key: "j",
+    ): ToggleOrientation,
     (
         modifiers: [
             Super,
         ],
-        key: "o",
-        description: Some("Obsidian"),
-    ): Spawn("obsidian"),
+        key: "p",
+        description: Some("Positron"),
+    ): Spawn("/usr/share/positron/bin/positron"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "Return",
+    ): System(Terminal),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "c",
+    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai/projects"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "a",
+    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://gemini.google.com/app"),
     (
         modifiers: [
             Super,
@@ -103,14 +111,9 @@
         modifiers: [
             Super,
         ],
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "a",
-        description: Some("Claude AI (projects)"),
-    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai/projects"),
+        key: "o",
+        description: Some("Obsidian"),
+    ): Spawn("obsidian"),
     (
         modifiers: [
             Super,
@@ -121,7 +124,14 @@
         modifiers: [
             Super,
         ],
-        key: "m",
-        description: Some("Spotify"),
-    ): Spawn("spotify"),
+        key: "d",
+        description: Some("Discord"),
+    ): Spawn("discord"),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "s",
+    ): System(Screenshot),
 }

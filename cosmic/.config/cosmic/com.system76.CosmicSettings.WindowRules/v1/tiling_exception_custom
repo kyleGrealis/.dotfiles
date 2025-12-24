@@ -1,0 +1,8 @@
+[
+	// Floating window applications
+	(
+		enabled: true,
+		appid: "cosmic-ext-applet-emoji-selector",
+		title: "Emoji Selector"
+	)
+]
