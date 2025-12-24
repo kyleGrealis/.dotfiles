@@ -1,22 +1,12 @@
+# R artifacts
 .Rproj.user
 .Rhistory
 .Rdata
 .httr-oauth
-.DS_Store
+
+# Quarto cache
 .quarto
 
-ssh/.ssh/id_ed25519*
-
-# Positron configs - ignore everything except specific files
-Positron/.config/Positron/*
-!Positron/.config/Positron/User/
-Positron/.config/Positron/User/*
-!Positron/.config/Positron/User/keybindings.json
-!Positron/.config/Positron/User/settings.json
-!Positron/.config/Positron/User/snippets/
-libreoffice/.config/libreoffice/4/cache/
-libreoffice/.config/libreoffice/4/user/pack/registrymodifications.pack
-libreoffice/.config/libreoffice/4/user/registrymodifications.xcu
-cosmic/.config/cosmic/com.system76.CosmicFiles/v1/tab
-local-bin/.local/bin/claude
-cosmic/.config/cosmic/com.system76.CosmicPortal/v1/screenshot
+# OS artifacts
+.DS_Store
+*:Zone.Identifier
