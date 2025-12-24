@@ -1,10 +1,13 @@
-# Positron extensions (can be reinstalled)
-.positron/extensions/
-
-# Config - ignore everything except User settings/keybindings/snippets
+# Ignore everything in the Positron config directory by default.
 .config/Positron/*
-!.config/Positron/User/
+
+# But, DO NOT ignore the User directory itself, so we can specify exceptions.
+!.config/Positron/User
+
+# Now, ignore all content within the User directory...
 .config/Positron/User/*
+
+# ...except for these specific files and folders that we want to track.
 !.config/Positron/User/keybindings.json
 !.config/Positron/User/settings.json
 !.config/Positron/User/snippets/

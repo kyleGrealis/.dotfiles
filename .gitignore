@@ -1,3 +1,7 @@
+# ===================================================================
+# Existing User Rules
+# ===================================================================
+
 # R artifacts
 .Rproj.user
 .Rhistory
@@ -7,6 +11,64 @@
 # Quarto cache
 .quarto
 
-# OS artifacts
+
+# ===================================================================
+# Operating System Files
+# ===================================================================
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+.Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Windows
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
 *:Zone.Identifier
+
+
+# ===================================================================
+# Application and Editor Files
+# ===================================================================
+
+# General
+.cache
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+
+# ===================================================================
+# Language & Dependency Files
+# ===================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# ===================================================================
+# General ignores
+# ===================================================================
+
+# Log files
+*.log
+logs/
