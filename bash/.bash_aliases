@@ -50,6 +50,7 @@ up() {
 # Git (enhanced with your additions)
 alias g='git'
 alias gst='git status'
+alias gs='git switch'
 alias gcm='git commit -m'
 alias gcam='git commit -a -m'
 alias gcad='git commit -a --amend'
