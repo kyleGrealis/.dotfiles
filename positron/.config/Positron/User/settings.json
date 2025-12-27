@@ -122,8 +122,5 @@
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.suggest.enabled": false,
     "terminal.integrated.suggest.inlineSuggestion": "off",
-    "terminal.integrated.tabs.enabled": false,
-    "redhat.telemetry.enabled": false,
-    "github.copilot.chat.agent.autoFix": false,
-    "github.copilot.chat.agent.currentEditorContext.enabled": false
+    "terminal.integrated.tabs.enabled": false
 }
