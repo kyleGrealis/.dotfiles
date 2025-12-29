@@ -1,0 +1,29 @@
+# ~/.dotfiles/local/bin/gnome-restore
+#!/usr/bin/env bash
+# Restore GNOME settings from dotfiles
+
+BACKUP_DIR="$HOME/.dotfiles/gnome/dconf"
+
+if [ ! -d "$BACKUP_DIR" ]; then
+    echo "Error: Backup directory not found at $BACKUP_DIR"
+    exit 1
+fi
+
+echo "Restoring GNOME settings from $BACKUP_DIR..."
+
+# Window manager keybindings
+dconf load /org/gnome/desktop/wm/keybindings/ < "$BACKUP_DIR/wm-keybindings.conf"
+
+# Shell keybindings
+dconf load /org/gnome/shell/keybindings/ < "$BACKUP_DIR/shell-keybindings.conf"
+
+# Mutter keybindings
+dconf load /org/gnome/mutter/keybindings/ < "$BACKUP_DIR/mutter-keybindings.conf"
+
+# Pop Shell extension
+dconf load /org/gnome/shell/extensions/pop-shell/ < "$BACKUP_DIR/pop-shell.conf"
+
+# Enabled extensions list
+dconf load /org/gnome/shell/ < "$BACKUP_DIR/shell.conf"
+
+echo "✓ Restore complete!"

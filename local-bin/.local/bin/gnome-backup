@@ -1,0 +1,26 @@
+# ~/.dotfiles/local/bin/gnome-backup
+#!/usr/bin/env bash
+# Backup GNOME settings to dotfiles
+
+BACKUP_DIR="$HOME/.dotfiles/gnome/dconf"
+mkdir -p "$BACKUP_DIR"
+
+echo "Backing up GNOME settings to $BACKUP_DIR..."
+
+# Window manager keybindings
+dconf dump /org/gnome/desktop/wm/keybindings/ > "$BACKUP_DIR/wm-keybindings.conf"
+
+# Shell keybindings
+dconf dump /org/gnome/shell/keybindings/ > "$BACKUP_DIR/shell-keybindings.conf"
+
+# Mutter keybindings
+dconf dump /org/gnome/mutter/keybindings/ > "$BACKUP_DIR/mutter-keybindings.conf"
+
+# Pop Shell extension
+dconf dump /org/gnome/shell/extensions/pop-shell/ > "$BACKUP_DIR/pop-shell.conf"
+
+# Enabled extensions list
+dconf dump /org/gnome/shell/ > "$BACKUP_DIR/shell.conf"
+
+echo "✓ Backup complete!"
+echo "Don't forget to commit changes in ~/.dotfiles/gnome/"
