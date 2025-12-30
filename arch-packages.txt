@@ -10,6 +10,7 @@ calf
 chaotic-keyring
 chaotic-mirrorlist
 cifs-utils
+clang
 cmatrix
 cosmic-applets
 cosmic-greeter
@@ -52,6 +53,8 @@ iwd
 just
 kdeconnect
 kdenlive
+kpeoplevcard
+kpeoplevcard-debug
 less
 libpulse
 libreoffice-still
@@ -93,6 +96,7 @@ slack-desktop
 smartmontools
 sof-firmware
 spotify
+sshfs
 stow
 tailscale
 tcpdump
@@ -106,6 +110,7 @@ v8-r
 vim
 vpl-gpu-rt
 vulkan-intel
+wayland-protocols
 wget
 wireplumber
 wl-clipboard
