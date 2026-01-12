@@ -6,4 +6,5 @@
     Pictures,
     Videos,
     Path("/home/kyle/dev"),
+    Path("/home/kyle/obsidian"),
 ]
