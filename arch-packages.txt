@@ -32,6 +32,7 @@ ghostty-terminfo
 gimp
 git
 git-lfs
+gnome-keyring
 grilo-plugins
 grub
 gst-plugin-pipewire
