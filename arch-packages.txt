@@ -19,6 +19,7 @@ cosmic-store
 cuda
 dconf-editor
 discord
+dolphin
 dosfstools
 efibootmgr
 eza
@@ -54,8 +55,10 @@ iwd
 just
 kdeconnect
 kdenlive
+konsole
 kpeoplevcard
 kpeoplevcard-debug
+kscreen
 less
 libpulse
 libreoffice-still
@@ -83,8 +86,13 @@ pipewire
 pipewire-alsa
 pipewire-jack
 pipewire-pulse
+plasma-desktop
+plasma-integration
+plasma-nm
+plasma-pa
 positron-ide-devel-bin
 power-profiles-daemon
+powerdevil
 proton-mail-bin
 proton-pass-bin
 qpdf
@@ -99,6 +107,7 @@ sof-firmware
 spotify
 sshfs
 stow
+systemsettings
 tailscale
 tcpdump
 tealdeer
