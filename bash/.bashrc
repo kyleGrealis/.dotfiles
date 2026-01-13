@@ -28,3 +28,5 @@ eval "$(fnm env --use-on-cd)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Ultimate Arch Cleanup
+alias yeet='sudo pacman -Rs ninja; yay -Sc --noconfirm; sudo paccache -r; flatpak uninstall --unused; sudo journalctl --vacuum-time=2weeks; rm -rf ~/.cache/thumbnails/*'
