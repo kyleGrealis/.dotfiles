@@ -1,8 +1,8 @@
-# ~/.dotfiles/local/bin/gnome-restore
+# ~/dotfiles/local/bin/gnome-restore
 #!/usr/bin/env bash
 # Restore GNOME settings from dotfiles
 
-BACKUP_DIR="$HOME/.dotfiles/gnome/dconf"
+BACKUP_DIR="$HOME/dotfiles/gnome/dconf"
 
 if [ ! -d "$BACKUP_DIR" ]; then
     echo "Error: Backup directory not found at $BACKUP_DIR"

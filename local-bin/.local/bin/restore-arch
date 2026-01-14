@@ -10,7 +10,7 @@
 
 set -e  # Exit on any error
 
-DOTFILES="$HOME/.dotfiles"
+DOTFILES="$HOME/dotfiles"
 
 # Color codes
 RED='\033[0;31m'

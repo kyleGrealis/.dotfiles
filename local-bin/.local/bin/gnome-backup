@@ -1,8 +1,8 @@
-# ~/.dotfiles/local/bin/gnome-backup
+# ~/dotfiles/local/bin/gnome-backup
 #!/usr/bin/env bash
 # Backup GNOME settings to dotfiles
 
-BACKUP_DIR="$HOME/.dotfiles/gnome/dconf"
+BACKUP_DIR="$HOME/dotfiles/gnome/dconf"
 mkdir -p "$BACKUP_DIR"
 
 echo "Backing up GNOME settings to $BACKUP_DIR..."
@@ -23,4 +23,4 @@ dconf dump /org/gnome/shell/extensions/pop-shell/ > "$BACKUP_DIR/pop-shell.conf"
 dconf dump /org/gnome/shell/ > "$BACKUP_DIR/shell.conf"
 
 echo "✓ Backup complete!"
-echo "Don't forget to commit changes in ~/.dotfiles/gnome/"
+echo "Don't forget to commit changes in ~/dotfiles/gnome/"

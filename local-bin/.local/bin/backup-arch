@@ -7,7 +7,7 @@
 # Date: October 10, 2025
 #=================================================================
 
-DOTFILES="$HOME/.dotfiles"
+DOTFILES="$HOME/dotfiles"
 DATE=$(date +"%Y-%m-%d %H:%M")
 
 echo "📦 Backing up Arch package lists..."

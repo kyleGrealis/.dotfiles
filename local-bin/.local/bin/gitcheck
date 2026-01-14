@@ -8,7 +8,7 @@
 #=================================================================
 
 DEV_DIR="$HOME/dev"
-DOTFILES_DIR="$HOME/.dotfiles"
+DOTFILES_DIR="$HOME/dotfiles"
 
 # Color codes
 RED='\033[0;31m'
