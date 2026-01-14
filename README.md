@@ -8,8 +8,8 @@ This is my repository for my GNU `stow` folders.
 
 ```bash
 # Clone dotfiles
-git clone https://github.com/kyleGrealis/.dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+git clone https://github.com/kyleGrealis/dotfiles.git ~/dotfiles
+cd ~/dotfiles
    
 # Restore Arch packages
 sudo pacman -S --needed - < arch-packages.txt
@@ -26,10 +26,10 @@ stow -vt $HOME <directory> <directory2>...
 Some configs require sudo and can't be stowed. Copy manually:
 ```bash
 # GRUB configuration
-sudo cp ~/.dotfiles/system/etc/default/grub /etc/default/grub
+sudo cp ~/dotfiles/system/etc/default/grub /etc/default/grub
 
 # Rebuild GRUB
-update-grub  # if .dotfiles/local-bin has been stowed already, or...
+update-grub  # if dotfiles/local-bin has been stowed already, or...
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
