@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Gemini
+Comment=Gemini
+Exec=brave --app=https://gemini.google.com/app --ozone-platform=wayland
+Terminal=false
+Type=Application
+Icon=/home/kyle/.local/share/icons/gemini.png
+StartupNotify=true
+Categories=Network;WebBrowser;

@@ -46,6 +46,8 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ### Getting desktop app icons
 
 Search `https://dashboardicons.com/` and download the *.png* version.
+If using KDE, run `kbuildsycoca6` after creating the `*.desktop` file to reload
+and have the new app recognized.
 
 ### Proton Mail
 
