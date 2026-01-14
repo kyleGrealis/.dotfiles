@@ -1,10 +1,14 @@
 kcontacts5
+kcontacts5-debug
 kpeople5
+kpeople5-debug
 kpeoplevcard
 kpeoplevcard-debug
 positron-ide-devel-bin
 proton-mail-bin
 proton-pass-bin
+proton-pass-bin-debug
+qt5-doc
 qt5-remoteobjects
 qt5-webchannel
 qt5-webengine
