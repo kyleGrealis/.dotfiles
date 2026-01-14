@@ -1,3 +1,7 @@
 *.swp
 *~
 .DS_Store
+.local/share/icons/ColorFlow*
+.local/share/icons/McMojave*
+.local/share/icons/Tela*
+.local/share/applications/mimeinfo.cache
