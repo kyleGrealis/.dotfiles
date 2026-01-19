@@ -1,6 +1,7 @@
 base
 base-devel
 bat
+bluedevil
 bluez
 bluez-utils
 bolt

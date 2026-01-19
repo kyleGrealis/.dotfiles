@@ -10,3 +10,4 @@ qt5-remoteobjects
 qt5-webchannel
 qt5-webengine
 udunits
+v8-r
