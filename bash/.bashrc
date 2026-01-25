@@ -30,3 +30,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # Ultimate Arch Cleanup
 alias yeet='sudo pacman -Rs ninja; yay -Sc --noconfirm; sudo paccache -r; flatpak uninstall --unused; sudo journalctl --vacuum-time=2weeks; rm -rf ~/.cache/thumbnails/*'
+alias kdererun='pkill -f kdeconnectd; (/usr/bin/kdeconnectd > /dev/null 2>&1 & disown)'
