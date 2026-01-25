@@ -106,6 +106,7 @@ tailscale
 tcpdump
 tealdeer
 texlive-latexextra
+trash-cli
 tree
 ttf-fira-code
 udunits
