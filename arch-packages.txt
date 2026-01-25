@@ -13,6 +13,10 @@ chaotic-mirrorlist
 cifs-utils
 clang
 cmatrix
+cosmic-app-library
+cosmic-files
+cosmic-session
+cosmic-settings
 cuda
 dconf-editor
 discord
@@ -78,6 +82,7 @@ nvidia-utils
 obs-studio
 obsidian
 onlyoffice-bin
+packagekit
 pacman-contrib
 pandoc-cli
 pipewire
