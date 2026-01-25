@@ -2,45 +2,6 @@
     (
         modifiers: [
             Super,
-            Shift,
-        ],
-        key: "b",
-        description: Some("Brave (incognito)"),
-    ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "p",
-    ): System(AppLibrary),
-    (
-        modifiers: [
-            Super,
-        ],
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "m",
-        description: Some("Spotify"),
-    ): Spawn("spotify"),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "space",
-    ): System(Launcher),
-    (
-        modifiers: [
-            Alt,
-        ],
-        key: "F4",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
         ],
         key: "l",
     ): System(LockScreen),
@@ -48,15 +9,26 @@
         modifiers: [
             Super,
         ],
-        key: "slash",
-    ): Disable,
+        key: "Next",
+    ): Minimize,
     (
         modifiers: [
             Super,
         ],
-        key: "e",
-        description: Some("Proton Mail"),
-    ): Spawn("proton-mail"),
+        key: "j",
+    ): ToggleOrientation,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "Return",
+    ): System(Terminal),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "t",
+    ): Spawn("ghostty -e btop"),
     (
         modifiers: [
             Alt,
@@ -67,14 +39,13 @@
         modifiers: [
             Super,
         ],
-        key: "0",
     ): Disable,
     (
         modifiers: [
             Super,
         ],
-        key: "j",
-    ): ToggleOrientation,
+        key: "slash",
+    ): Disable,
     (
         modifiers: [
             Super,
@@ -86,20 +57,23 @@
         modifiers: [
             Super,
         ],
-        key: "Return",
-    ): System(Terminal),
+        key: "o",
+        description: Some("Obsidian"),
+    ): Spawn("obsidian"),
     (
         modifiers: [
             Super,
+            Shift,
         ],
-        key: "c",
-    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai/projects"),
+        key: "s",
+    ): System(Screenshot),
     (
         modifiers: [
             Super,
+            Shift,
         ],
-        key: "a",
-    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://gemini.google.com/app"),
+        key: "p",
+    ): System(AppLibrary),
     (
         modifiers: [
             Super,
@@ -111,15 +85,16 @@
         modifiers: [
             Super,
         ],
-        key: "o",
-        description: Some("Obsidian"),
-    ): Spawn("obsidian"),
+        key: "Prior",
+    ): Maximize,
     (
         modifiers: [
             Super,
+            Shift,
         ],
-        key: "t",
-    ): Spawn("ghostty -e btop"),
+        key: "b",
+        description: Some("Brave (incognito)"),
+    ): Spawn("brave --incognito --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"),
     (
         modifiers: [
             Super,
@@ -129,9 +104,57 @@
     ): Spawn("discord"),
     (
         modifiers: [
-            Super,
-            Shift,
+            Alt,
         ],
-        key: "s",
-    ): System(Screenshot),
+        key: "F4",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "space",
+    ): System(Launcher),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "0",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "m",
+    ): Spawn("spotify"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "e",
+        description: Some("Proton Mail"),
+    ): Spawn("proton-mail"),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "c",
+        description: Some("ClaudeAI"),
+    ): Spawn("brave --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland --app=https://www.claude.ai"),
+    
+    // Disable the default Zoom In/Out that might be conflicting
+    (
+        modifiers: [ Super, ],
+        key: "equal",
+    ): Disable,
+    (
+        modifiers: [ Super, ],
+        key: "plus",
+    ): Disable,
+
+    // Add Emote to Super + .
+    (
+        modifiers: [ Super, ],
+        key: "period",
+        description: Some("Emoji Picker"),
+    ): Spawn("emote"),
 }
