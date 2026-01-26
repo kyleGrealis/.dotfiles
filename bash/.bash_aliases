@@ -47,13 +47,10 @@ up() {
 }
 
 
-# Git (enhanced with your additions)
-alias g='git'
+# Git (enhanced with your additions
 alias gst='git status'
 alias gs='git switch'
-alias gcm='git commit -m'
-alias gcam='git commit -a -m'
-alias gcad='git commit -a --amend'
+alias gsc='git switch -c'
 alias gd='git diff -U0'
 alias gpush='git push'
 alias gpull='git pull'
