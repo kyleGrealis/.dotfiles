@@ -76,3 +76,9 @@ alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias copy='tee >(wl-copy)'
 alias watch-gpu='watch -n 0.5 nvidia-smi'
 alias ff='clear && fastfetch'
+
+# no more `rm -rf fahk!`
+alias tp='trash-put'        # explicit trash
+alias tl='trash-list'       # see what's in trash
+alias tr='trash-restore'    # recover oopsies
+alias te='trash-empty'      # actually delete (use sparingly!)
