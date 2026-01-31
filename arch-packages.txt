@@ -87,6 +87,8 @@ pipewire-jack
 pipewire-pulse
 positron-ide-devel-bin
 power-profiles-daemon
+pre-commit
+proton-drive-sync-bin
 proton-mail-bin
 proton-pass-bin
 qpdf

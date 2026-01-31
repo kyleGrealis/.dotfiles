@@ -3,6 +3,7 @@ kpeople5
 kpeoplevcard
 kpeoplevcard-debug
 positron-ide-devel-bin
+proton-drive-sync-bin
 proton-mail-bin
 proton-pass-bin
 proton-pass-bin-debug
